@@ -226,7 +226,6 @@ export default function CollegeData({ College }) {
 
 export async function getServerSideProps(context) {
   const { id } = context.query;
-  // const {getCollegeById} = useCollegeContext()
   const posts = await getSingleCollegeData(id);
   return {
     props: { College: posts },
