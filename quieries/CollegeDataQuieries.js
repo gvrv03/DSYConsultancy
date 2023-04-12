@@ -27,12 +27,23 @@ export async function getSingleCollegeData(id) {
   return data;
 }
 
-
-
 // for show all Colleges
 export async function allColleges() {
   // for show all Colleges
   const res = await fetch(baseUrl + "/api/Colleges", {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+  const data = await res.json();
+  return data;
+}
+
+// for show all Category
+export async function allCategory() {
+  // for show all Colleges
+  const res = await fetch(baseUrl + "/api/getCategory", {
     method: "GET",
     headers: {
       "Content-Type": "application/json",

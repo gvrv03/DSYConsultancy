@@ -1,6 +1,10 @@
 import Authenticated from "directsecondyearadmission/Helpers/Authenticated";
-import { PUBLIC_ADMINKEY, PUBLIC_ROOTKEY } from "directsecondyearadmission/quieries/UserKeys";
+import {
+  PUBLIC_ADMINKEY,
+  PUBLIC_ROOTKEY,
+} from "directsecondyearadmission/quieries/UserKeys";
 import initDB from "../../Helpers/initDB";
+import CollegeCategory from "directsecondyearadmission/Modal/CollegeCategory";
 import Colleges from "../../Modal/Colleges";
 initDB();
 
@@ -35,6 +39,17 @@ export default Authenticated(async (req, res) => {
       if (!checkDep) {
         return res.status(404).json({ error: "Department not exists" });
       }
+
+      const checkCollegeCategory = await CollegeCategory.findOne({
+        Category: category,
+      });
+
+      if (!checkCollegeCategory) {
+        await new CollegeCategory({
+          Category: category,
+        }).save();
+      }
+
       const checkCat = await Colleges.findOne({
         department: {
           $elemMatch: {

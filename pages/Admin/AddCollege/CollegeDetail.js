@@ -194,7 +194,7 @@ const CollegeDetail = () => {
                 name="cUnder"
                 className=" bg-white border  w-full rounded-sm  py-2 px-3 text-grey-darker"
               >
-                <option value="Government">---Select---</option>
+                <option value="">---Select---</option>
                 <option value="Government">Government</option>
                 <option value="Private">Private</option>
               </select>

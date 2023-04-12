@@ -67,7 +67,7 @@ const userSchema = new Schema(
         },
         markType: {
           type: String,
-          default: "Percetage",
+          default: "Percentage",
         },
         percentage: {
           type: Number,

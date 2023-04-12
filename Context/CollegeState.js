@@ -4,7 +4,7 @@ import collegeContext from "./collegeContext";
 import Toastmsg from "directsecondyearadmission/pages/Components/Toastmsg";
 import { useRouter } from "next/router";
 import PopUpModal from "directsecondyearadmission/pages/Components/PopUpModal";
-
+import baseUrl from "directsecondyearadmission/baseUrl";
 const CollegeState = (props) => {
   const router = useRouter();
   const [loginStatus, setLoginStatus] = useState(false); //login status
@@ -70,6 +70,10 @@ const CollegeState = (props) => {
       router.reload();
     }
   };
+
+  const getAllCategory = ()=>{
+            const res = fetch
+  }
 
   return (
     <collegeContext.Provider

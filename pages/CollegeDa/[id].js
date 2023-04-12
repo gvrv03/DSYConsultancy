@@ -1,6 +1,7 @@
 import HomeLayout from "directsecondyearadmission/Layout/HomeLayout";
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import Link from "next/link";
+import { useDownloadExcel } from "react-export-table-to-excel";
 import { useRouter } from "next/dist/client/router";
 import Box from "@mui/material/Box";
 import ImageList from "@mui/material/ImageList";
@@ -56,14 +57,13 @@ const CollegeCard = () => {
   );
 };
 
-export default function CollegeData({College}) {
+export default function CollegeData({ College }) {
   const rouuter = useRouter();
   const [count, setCount] = useState(1);
   const data = "";
   var approvedBy = College.approvedBy.split(",");
   var topRec = College.topRecruiters.split(",");
   const collegeUrl = baseUrl + "/CollegeDa/" + rouuter.query.id;
-
 
   const CInfoData = ({ children }) => {
     return (
@@ -170,9 +170,22 @@ export default function CollegeData({College}) {
     );
   };
   const CollegeCourses = ({ courses }) => {
+    const tableRef = useRef(null);
+
+    const { onDownload } = useDownloadExcel({
+      currentTableRef: tableRef.current,
+      filename: "College Courses",
+      sheet: "College",
+    });
     return (
       <div className="mt-5">
-        <table className="w-full border  outline-none">
+        <button
+          onClick={onDownload}
+          className="px-10 py-2 bg-red-500 text-white my-5"
+        >
+          Download Details
+        </button>
+        <table ref={tableRef} className="w-full border  outline-none">
           <thead className="border-none  outline-none">
             <tr className="border-none   outline-none">
               <th className="py-3 border-none bg-blue-50">Sr. No.</th>
@@ -213,10 +226,23 @@ export default function CollegeData({College}) {
       </div>
     );
   };
-  const CollegeCategory = ({ category }) => {
+  const CollegeCategory = ({ category, name }) => {
+    const tableRef = useRef(null);
+
+    const { onDownload } = useDownloadExcel({
+      currentTableRef: tableRef.current,
+      filename: name,
+      sheet: "CutOffs",
+    });
     return (
       <div className="mt-5 overflow-x-scroll">
-        <table className="w-full border  outline-none">
+        <button
+          onClick={onDownload}
+          className="px-10 py-2 bg-red-500 text-white my-5"
+        >
+          Download Details
+        </button>
+        <table ref={tableRef} className="w-full border  outline-none">
           <thead className="border-none  outline-none">
             <tr className="border-none   outline-none">
               <th className="py-3 border-none bg-blue-50">Choice Code</th>
@@ -435,27 +461,21 @@ export default function CollegeData({College}) {
           <CInfoData>
             {count == 1 && <CollegeArtical Artical={College.fullDescription} />}
             {count == 2 && <CollegeCourses courses={College.department} />}
-            {count == 3 && <CollegeCategory category={College.department} />}
+            {count == 3 && (
+              <CollegeCategory
+                category={College.department}
+                name={College.name}
+              />
+            )}
             {count == 4 && <CollegeImages images={College.images} />}
             {count == 5 && (
               <CollegeAddress
                 maps={College.iframe}
                 locationCollege={College.location}
               />
-              
             )}
           </CInfoData>
         </article>
-        <div>
-          <div className="space-y-2 mt-5">
-            <h4 className="text-lg font-semibold">More Colleges</h4>
-            <div className="flex  gap-5 flex-wrap ">
-              <CollegeCard />
-              <CollegeCard />
-              <CollegeCard />
-            </div>
-          </div>
-        </div>
       </div>
     </>
   );

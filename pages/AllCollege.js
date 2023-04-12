@@ -33,7 +33,7 @@ const AllCollege = () => {
   };
 
   // filter for College Under
-    const undercolleges = collegeByUnder(selectedCollegeUnder, data, district);
+  const undercolleges = collegeByUnder(selectedCollegeUnder, data, district);
   const router = useRouter();
   const context = useContext(collegeContext);
 
@@ -95,16 +95,15 @@ const AllCollege = () => {
 
     const NavItem = (props) => {
       return (
-        (<Link
+        <Link
           href={props.location}
           className="text-gray-700 navItem block px-4 py-2 text-sm"
           role="menuitem"
           tabIndex="-1"
-          id="menu-item-0">
-
+          id="menu-item-0"
+        >
           {props.name}
-
-        </Link>)
+        </Link>
       );
     };
 
@@ -181,8 +180,8 @@ const AllCollege = () => {
               href="/"
               rel="noopener noreferrer"
               title="Back to homepage"
-              className="hover:underline">
-
+              className="hover:underline"
+            >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 20 20"
@@ -191,7 +190,6 @@ const AllCollege = () => {
               >
                 <path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"></path>
               </svg>
-
             </Link>
           </li>
 
@@ -295,19 +293,17 @@ const AllCollege = () => {
             }}
             type="button"
             target="_blank"
-            className="pBtn w-2/4 text-center px-3 text-xs py-2">
-            
-              Read More
-            
+            className="pBtn w-2/4 text-center px-3 text-xs py-2"
+          >
+            Read More
           </Link>
 
           <Link
             href={`tel:+91${props.contacts}`}
             type="button"
-            className="border w-2/4 text-center px-3 text-xs py-2">
-            
-              Make a call
-            
+            className="border w-2/4 text-center px-3 text-xs py-2"
+          >
+            Make a call
           </Link>
         </div>
       </div>

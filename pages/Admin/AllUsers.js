@@ -1,5 +1,5 @@
 import { getallUsers } from "directsecondyearadmission/quieries/adminQuieries";
-import React from "react";
+import React, { Component } from "react";
 import { useState, useEffect } from "react";
 import Dashboard from "./Dashboard";
 import { useContext } from "react";
@@ -11,11 +11,22 @@ import {
 } from "directsecondyearadmission/quieries/UserKeys";
 import Loader2 from "../Components/Loader2";
 
+import exportFromJSON from "export-from-json";
+
 const AllUsers = () => {
   const context = useContext(collegeContext);
   const [data, setdata] = useState(null);
   const [token, setToken] = useState("");
   const [checkUser, setcheckUser] = useState(false);
+
+  const fileName = "UsersData";
+  const exportType = "xls";
+
+  const jsonData = data
+  console.log(jsonData);
+  const ExportToExcel = () => {
+    exportFromJSON({ jsonData , fileName, exportType });
+  };
 
   useEffect(() => {
     if (localStorage.getItem("token")) {
@@ -55,6 +66,13 @@ const AllUsers = () => {
       <div className="px-5 font-semibold text-slate-400 bg-white">
         All Users
       </div>
+      <button
+        type="button"
+        onClick={ExportToExcel}
+        className="bg-red-500 px-10 py-2 m-5 text-white"
+      >
+        Download XLS
+      </button>
       <div className="h-full mt-5 mx-5 overflow-scroll">
         <table className=" border-none w-full overflow-x-scroll">
           <thead className="border-none  text-sm ">

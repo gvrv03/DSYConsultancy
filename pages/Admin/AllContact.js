@@ -1,13 +1,21 @@
 import { getAllContacts } from "directsecondyearadmission/quieries/UserDataQuieries";
-import React from "react";
+import React, { Component } from "react";
 import { useEffect } from "react";
 import { useState } from "react";
 import baseUrl from "directsecondyearadmission/baseUrl";
 import Dashboard from "./Dashboard";
 import Loader2 from "../Components/Loader2";
 
+import exportFromJSON from "export-from-json";
 const AllContact = () => {
   const [data, setdata] = useState(null);
+  const fileName = "Contacts";
+  const exportType = "xls";
+
+  const ExportToExcel = () => {
+    exportFromJSON({ data, fileName, exportType });
+  };
+
   useEffect(() => {
     const getContactData = async () => {
       const data = await getAllContacts();
@@ -23,7 +31,13 @@ const AllContact = () => {
       <div className="px-5 font-semibold text-slate-400 bg-white">
         All Contact
       </div>
-
+      <button
+        type="button"
+        onClick={ExportToExcel}
+        className="bg-red-500 px-10 py-2 m-5 text-white"
+      >
+        Download XLS
+      </button>
       <div className="mt-5 mx-5 w-full   ">
         <table className=" border-none  overflow-x-scroll w-full ">
           <thead className="border-none  w-full text-sm ">

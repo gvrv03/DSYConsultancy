@@ -8,7 +8,10 @@ import collegeContext from "directsecondyearadmission/Context/collegeContext";
 import { useContext } from "react";
 import { useRouter } from "next/router";
 import { getUserData } from "directsecondyearadmission/quieries/UserDataQuieries";
-import { allColleges } from "directsecondyearadmission/quieries/CollegeDataQuieries";
+import {
+  allCategory,
+  allColleges,
+} from "directsecondyearadmission/quieries/CollegeDataQuieries";
 const Profile = ({ userData, CollegeData }) => {
   const currentYear = new Date().getFullYear();
   const context = useContext(collegeContext);
@@ -17,6 +20,9 @@ const Profile = ({ userData, CollegeData }) => {
   const [token, setToken] = useState("");
 
   const districtName = CollegeData.map((item) => item.location.district);
+
+  // To get category Name
+
   const removeDubDist = CollegeData.filter(
     (district, index) =>
       !districtName.includes(district.location.district, index + 1)
@@ -80,7 +86,6 @@ const Profile = ({ userData, CollegeData }) => {
 
   const BasicDetails = () => {
     const [modalOpen, setModalOpen] = useState("hidden");
-
     const toggleUser = () => {
       if (modalOpen == "hidden") {
         setModalOpen("block");
@@ -125,7 +130,7 @@ const Profile = ({ userData, CollegeData }) => {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
-            "Authorization": token,
+            Authorization: token,
           },
           body: JSON.stringify({
             fullName: fullName,
@@ -146,6 +151,14 @@ const Profile = ({ userData, CollegeData }) => {
           context.openModal("fail", res2.error);
         }
       };
+      const [allCat, setallCat] = useState([]);
+      useEffect(() => {
+        const getCat = async () => {
+          const res = await allCategory();
+          setallCat(res);
+        };
+        getCat();
+      }, []);
 
       return (
         <div className={`fixed top-0 ${modalOpen} left-0 h-full  w-full   `}>
@@ -193,12 +206,12 @@ const Profile = ({ userData, CollegeData }) => {
                       className="w-full bg-white rounded-sm  border border-gray-300 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
                     >
                       <option value="">Your Social Category</option>
-                      <option value="General">General</option>
-                      <option value="ST">ST</option>
-                      <option value="OBC">OBC</option>
-                      <option value="SC">SC</option>
-                      <option value="VJ/NT">VJ/NT</option>
-                      <option value="OPEN">OPEN</option>
+
+                      {allCat.map((cat, index) => {
+                        return (
+                          <option value={cat.Category}>{cat.Category}</option>
+                        );
+                      })}
                     </select>
                   </div>
                   <div className="flex flex-col ">
@@ -424,7 +437,7 @@ const Profile = ({ userData, CollegeData }) => {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
-            "Authorization": token,
+            Authorization: token,
           },
           body: JSON.stringify({
             mobileNo,
@@ -642,7 +655,7 @@ const Profile = ({ userData, CollegeData }) => {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
-            "Authorization": token,
+            Authorization: token,
           },
           body: JSON.stringify({
             sBoard,
@@ -1025,7 +1038,7 @@ const Profile = ({ userData, CollegeData }) => {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
-            "Authorization": token,
+            Authorization: token,
           },
           body: JSON.stringify({
             university,
