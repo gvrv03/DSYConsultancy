@@ -1,6 +1,5 @@
 import React from "react";
-
-const ModelHeader = (props) => {
+export const ModelHeader = (props) => {
   return (
     <header className="bgColor p-5 flex justify-between items-center rounded-sm">
       <div className="flex justify-center items-center gap-5">
@@ -21,5 +20,3 @@ const ModelHeader = (props) => {
     </header>
   );
 };
-
-export default ModelHeader;
