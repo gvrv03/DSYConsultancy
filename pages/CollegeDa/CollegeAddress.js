@@ -2,10 +2,9 @@ import React from "react";
 import { useState } from "react";
 
 const CollegeAddress = ({ maps, locationCollege }) => {
-  const { addressLine, taluka, district, city, longitude, latitude } =
-    locationCollege;
-
   try {
+    const { addressLine, taluka, district, city, longitude, latitude } =
+      locationCollege;
     return (
       <div className=" flex gap-5 flex-col sm:flex-row">
         <div className="overflow-scroll grid place-items-center w-full">
