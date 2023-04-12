@@ -26,11 +26,11 @@ function generateSiteMap(posts) {
 
      </url>
      <url>
-       <loc>https://dsyconsultancy.netlify.app/Login</loc>
+       <loc>https://dsyconsultancy.netlify.app/SignIn</loc>
 
      </url>
      <url>
-       <loc>https://dsyconsultancy.netlify.app/Register</loc>
+       <loc>https://dsyconsultancy.netlify.app/SignUp</loc>
 
      </url>
      <url>

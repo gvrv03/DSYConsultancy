@@ -8,10 +8,11 @@ const userSchema = new Schema(
       default: "user",
     },
     credentails: {
-      username: String,
+      userPhoto: String,
       email: String,
       password: String,
       fName: String,
+      firebaseID: String,
     },
     basicDetails: {
       fName: String,

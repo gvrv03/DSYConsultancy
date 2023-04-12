@@ -18,9 +18,11 @@ import { useRouter } from "next/router";
 import Loading from "./Components/Loading";
 import HomeLayout from "directsecondyearadmission/Layout/HomeLayout";
 import CollegeLayout from "directsecondyearadmission/Layout/CollegeLayout";
+import { useUserAuth } from "directsecondyearadmission/Context/UserAuthContext";
 
 const AllCollege = () => {
   const [loading, setLoading] = useState(true);
+  const { user } = useUserAuth();
   const [data, setdata] = useState(null);
   const [selectedCollegeUnder, setSelectedCollegeUnder] = useState([]);
   const [district, setdistrict] = useState("");
@@ -364,7 +366,7 @@ const AllCollege = () => {
         <meta name="title" content="DSY consultancy | All Colleges" />
       </Head>
 
-      {context.loginStatus ? (
+      {user ? (
         <HomeLayout>
           <CompleteData />
         </HomeLayout>

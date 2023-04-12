@@ -7,12 +7,16 @@ import Image from "next/image";
 import Head from "next/head";
 import Link from "next/link";
 import { GetCurrentLocation } from "directsecondyearadmission/quieries/GetCurrentLocation";
+import { useUserAuth } from "directsecondyearadmission/Context/UserAuthContext";
 const Home = () => {
   const context = useContext(collegeContext);
   const loginStatus = context.loginStatus;
   const [coOrdinates, setcoOrdinates] = useState({});
   const [token, setToken] = useState("");
 
+  const { user } = useUserAuth();
+
+  console.log(user);
   useEffect(() => {
     if (localStorage.getItem("token")) {
       setToken(localStorage.getItem("token"));
@@ -97,7 +101,7 @@ const Home = () => {
     );
   };
   const HeaderCard = () => {
-    const name = context.userAllData.credentails.fName;
+    const name = user.displayName;
     const [progress, setProgress] = useState(context.profileCompletion);
     return (
       <div className="mb-5   shadow-md border">
@@ -119,7 +123,8 @@ const Home = () => {
                   id: context.userId,
                 },
               }}
-              legacyBehavior>
+              legacyBehavior
+            >
               <button
                 type="button"
                 className="font-bold bg-slate-600 text-white px-10 mt-5 py-3"

@@ -12,7 +12,7 @@ export const LoginStatus = () => {
     <div className="text-center w-full text-sm font-semibold rounded-sm bg-blue-50 border-blue-100 border p-5 ">
       <Image src="/img/loginUser.svg" width={100} height={100} />
       <p className="mt-5">Login Now For More Features</p>
-      <Link href="/Login" legacyBehavior>
+      <Link href="/SignIn" legacyBehavior>
         <p className="font-bold cursor-pointer  pBtn py-2 mt-2 ">Login</p>
       </Link>
     </div>

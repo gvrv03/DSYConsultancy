@@ -8,7 +8,7 @@ import CollegeCategory from "directsecondyearadmission/Modal/CollegeCategory";
 import Colleges from "../../Modal/Colleges";
 initDB();
 
-export default Authenticated(async (req, res) => {
+export default async (req, res) => {
   const { category, min, max, aFees, aSeats, choiceCode } = req.body;
   let studentCategory = {
     category,
@@ -71,4 +71,4 @@ export default Authenticated(async (req, res) => {
   } catch (err) {
     res.status(500).json({ error: "Internal Server Error" });
   }
-});
+};

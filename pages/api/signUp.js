@@ -1,6 +1,5 @@
 import initDB from "../../Helpers/initDB";
 import User from "directsecondyearadmission/Modal/User";
-var CryptoJS = require("crypto-js");
 initDB();
 export default async (req, res) => {
   switch (req.method) {
@@ -15,42 +14,23 @@ export default async (req, res) => {
 
 // To Add Users
 const signUpUser = async (req, res) => {
-  const { username, fName, email, password, cpassword } = req.body;
+  const { userPhoto, fName, email, password, firebaseID } = req.body;
 
   try {
-    if (!username || !fName || !email || !password) {
-      return res.status(401).json({ error: "Please fill all the fields" });
-    }
-    const checkUserName = await User.findOne({
-      "credentails.username": username,
-    });
-    const checkUserEmail = await User.findOne({
-      "credentails.email": email,
-    });
-
-    if (checkUserName) {
-      return res.status(200).json({ error: username + " Already Exist" });
-    }
-    if (checkUserEmail) {
-      return res.status(200).json({ error: email + " Already Exist" });
-    }
-
     const credentail = {
-      fName,
-      username,
+      userPhoto,
       email,
-      password: CryptoJS.AES.encrypt(password,process.env.CRYPTO_SECRET).toString(),
+      password,
+      fName,
+      firebaseID,
     };
 
-    if (password == cpassword) {
-      const userStatus = await new User({
-        credentails: credentail,
-        "basicDetails.fName": fName,
-      }).save();
-      res.status(201).json({ msg: "Account Created", userStatus });
-    } else {
-      res.status(400).json({ error: "Password not Matched" });
-    }
+    const userStatus = await new User({
+      credentails: credentail,
+      "basicDetails.fName": fName,
+    }).save();
+
+    return res.status(201).json({ msg: "Account Created", userStatus });
   } catch (err) {
     res.status(500).json({ error: "Internal Server Error" });
   }

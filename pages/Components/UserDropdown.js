@@ -10,13 +10,12 @@ import Tooltip from "@mui/material/Tooltip";
 import PersonAdd from "@mui/icons-material/PersonAdd";
 import Settings from "@mui/icons-material/Settings";
 import Logout from "@mui/icons-material/Logout";
-import { useContext } from "react";
-import collegeContext from "directsecondyearadmission/Context/collegeContext";
 import { useRouter } from "next/router";
+import { useUserAuth } from "directsecondyearadmission/Context/UserAuthContext";
 
 export default function UserDropdown() {
   const [anchorEl, setAnchorEl] = React.useState(null);
-  const context = useContext(collegeContext);
+  const { user, logOut } = useUserAuth();
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -37,7 +36,7 @@ export default function UserDropdown() {
             aria-expanded={open ? "true" : undefined}
           >
             <Avatar sx={{ width: 32, height: 32 }}>
-              {context.username.charAt(0).toUpperCase()}
+              {user.displayName.charAt(0).toUpperCase()}
             </Avatar>
           </IconButton>
         </Tooltip>
@@ -90,7 +89,7 @@ export default function UserDropdown() {
           </ListItemIcon>
           Settings
         </MenuItem>
-        <MenuItem onClick={context.logOut}>
+        <MenuItem onClick={logOut}>
           <ListItemIcon>
             <Logout fontSize="small" />
           </ListItemIcon>

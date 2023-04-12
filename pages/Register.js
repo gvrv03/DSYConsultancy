@@ -51,7 +51,7 @@ const Register = () => {
     if (res2.msg) {
       alert(res2.msg);
       setTimeout(() => {
-        router.push("/Login");
+        router.push("/SignIn");
       }, 2000);
     } else {
       alert(res2.error);
@@ -196,7 +196,7 @@ const Register = () => {
           Sign Up
         </button>
         <p className="text-xs text-center text-gray-500 mt-3">
-          <Link href="/Login">
+          <Link href="/SignIn">
              Already have an Accouunt ?
           </Link>
         </p>

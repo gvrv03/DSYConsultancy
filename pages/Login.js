@@ -143,7 +143,7 @@ const Login = () => {
           Sign In
         </button>
         <p className="text-xs text-center text-gray-500 mt-3">
-          <Link href="/Register">
+          <Link href="/SignUp">
              Create a New Accouunt
           </Link>
         </p>

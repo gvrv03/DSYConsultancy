@@ -3,14 +3,14 @@ import User from "directsecondyearadmission/Modal/User";
 import Authenticated from "directsecondyearadmission/Helpers/Authenticated";
 initDB();
 
-export default Authenticated(async (req, res) => {
+export default async (req, res) => {
   const { mobileNo, email, city, state, id } = req.body;
 
   try {
     if (!mobileNo || !email || !city || !state || !id) {
       return res.status(401).json({ error: "Please fill all the fields" });
     }
-    const progress = await User.findById(id);
+    const progress = await User.findOne({ "credentails.firebaseID": id });
     const process = 80;
     let newProcess = progress.profileCompletion;
     if (
@@ -32,7 +32,10 @@ export default Authenticated(async (req, res) => {
       contactDetails: cDeatails,
     };
 
-    const userData = await User.findOneAndUpdate({ _id: id }, update);
+    const userData = await User.findOneAndUpdate(
+      { "credentails.firebaseID": id },
+      update
+    );
 
     if (!userData) {
       return res.status(404).json({ error: "This User not Exists" });
@@ -45,4 +48,4 @@ export default Authenticated(async (req, res) => {
   } catch (err) {
     res.status(500).json({ error: "Internal Server Error" });
   }
-});
+};

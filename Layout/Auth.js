@@ -1,32 +1,56 @@
 import React from "react";
-import { useContext } from "react";
-import collegeContext from "directsecondyearadmission/Context/collegeContext";
-import { useRouter } from "next/router";
+import { useUserAuth } from "directsecondyearadmission/Context/UserAuthContext";
 
-export default function Auth({ children }) {
-  const context = useContext(collegeContext);
-  const router = useRouter();
-  console.log(context);
-  if (context.loginStatus) {
-    router.push("/");
-  }
-  return (
-    <>
-      <section className="text-gray-600 h-screen  overflow-y-scroll grid sm:place-items-center place-items-start md:mt-20 body-font">
-        <div className="container px-5 py-24 mx-auto flex flex-wrap items-center">
-          <div className="lg:w-3/5 md:w-1/2 md:pr-16 lg:pr-0 pr-0">
-            <h1 className="title-font font-medium text-3xl text-gray-900">
-              Slow-carb next level shoindcgoitch ethical authentic, poko
-              scenester
-            </h1>
-            <p className="leading-relaxed mt-4">
-              Poke slow-carb mixtape knausgaard, typewriter street art gentrify
-              hammock starladder roathse. Craies vegan tousled etsy austin.
-            </p>
-          </div>
+const Auth = ({ children }) => {
+  const { signWithGoogle } = useUserAuth();
+  const { user } = useUserAuth();
+
+  const handleGoogleSignIn = async (e) => {
+    e.preventDefault();
+    try {
+      await signWithGoogle();
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+  if (!user) {
+    return (
+      <>
+        <div className="flex flex-col items-center px-5  container justify-center  py-8 mx-auto h-screen lg:py-0">
           {children}
+          <div className="w-full bg-white rounded-sm shadow-lg  grid place-items-center sm:max-w-md p-5 ">
+            <h1 className=" text-2xl font-bold pb-5">OR</h1>
+            <button
+              type="button"
+              onClick={handleGoogleSignIn}
+              className="text-white bg-[#4285F4] flex justify-center   w-full hover:bg-[#4285F4]/90 focus:ring-4 focus:outline-none focus:ring-[#4285F4]/50 font-medium rounded-sm text-sm px-5 py-2.5 text-center  items-center dark:focus:ring-[#4285F4]/55 "
+            >
+              <svg
+                className="w-4 h-4 mr-2 -ml-1"
+                aria-hidden="true"
+                focusable="false"
+                data-prefix="fab"
+                data-icon="google"
+                role="img"
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 488 512"
+              >
+                <path
+                  fill="currentColor"
+                  d="M488 261.8C488 403.3 391.1 504 248 504 110.8 504 0 393.2 0 256S110.8 8 248 8c66.8 0 123 24.5 166.3 64.9l-67.5 64.9C258.5 52.6 94.3 116.6 94.3 256c0 86.5 69.1 156.6 153.7 156.6 98.2 0 135-70.4 140.8-106.9H248v-85.3h236.1c2.3 12.7 3.9 24.9 3.9 41.4z"
+                ></path>
+              </svg>
+              Sign in with Google
+            </button>
+          </div>
         </div>
-      </section>
-    </>
-  );
-}
+      </>
+    );
+  }else{
+    return(
+      <div className=" mt-24  container m-auto bg-white p-5">Already Login</div>
+    )
+  }
+};
+
+export default Auth;

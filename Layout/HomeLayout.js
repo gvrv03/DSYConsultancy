@@ -6,11 +6,12 @@ import Image from "next/image";
 // components
 import { useContext } from "react";
 import collegeContext from "directsecondyearadmission/Context/collegeContext";
-import { Public } from "@mui/icons-material";
+
 import {
   PUBLIC_ADMINKEY,
   PUBLIC_ROOTKEY,
 } from "directsecondyearadmission/quieries/UserKeys";
+import { useUserAuth } from "directsecondyearadmission/Context/UserAuthContext";
 
 export const SideUserData = () => {
   const router = useRouter();
@@ -37,13 +38,12 @@ export const SideUserData = () => {
               href={{
                 pathname: `/Profile`,
                 query: {
-                  id: context.userId,
+                  id: user.uid,
                 },
               }}
-              className=" text-center  font-semibold  text-xs">
-              
-                Mange your profile
-              
+              className=" text-center  font-semibold  text-xs"
+            >
+              Mange your profile
             </Link>
           )}
         </div>
@@ -54,7 +54,7 @@ export const SideUserData = () => {
 
 export default function HomeLayout({ children }) {
   const router = useRouter();
-
+  const { user } = useUserAuth();
   const context = useContext(collegeContext);
   const ListItem = (props) => {
     return (
@@ -63,11 +63,10 @@ export default function HomeLayout({ children }) {
           href={props.location}
           className={`flex items-center ${
             router.pathname == props.location && "bg-sky-100 font-semibold"
-          }  mb-2 px-4 p-2 my-1 navItem   rounded-sm hover:bg-sky-100  hover:font-semibold`}>
-
+          }  mb-2 px-4 p-2 my-1 navItem   rounded-sm hover:bg-sky-100  hover:font-semibold`}
+        >
           <i className={`bi ${props.icon} mr-2`}></i>
           <span className="text-sm">{props.name}</span>
-
         </Link>
       </li>
     );
@@ -95,7 +94,8 @@ export default function HomeLayout({ children }) {
                   id: context.userId,
                 },
               }}
-              className=" text-xs">
+              className=" text-xs"
+            >
               Mange your profile
             </Link>
           )}
@@ -107,98 +107,100 @@ export default function HomeLayout({ children }) {
     );
   };
 
-  if (context.loginStatus) {
-    return <>
-      <section className="body-font md:mt-20   mt-0 px-5">
-        {/* <UserData /> */}
-        <div className="container    home  ">
-          <aside className={`screenSidebar shadow-md rounded-sm `}>
-            <div className="rounded-sm">
-              {/* <SideUserData /> */}
-              <ul className="mb-2">
-                <li>
-                  <Link
-                    href={{
-                      pathname: `/Profile`,
-                      query: {
-                        id: context.userId,
-                        // cName: props.collegeName.replace(" ", "+"),
-                      },
-                    }}
-                    className={`flex items-center ${
-                      router.pathname == "/Profile" &&
-                      "bg-sky-100 font-semibold"
-                    }  mb-2 px-4 p-2 my-1 navItem hover:bg-sky-100 hover:font-semibold  rounded-sm`}>
-
-                    <i className={`bi bi-person-fill mr-2`}></i>
-                    <span className="text-sm">Profile</span>
-
-                  </Link>
-                </li>
-                {HomeNav.map((item, index) => {
-                  return (
-                    <ListItem
-                      key={index}
-                      location={item.location}
-                      name={item.name}
-                      icon={item.icon}
-                    />
-                  );
-                })}
-
-                {(context.adminKey == PUBLIC_ADMINKEY ||
-                  context.adminKey == PUBLIC_ROOTKEY) && (
+  if (user) {
+    return (
+      <>
+        <section className="body-font md:mt-20   mt-0 px-5">
+          {/* <UserData /> */}
+          <div className="container    home  ">
+            <aside className={`screenSidebar shadow-md rounded-sm `}>
+              <div className="rounded-sm">
+                {/* <SideUserData /> */}
+                <ul className="mb-2">
                   <li>
                     <Link
-                      href="/Admin/AllContact"
+                      href={{
+                        pathname: `/Profile`,
+                        query: {
+                          id: user.uid,
+                          // cName: props.collegeName.replace(" ", "+"),
+                        },
+                      }}
                       className={`flex items-center ${
-                        router.pathname == "/Admin/AllContact" &&
+                        router.pathname == "/Profile" &&
                         "bg-sky-100 font-semibold"
-                      }  mb-2 px-4 p-2 my-1 navItem hover:bg-sky-100 hover:font-semibold  rounded-sm`}>
-
-                      <i className={`bi bi-bar-chart-line-fill mr-2`}></i>
-                      <span className="text-sm">Dashboard</span>
-
+                      }  mb-2 px-4 p-2 my-1 navItem hover:bg-sky-100 hover:font-semibold  rounded-sm`}
+                    >
+                      <i className={`bi bi-person-fill mr-2`}></i>
+                      <span className="text-sm">Profile</span>
                     </Link>
                   </li>
-                )}
-              </ul>
+                  {HomeNav.map((item, index) => {
+                    return (
+                      <ListItem
+                        key={index}
+                        location={item.location}
+                        name={item.name}
+                        icon={item.icon}
+                      />
+                    );
+                  })}
+
+                  {(context.adminKey == PUBLIC_ADMINKEY ||
+                    context.adminKey == PUBLIC_ROOTKEY) && (
+                    <li>
+                      <Link
+                        href="/Admin/AllContact"
+                        className={`flex items-center ${
+                          router.pathname == "/Admin/AllContact" &&
+                          "bg-sky-100 font-semibold"
+                        }  mb-2 px-4 p-2 my-1 navItem hover:bg-sky-100 hover:font-semibold  rounded-sm`}
+                      >
+                        <i className={`bi bi-bar-chart-line-fill mr-2`}></i>
+                        <span className="text-sm">Dashboard</span>
+                      </Link>
+                    </li>
+                  )}
+                </ul>
+              </div>
+
+              {/* <div className="sideAds">Space for ads</div> */}
+            </aside>
+
+            <div className="screenLayout mt-20 md:mt-0 ">{children}</div>
+          </div>
+        </section>
+      </>
+    );
+  }
+  return (
+    <>
+      <section className="body-font  mt-20 mx-5 ">
+        <div className="container m-auto">
+          <div className="bg-white p-5   border flex sm:flex-row flex-col-reverse items-center  justify-between rounded-sm ">
+            <div className="flex flex-col sm:w-2/4 w-full ">
+              <div>
+                <p className="text-base font-semibold ">
+                  Sorry! You are not a DSY user
+                </p>
+                <p className="text-sm mt-3  text-slate-400">
+                  Login Now for Become a User
+                </p>
+              </div>
+
+              <Link href="/SignIn" legacyBehavior>
+                <button type="button" className="pBtn px-10 mt-5 py-3">
+                  Login
+                </button>
+              </Link>
             </div>
 
-            {/* <div className="sideAds">Space for ads</div> */}
-          </aside>
-
-          <div className="screenLayout mt-20 md:mt-0 ">{children}</div>
+            <div className="sm:mb-0 mb-10">
+              <Image width={200} height={150} src="/img/loginUser.svg" />
+            </div>
+          </div>
         </div>
       </section>
-    </>;
-  }
-  return <>
-    <section className="body-font  mt-20 mx-5 ">
-      <div className="container m-auto">
-        <div className="bg-white p-5   border flex sm:flex-row flex-col-reverse items-center  justify-between rounded-sm ">
-          <div className="flex flex-col sm:w-2/4 w-full ">
-            <div>
-              <p className="text-base font-semibold ">
-                Sorry! You are not a DSY user
-              </p>
-              <p className="text-sm mt-3  text-slate-400">
-                Login Now for Become a User
-              </p>
-            </div>
-
-            <Link href="/Login" legacyBehavior>
-              <button type="button" className="pBtn px-10 mt-5 py-3">
-                Login
-              </button>
-            </Link>
-          </div>
-
-          <div className="sm:mb-0 mb-10">
-            <Image width={200} height={150} src="/img/loginUser.svg" />
-          </div>
-        </div>
-      </div>
-    </section>
-  </>;
+    </>
+  );
 }

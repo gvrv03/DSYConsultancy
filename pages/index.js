@@ -8,6 +8,7 @@ import Head from "next/head";
 import collegeContext from "directsecondyearadmission/Context/collegeContext";
 import { useRouter } from "next/router";
 import Loading from "./Components/Loading";
+import { useUserAuth } from "directsecondyearadmission/Context/UserAuthContext";
 const CollegeCard = () => {
   const Card = () => {
     return (
@@ -118,7 +119,7 @@ const Home = () => {
     },
   ];
   const status = useContext(collegeContext);
-  const user = status.loginStatus;
+  const {user } = useUserAuth()
 
   const HomeAds = () => {
     return (
@@ -201,7 +202,7 @@ const Home = () => {
                   </button>
                 </Link>
                 {!user && (
-                  <Link href="/Login" legacyBehavior>
+                  <Link href="/SignIn" legacyBehavior>
                     <button className="ml-4 font-semibold inline-flex pColor border py-2 px-6 focus:outline-none hover:bg-gray-200 rounded-sm text-lg">
                       Sign In
                     </button>
