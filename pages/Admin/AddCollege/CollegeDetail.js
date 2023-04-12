@@ -2,11 +2,11 @@ import React, { useState, useEffect } from "react";
 import AddCollegeDetails from "../AddCollegeDetails";
 import Link from "next/link";
 import InstituteCheck from "./InstituteCheck";
-import Toastmsg from "directsecondyearadmission/pages/Components/Toastmsg";
+import Toastmsg from "directsecondyearadmission/Components/Toastmsg";
 import { toast } from "react-toastify";
 import { useContext } from "react";
 import collegeContext from "directsecondyearadmission/Context/collegeContext";
-import PopUpModal from "directsecondyearadmission/pages/Components/PopUpModal";
+import PopUpModal from "directsecondyearadmission/Components/PopUpModal";
 const CollegeDetail = () => {
   const context = useContext(collegeContext);
   console.log(context.username);

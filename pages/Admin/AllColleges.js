@@ -4,7 +4,7 @@ import baseUrl from "../../baseUrl";
 import { getColleges } from "directsecondyearadmission/quieries/adminQuieries";
 import { useState } from "react";
 import { useEffect } from "react";
-import Loader2 from "../Components/Loader2";
+import Loader2 from "../../Components/Loader2";
 const AllColleges = () => {
   // console.log(props);
 

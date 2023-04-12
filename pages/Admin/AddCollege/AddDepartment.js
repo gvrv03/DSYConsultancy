@@ -3,7 +3,7 @@ import AddCollegeDetails from "../AddCollegeDetails";
 import Link from "next/link";
 import InstituteCheck from "./InstituteCheck";
 import { toast } from "react-toastify";
-import Toastmsg from "directsecondyearadmission/pages/Components/Toastmsg";
+import Toastmsg from "directsecondyearadmission/Components/Toastmsg";
 
 const Stepper = () => {
   return (

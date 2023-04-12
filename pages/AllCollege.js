@@ -15,7 +15,7 @@ import "swiper/css/navigation";
 // import required modules
 import { Autoplay, Pagination, Navigation } from "swiper";
 import { useRouter } from "next/router";
-import Loading from "./Components/Loading";
+import Loading from "directsecondyearadmission/Components/Loading";
 import HomeLayout from "directsecondyearadmission/Layout/HomeLayout";
 import CollegeLayout from "directsecondyearadmission/Layout/CollegeLayout";
 import { useUserAuth } from "directsecondyearadmission/Context/UserAuthContext";

@@ -5,7 +5,7 @@ import Link from "next/link";
 import { collegeByUnder } from "directsecondyearadmission/quieries/quieries";
 import { allColleges } from "directsecondyearadmission/quieries/CollegeDataQuieries";
 import { useEffect } from "react";
-import Loader2 from "./Components/Loader2";
+import Loader2 from "directsecondyearadmission/Components/Loader2";
 
 const College = () => {
   const [data, setdata] = useState(null);

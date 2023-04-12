@@ -5,7 +5,7 @@ import "suneditor/dist/css/suneditor.min.css"; // Import Sun Editor's CSS File
 import AddCollegeDetails from "../AddCollegeDetails";
 import InstituteCheck from "./InstituteCheck";
 import { toast } from "react-toastify";
-import Toastmsg from "directsecondyearadmission/pages/Components/Toastmsg";
+import Toastmsg from "directsecondyearadmission/Components/Toastmsg";
 
 const Stepper = () => {
   return (

@@ -9,7 +9,7 @@ import {
   PUBLIC_ADMINKEY,
   PUBLIC_ROOTKEY,
 } from "directsecondyearadmission/quieries/UserKeys";
-import Loader2 from "../Components/Loader2";
+import Loader2 from "../../Components/Loader2";
 
 import exportFromJSON from "export-from-json";
 

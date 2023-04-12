@@ -1,7 +1,7 @@
 import "../styles/globals.css";
 import ScrollToTop from "react-scroll-up";
-import Footer from "./Components/Footer";
-import Nav from "./Components/Nav";
+import Footer from "directsecondyearadmission/Components/Footer";
+import Nav from "directsecondyearadmission/Components/Nav";
 import CollegeState from "directsecondyearadmission/Context/CollegeState";
 import Router from "next/router";
 

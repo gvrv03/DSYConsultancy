@@ -4,7 +4,7 @@ import { useEffect } from "react";
 import { useState } from "react";
 import baseUrl from "directsecondyearadmission/baseUrl";
 import Dashboard from "./Dashboard";
-import Loader2 from "../Components/Loader2";
+import Loader2 from "../../Components/Loader2";
 
 import exportFromJSON from "export-from-json";
 const AllContact = () => {

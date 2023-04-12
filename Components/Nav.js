@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import UserDropdown from "./UserDropdown";
-import baseUrl from "../../baseUrl";
+import baseUrl from "directsecondyearadmission/baseUrl";
 import TopNav from "directsecondyearadmission/navItem/TopNav";
 import HomeNav from "directsecondyearadmission/navItem/HomeNav";
 import { useContext } from "react";

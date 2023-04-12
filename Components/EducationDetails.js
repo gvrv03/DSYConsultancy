@@ -4,7 +4,7 @@ import { useRouter } from "next/router";
 import React from "react";
 import { useState } from "react";
 import { useContext } from "react";
-import { ModelHeader } from "./ModelHeader";
+import ModelHeader from "./ModelHeader";
 
 const EducationDetails = ({userData}) => {
   const [modalOpen, setModalOpen] = useState("hidden");

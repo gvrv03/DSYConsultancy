@@ -12,11 +12,11 @@ import {
   allCategory,
   allColleges,
 } from "directsecondyearadmission/quieries/CollegeDataQuieries";
-import BasicDetails from "./Components/BasicDetails";
-import { ModelHeader } from "./Components/ModelHeader";
-import ContactDetails from "./Components/ContactDetails";
-import EducationDetails from "./Components/EducationDetails";
-import PreferenceDetails from "./Components/PreferenceDetails";
+import BasicDetails from "directsecondyearadmission/Components/BasicDetails";
+import { ModelHeader } from "directsecondyearadmission/Components/ModelHeader";
+import ContactDetails from "directsecondyearadmission/Components/ContactDetails";
+import EducationDetails from "directsecondyearadmission/Components/EducationDetails";
+import PreferenceDetails from "directsecondyearadmission/Components/PreferenceDetails";
 
 const Profile = ({ userData, CollegeData }) => {
   return (

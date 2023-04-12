@@ -1,7 +1,7 @@
 import initDB from "../../Helpers/initDB";
 import ContactUs from "directsecondyearadmission/Modal/ContactUs";
 import { renderToString ,renderToStaticMarkup} from "react-dom/server";
-import Nav from "../Components/Nav";
+import Nav from "../../Components/Nav";
 initDB();
 
 function MyComponent() {

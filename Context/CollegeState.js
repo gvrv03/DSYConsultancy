@@ -1,9 +1,9 @@
 import { toast } from "react-toastify";
 import { useEffect, useState } from "react";
 import collegeContext from "./collegeContext";
-import Toastmsg from "directsecondyearadmission/pages/Components/Toastmsg";
+import Toastmsg from "directsecondyearadmission/Components/Toastmsg";
 import { useRouter } from "next/router";
-import PopUpModal from "directsecondyearadmission/pages/Components/PopUpModal";
+import PopUpModal from "directsecondyearadmission/Components/PopUpModal";
 import baseUrl from "directsecondyearadmission/baseUrl";
 const CollegeState = (props) => {
   const router = useRouter();

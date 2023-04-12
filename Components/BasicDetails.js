@@ -6,7 +6,7 @@ import React from "react";
 import { useContext } from "react";
 import { useEffect } from "react";
 import { useState } from "react";
-import { ModelHeader } from "./ModelHeader";
+import ModelHeader from "./ModelHeader";
 
 const BasicDetails = ({ userData }) => {
   const router = useRouter();
@@ -133,7 +133,7 @@ const BasicDetails = ({ userData }) => {
 
                     {allCat.map((cat, index) => {
                       return (
-                        <option value={cat.Category}>{cat.Category}</option>
+                        <option key={index} value={cat.Category}>{cat.Category}</option>
                       );
                     })}
                   </select>
