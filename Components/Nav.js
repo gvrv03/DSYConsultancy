@@ -14,8 +14,8 @@ const Nav = () => {
   const [nav, setnav] = useState("hidden");
   const router = useRouter;
   const [overlay, setOverlay] = useState("");
-  const { user } = useUserAuth();
-  console.log(user);
+  const { token,user } = useUserAuth();
+  console.log(token);
   // const { user.displayName, photoURL } = user && user;
   const closeNav = () => {
     if (nav == "block") {

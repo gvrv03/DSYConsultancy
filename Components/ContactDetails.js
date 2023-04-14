@@ -1,8 +1,6 @@
-import collegeContext from "directsecondyearadmission/Context/collegeContext";
 import { useUserAuth } from "directsecondyearadmission/Context/UserAuthContext";
-import { useRouter } from "next/router";
+import { useUserContext } from "directsecondyearadmission/Context/UserContext";
 import React from "react";
-import { useContext } from "react";
 import { useState } from "react";
 import ModelHeader from "./ModelHeader";
 
@@ -10,8 +8,7 @@ const ContactDetails = ({ userData }) => {
   const [modalOpen, setModalOpen] = useState("hidden");
   const [requiredState, setRequired] = useState(false);
   const { user } = useUserAuth();
-  const router = useRouter();
-  const context = useContext(collegeContext);
+  const { updateUserContact } = useUserContext();
 
   const toggleUser = () => {
     if (modalOpen == "hidden") {
@@ -32,31 +29,7 @@ const ContactDetails = ({ userData }) => {
     const updateContDetails = async (e) => {
       e.preventDefault();
       const { mobileNo, email, city, state } = contactDetails;
-      onSubmit(mobileNo, email, city, state, user.uid);
-    };
-
-    const onSubmit = async (mobileNo, email, city, state, id) => {
-      const res = await fetch("/api/updateContD", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          mobileNo,
-          email,
-          city,
-          state,
-          id,
-        }),
-      });
-
-      const res2 = await res.json();
-      if (res2.msg) {
-        context.openModal("success", res2.msg);
-        router.reload();
-      } else {
-        context.openModal("fail", res2.error);
-      }
+      updateUserContact(mobileNo, email, city, state, user.uid);
     };
 
     return (

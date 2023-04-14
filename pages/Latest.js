@@ -2,6 +2,8 @@ import LatestNews from "directsecondyearadmission/Layout/LatestNews";
 import React, { useState } from "react";
 import Link from "next/link";
 import Head from "next/head";
+import { getNews } from "directsecondyearadmission/quieries/getNews";
+import NewsBlog from "directsecondyearadmission/Components/NewsBlog";
 
 const BreadCrumb = () => {
   const [userOpen, setUserOpen] = useState("hidden");
@@ -34,16 +36,15 @@ const BreadCrumb = () => {
 
   const NavItem = (props) => {
     return (
-      (<Link
+      <Link
         href={props.location}
         className="text-gray-700 navItem block px-4 py-2 text-sm"
         role="menuitem"
         tabIndex="-1"
-        id="menu-item-0">
-
+        id="menu-item-0"
+      >
         {props.name}
-
-      </Link>)
+      </Link>
     );
   };
 
@@ -58,8 +59,8 @@ const BreadCrumb = () => {
             href="/"
             rel="noopener noreferrer"
             title="Back to homepage"
-            className="hover:underline">
-
+            className="hover:underline"
+          >
             <svg
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 20 20"
@@ -68,7 +69,6 @@ const BreadCrumb = () => {
             >
               <path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"></path>
             </svg>
-
           </Link>
         </li>
 
@@ -122,43 +122,7 @@ const BreadCrumb = () => {
   );
 };
 
-const Latest = () => {
-  const NewsBlog = () => {
-    return (
-      <Link href="/" legacyBehavior>
-        <article className="flex flex-col bg-white cursor-pointer ">
-          <p
-            rel="noopener noreferrer"
-            aria-label="Te nulla oportere reprimique his dolorum"
-          >
-            <img
-              className="object-cover cursor-pointer w-full h-52 "
-              src="https://source.unsplash.com/200x200/?fashion?1"
-            />
-          </p>
-          <div className="flex flex-col flex-1 p-6">
-            <p
-              rel="noopener noreferrer"
-              aria-label="Te nulla oportere reprimique his dolorum"
-            ></p>
-            <a
-              rel="noopener noreferrer"
-              className="text-xs tracking-wider uppercase hover:underline dark:text-violet-400"
-            >
-              Convenire
-            </a>
-            <h3 className="flex-1 cursor-pointer py-2 text-lg font-semibold leading-snug">
-              Te nulla oportere reprimique his dolorum
-            </h3>
-            <div className="flex flex-wrap justify-between pt-3 space-x-2 text-xs dark:text-gray-400">
-              <span>June 1, 2020</span>
-            </div>
-          </div>
-        </article>
-      </Link>
-    );
-  };
-
+const Latest = ({ newsData }) => {
   return (
     <section className="mt-20 px-5">
       <Head>
@@ -173,25 +137,32 @@ const Latest = () => {
       <div className="container  mx-auto space-y-8">
         <BreadCrumb />
         <div className="grid overflow-y-scroll h-screen grid-cols-1 gap-x-4 gap-y-8 md:grid-cols-2 lg:grid-cols-4">
-          <NewsBlog />
-          <NewsBlog />
-          <NewsBlog />
-          <NewsBlog />
-          <NewsBlog />
-          <NewsBlog />
-          <NewsBlog />
-          <NewsBlog />
-          <NewsBlog />
-          <NewsBlog />
-          <NewsBlog />
-          <NewsBlog />
-          <NewsBlog />
-          <NewsBlog />
-          <NewsBlog />
+          {newsData.articles.map((item, index) => {
+            const { author, title, description, url, urlToImage, publishedAt } =
+              item;
+            return (
+              <NewsBlog
+                key={index}
+                author={author}
+                title={title}
+                description={description}
+                url={url}
+                urlToImage={urlToImage}
+                publishedAt={publishedAt}
+              />
+            );
+          })}
         </div>
       </div>
     </section>
   );
 };
 
+export async function getServerSideProps() {
+  const newsData = await getNews();
+
+  return {
+    props: { newsData },
+  };
+}
 export default Latest;

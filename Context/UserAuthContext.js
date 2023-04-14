@@ -23,6 +23,14 @@ import { useState } from "react";
 const userAuthContext = createContext();
 export function UserAuthContexProvider({ children }) {
   const [user, setuser] = useState("");
+  const [token, settoken] = useState("");
+
+  useEffect(() => {
+    const getToken = () => {
+      settoken(localStorage.getItem("token"));
+    };
+    getToken();
+  }, []);
 
   async function checkRole(token, uid) {
     // await authAdmin.setCustomUserClaims(uid).then(() => {
@@ -69,7 +77,6 @@ export function UserAuthContexProvider({ children }) {
     });
     console.log(displayName);
     await sendEmailVerification(res.user);
-    // console.log(res.user);
     return res;
   }
 
@@ -92,8 +99,10 @@ export function UserAuthContexProvider({ children }) {
     return res;
   }
 
-  function signUIn(email, password) {
-    const res = signInWithEmailAndPassword(auth, email, password);
+  async function signUIn(email, password) {
+    const res = await signInWithEmailAndPassword(auth, email, password);
+    localStorage.setItem("token", await res.user.getIdToken());
+
     return res;
   }
   function logOut() {
@@ -116,6 +125,8 @@ export function UserAuthContexProvider({ children }) {
         firebaseID: uid,
       }),
     });
+    localStorage.setItem("token", await res.user.getIdToken());
+    // console.log(res.user.getIdToken());
     return res;
   }
 
@@ -144,6 +155,7 @@ export function UserAuthContexProvider({ children }) {
         signUp,
         signUIn,
         logOut,
+        token,
         updateUserProfile,
         checkRole,
         signWithGoogle,

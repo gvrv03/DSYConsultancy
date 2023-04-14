@@ -1,11 +1,6 @@
 import React, { useState } from "react";
 import Link from "next/link";
-import { useRouter } from "next/dist/client/router";
 import Image from "next/image";
-import HomeNav from "directsecondyearadmission/navItem/HomeNav";
-// components
-import { useContext } from "react";
-import collegeContext from "directsecondyearadmission/Context/collegeContext";
 
 export const LoginStatus = () => {
   return (
@@ -19,8 +14,6 @@ export const LoginStatus = () => {
   );
 };
 export default function CollegeLayout({ children }) {
-  const router = useRouter();
-  const context = useContext(collegeContext);
   return (
     <>
       <section className="body-font  h-screen  overflow-scroll   ">

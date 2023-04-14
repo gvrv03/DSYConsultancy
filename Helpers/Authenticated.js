@@ -1,31 +1,18 @@
-import jwt from "jsonwebtoken";
-
+import app from "directsecondyearadmission/firebase";
 function Authenticated(icomponent) {
-  return (req, res) => {
+  return async (req, res) => {
     const { authorization } = req.headers;
     if (!authorization) {
       return res.status(401).json({ error: "You must logged in" });
     }
 
+    const token = req.headers.authorization.split("Bearer ")[1];
     try {
-      jwt.verify(
-        authorization,
-        process.env.JWT_SECRET,
-        function (err, decoded) {
-          if (err) {
-            return res.status(401).json({ error: "You must logged in" });
-          }
-          if (decoded) {
-            req.decoded = decoded;
-            return icomponent(req, res);
-          }
-        }
-      );
-    } catch (err) {
-      console.log(err);
-      return res.status(401).json({ error: "Internal Server Error" });
+      const decoded = await app.auth().verifyIdToken(authorization);
+      console.log(decoded);
+    } catch (error) {
+      console.log(error);
     }
   };
 }
-
 export default Authenticated;

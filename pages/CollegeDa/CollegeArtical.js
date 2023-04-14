@@ -9,17 +9,21 @@ const CollegeArtical = ({ Artical, topRec }) => {
           </div>
         )}
         <div dangerouslySetInnerHTML={{ __html: Artical }} />
-        <span className="text-sm m-0  font-semibold  flex  border-t-2 py-5">
+        <span className="text-sm m-0  font-semibold justify-start flex-wrap items-center flex  border-t-2 py-5">
           {" "}
-          <i className="bi text-slate-400 bi-building-fill-gear mr-2"></i>{" "}
-          <span className="mr-2 ">Top Recruiters : </span>
-          {topRec.map((item, index) => {
-            return (
-              <div key={index} className="mr-2 text-xs h-auto px-3 border">
-                {item}
-              </div>
-            );
-          })}
+          <div className="mr-2  mb-2">
+            <i className="bi text-slate-400 bi-building-fill-gear mr-2"></i> Top
+            Recruiters :
+          </div>
+          <div className="flex gap-2 flex-wrap ">
+            {topRec.map((item, index) => {
+              return (
+                <div key={index} className="mr-2 text-xs h-auto px-3 border">
+                  {item}
+                </div>
+              );
+            })}{" "}
+          </div>
         </span>
       </div>
     );

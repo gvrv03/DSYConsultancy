@@ -1,16 +1,16 @@
 import collegeContext from "directsecondyearadmission/Context/collegeContext";
 import { useUserAuth } from "directsecondyearadmission/Context/UserAuthContext";
+import { useUserContext } from "directsecondyearadmission/Context/UserContext";
 import { allCategory } from "directsecondyearadmission/quieries/CollegeDataQuieries";
 import { useRouter } from "next/router";
 import React from "react";
-import { useContext } from "react";
 import { useEffect } from "react";
 import { useState } from "react";
 import ModelHeader from "./ModelHeader";
 
 const BasicDetails = ({ userData }) => {
   const router = useRouter();
-  const context = useContext(collegeContext);
+  const { updateBasicDetailsUser } = useUserContext();
   const [modalOpen, setModalOpen] = useState("hidden");
   const { user } = useUserAuth();
   const toggleUser = () => {
@@ -33,7 +33,8 @@ const BasicDetails = ({ userData }) => {
       e.preventDefault();
       const { fullName, socialCategory, dob, gender, marStatus, phyChanged } =
         basicDetails;
-      onSubmit(
+
+      updateBasicDetailsUser(
         fullName,
         socialCategory,
         dob,
@@ -44,39 +45,6 @@ const BasicDetails = ({ userData }) => {
       );
     };
 
-    const onSubmit = async (
-      fullName,
-      socialCategory,
-      dob,
-      gender,
-      marStatus,
-      phyChanged,
-      id
-    ) => {
-      const res = await fetch("/api/updateBasicD", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          fullName: fullName,
-          dob: dob,
-          socialCategory: socialCategory,
-          gender: gender,
-          maritialStatus: marStatus,
-          phyChanged: phyChanged,
-          id: id,
-        }),
-      });
-
-      const res2 = await res.json();
-      if (res2.msg) {
-        context.openModal("success", res2.msg);
-        router.reload();
-      } else {
-        context.openModal("fail", res2.error);
-      }
-    };
     const [allCat, setallCat] = useState([]);
     useEffect(() => {
       const getCat = async () => {
@@ -133,7 +101,9 @@ const BasicDetails = ({ userData }) => {
 
                     {allCat.map((cat, index) => {
                       return (
-                        <option key={index} value={cat.Category}>{cat.Category}</option>
+                        <option key={index} value={cat.Category}>
+                          {cat.Category}
+                        </option>
                       );
                     })}
                   </select>

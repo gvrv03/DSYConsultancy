@@ -1,17 +1,17 @@
 import collegeContext from "directsecondyearadmission/Context/collegeContext";
 import { useUserAuth } from "directsecondyearadmission/Context/UserAuthContext";
+import { useUserContext } from "directsecondyearadmission/Context/UserContext";
 import { useRouter } from "next/router";
 import React from "react";
 import { useState } from "react";
 import { useContext } from "react";
 import ModelHeader from "./ModelHeader";
 
-const EducationDetails = ({userData}) => {
+const EducationDetails = ({ userData }) => {
   const [modalOpen, setModalOpen] = useState("hidden");
   const [requiredState, setRequired] = useState(false);
   const { user } = useUserAuth();
-  const router = useRouter();
-  const context = useContext(collegeContext);
+  const { updateEdutDetailsUser } = useUserContext();
   const toggleUser = () => {
     if (modalOpen == "hidden") {
       setModalOpen("block");
@@ -42,7 +42,7 @@ const EducationDetails = ({userData}) => {
         cMarkType,
         cPercentage,
       } = eductaionDetails;
-      onSubmit(
+      updateEdutDetailsUser(
         sBoard,
         sSchool,
         sPassYear,
@@ -57,47 +57,6 @@ const EducationDetails = ({userData}) => {
       );
     };
 
-    const onSubmit = async (
-      sBoard,
-      sSchool,
-      sPassYear,
-      sMarkType,
-      sPercentage,
-      cBoard,
-      cSchool,
-      cPassYear,
-      cMarkType,
-      cPercentage,
-      id
-    ) => {
-      const res = await fetch("/api/updateEduD", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          sBoard,
-          sSchool,
-          sPassYear,
-          sMarkType,
-          sPercentage,
-          cBoard,
-          cSchool,
-          cPassYear,
-          cMarkType,
-          cPercentage,
-          id,
-        }),
-      });
-
-      const res2 = await res.json();
-      if (res2.msg) {
-        context.openModal("success", res2.msg);
-        router.reload();
-      } else {
-        context.openModal("fail", res2.error);
-      }
-    };
     return (
       <div className={`fixed top-0 ${modalOpen} left-0 h-full  w-full   `}>
         <div className="z-10  relative w-full flex justify-center overflow-y-scroll  items-center h-full modalColor">

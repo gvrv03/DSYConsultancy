@@ -6,33 +6,6 @@ import { useState } from "react";
 
 const collegesContext = createContext();
 export function CollegeContexProvider({ children }) {
-  // to get Single College
-  async function getCollegeById(id) {
-    const res = await fetch(baseUrl + "/api/College/" + id, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-
-    const data = await res.json();
-    if (data.error) {
-      return {
-        notFound: true,
-      };
-    }
-    await fetch(baseUrl + "/api/viewsIn", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        instituteCode: data.instituteCode,
-      }),
-    });
-    return data;
-  }
-
   // to get All Colleges
   async function getAllColleges() {
     // for show all Colleges
@@ -60,9 +33,7 @@ export function CollegeContexProvider({ children }) {
   }
 
   return (
-    <collegesContext.Provider
-      value={{ getCollegeById, getAllColleges, allCategory }}
-    >
+    <collegesContext.Provider value={{ getAllColleges, allCategory }}>
       {children}
     </collegesContext.Provider>
   );

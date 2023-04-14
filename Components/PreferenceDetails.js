@@ -1,5 +1,6 @@
 import collegeContext from "directsecondyearadmission/Context/collegeContext";
 import { useUserAuth } from "directsecondyearadmission/Context/UserAuthContext";
+import { useUserContext } from "directsecondyearadmission/Context/UserContext";
 import { useRouter } from "next/router";
 import React from "react";
 import { useState } from "react";
@@ -10,8 +11,7 @@ const PreferenceDetails = ({ userData, CollegeData }) => {
   const [modalOpen, setModalOpen] = useState("hidden");
   const [requiredState, setRequired] = useState(false);
   const { user } = useUserAuth();
-  const router = useRouter();
-  const context = useContext(collegeContext);
+  const { preferenceDetailsUser } = useUserContext();
 
   const districtName = CollegeData.map((item) => item.location.district);
 
@@ -58,40 +58,16 @@ const PreferenceDetails = ({ userData, CollegeData }) => {
       e.preventDefault();
       const { university, branch, location, collegeType, needLoan } =
         preferenceDetails;
-      onSubmit(university, branch, location, collegeType, needLoan, user.uid);
+      preferenceDetailsUser(
+        university,
+        branch,
+        location,
+        collegeType,
+        needLoan,
+        user.uid
+      );
     };
 
-    const onSubmit = async (
-      university,
-      branch,
-      location,
-      collegeType,
-      needLoan,
-      id
-    ) => {
-      const res = await fetch("/api/updatePrefD", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          university,
-          branch,
-          location,
-          collegeType,
-          needLoan,
-          id,
-        }),
-      });
-
-      const res2 = await res.json();
-      if (res2.msg) {
-        context.openModal("success", res2.msg);
-        router.reload();
-      } else {
-        context.openModal("fail", res2.error);
-      }
-    };
     return (
       <div className={`fixed top-0 ${modalOpen} left-0 h-full  w-full   `}>
         <div className="z-10  relative w-full flex justify-center  items-center h-full modalColor">
