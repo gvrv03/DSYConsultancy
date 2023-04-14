@@ -25,11 +25,13 @@ const signUpUser = async (req, res) => {
       firebaseID,
     };
 
-    const userStatus = await new User({
-      credentails: credentail,
-      "basicDetails.fName": fName,
-    }).save();
-
+    const user = await User.findOne({ "credentails.email": email });
+    if (!user) {
+      const userStatus = await new User({
+        credentails: credentail,
+        "basicDetails.fName": fName,
+      }).save();
+    }
     return res.status(201).json({ msg: "Account Created", userStatus });
   } catch (err) {
     res.status(500).json({ error: "Internal Server Error" });

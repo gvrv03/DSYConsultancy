@@ -7,10 +7,7 @@ import collegeContext from "directsecondyearadmission/Context/collegeContext";
 import Link from "next/link";
 import { useState } from "react";
 import { useRouter } from "next/router";
-import {
-  PUBLIC_ADMINKEY,
-  PUBLIC_ROOTKEY,
-} from "directsecondyearadmission/quieries/UserKeys";
+import { useUserContext } from "directsecondyearadmission/Context/UserContext";
 
 const HeaderFilter = () => {
   const [userOpen, setUserOpen] = useState("hidden");
@@ -63,16 +60,15 @@ const HeaderFilter = () => {
 
   const NavItem = (props) => {
     return (
-      (<Link
+      <Link
         href={props.location}
         className="text-gray-700 navItem block px-4 py-2 text-sm"
         role="menuitem"
         tabIndex="-1"
-        id="menu-item-0">
-
+        id="menu-item-0"
+      >
         {props.name}
-
-      </Link>)
+      </Link>
     );
   };
 
@@ -108,8 +104,8 @@ const HeaderFilter = () => {
 };
 
 const Dashboard = ({ children }) => {
-  const context = useContext(collegeContext);
-  const router = useRouter();
+  const { allUserDetail } = useUserContext();
+
   const HeaderAdmin = () => {
     const [data, setData] = useState({});
     useEffect(() => {
@@ -178,8 +174,8 @@ const Dashboard = ({ children }) => {
   };
 
   if (
-    context.adminKey == PUBLIC_ADMINKEY ||
-    context.adminKey == PUBLIC_ROOTKEY
+    allUserDetail.role === process.env.NEXT_PUBLIC_ADMINKEY ||
+    allUserDetail.role === process.env.NEXT_PUBLIC_ROOTKEY
   ) {
     return (
       <HomeLayout>

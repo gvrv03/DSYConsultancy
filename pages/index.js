@@ -236,7 +236,7 @@ const Home = () => {
               {listUser.map((listUsers, index) => (
                 <div
                   data-aos="fade-up"
-                  data-aos-delay="500"
+                  data-aos-delay={300}
                   className="flex items-center justify-start sm:justify-center py-4 sm:py-6 w-8/12 px-4 sm:w-auto mx-auto sm:mx-0"
                   key={index}
                 >

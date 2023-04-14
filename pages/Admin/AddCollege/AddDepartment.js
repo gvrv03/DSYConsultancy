@@ -4,6 +4,7 @@ import Link from "next/link";
 import InstituteCheck from "./InstituteCheck";
 import { toast } from "react-toastify";
 import Toastmsg from "directsecondyearadmission/Components/Toastmsg";
+import { useUserContext } from "directsecondyearadmission/Context/UserContext";
 
 const Stepper = () => {
   return (
@@ -49,6 +50,7 @@ const AddDepartment = () => {
   const [requiredState, setRequired] = useState(false);
   const [depDetails, setDepDetails] = useState({});
   const [token, setToken] = useState("");
+  const { userUID } = useUserContext();
 
   useEffect(() => {
     if (localStorage.getItem("token")) {
@@ -73,7 +75,7 @@ const AddDepartment = () => {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        "Authorization": token,
+        Authorization: userUID,
       },
       body: JSON.stringify({
         courseName: courseName,
@@ -112,7 +114,7 @@ const AddDepartment = () => {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          "Authorization": token,
+          Authorization: token,
         },
         body: JSON.stringify({
           instituteCode: insCode,
@@ -193,7 +195,7 @@ const AddDepartment = () => {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          "Authorization": token,
+          Authorization: token,
         },
         body: JSON.stringify({
           category: category,

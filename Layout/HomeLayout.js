@@ -7,11 +7,8 @@ import Image from "next/image";
 import { useContext } from "react";
 import collegeContext from "directsecondyearadmission/Context/collegeContext";
 
-import {
-  PUBLIC_ADMINKEY,
-  PUBLIC_ROOTKEY,
-} from "directsecondyearadmission/quieries/UserKeys";
 import { useUserAuth } from "directsecondyearadmission/Context/UserAuthContext";
+import { useUserContext } from "directsecondyearadmission/Context/UserContext";
 
 export const SideUserData = () => {
   const router = useRouter();
@@ -55,7 +52,8 @@ export const SideUserData = () => {
 export default function HomeLayout({ children }) {
   const router = useRouter();
   const { user } = useUserAuth();
-  const context = useContext(collegeContext);
+  const { allUserDetail } = useUserContext();
+
   const ListItem = (props) => {
     return (
       <li>
@@ -78,7 +76,9 @@ export default function HomeLayout({ children }) {
         <section className="body-font md:mt-20   mt-0 px-5">
           {/* <UserData /> */}
           <div className="container  gap-5  flex m-auto  ">
-            <aside className={` bg-white w-full hidden md:block p-5 md:w-1/5  shadow-md rounded-sm `}>
+            <aside
+              className={` bg-white w-full hidden md:block p-5 md:w-1/5  shadow-md rounded-sm `}
+            >
               <div className="rounded-sm ">
                 {/* <SideUserData /> */}
                 <ul className="mb-2">
@@ -111,8 +111,8 @@ export default function HomeLayout({ children }) {
                     );
                   })}
 
-                  {(context.adminKey == PUBLIC_ADMINKEY ||
-                    context.adminKey == PUBLIC_ROOTKEY) && (
+                  {(allUserDetail.role === process.env.NEXT_PUBLIC_ADMINKEY ||
+                    allUserDetail.role === process.env.NEXT_PUBLIC_ROOTKEY) && (
                     <li>
                       <Link
                         href="/Admin/AllContact"
@@ -132,7 +132,9 @@ export default function HomeLayout({ children }) {
               {/* <div className="sideAds">Space for ads</div> */}
             </aside>
 
-            <div className="md:w-4/5 w-full h-screen  overflow-y-scroll mt-20  md:mt-0 ">{children}</div>
+            <div className="md:w-4/5 w-full h-screen  overflow-y-scroll mt-20  md:mt-0 ">
+              {children}
+            </div>
           </div>
         </section>
       </>

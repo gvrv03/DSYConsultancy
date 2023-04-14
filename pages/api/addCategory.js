@@ -21,53 +21,46 @@ export default async (req, res) => {
   const filter = { department: { $elemMatch: { choiceCode } } };
   const update = { $push: { "department.$.categories": studentCategory } };
   try {
-    if (
-      req.decoded.userData.role == PUBLIC_ADMINKEY ||
-      req.decoded.userData.role == PUBLIC_ROOTKEY
-    ) {
-      if (!category || !min || !max || !aFees || !aSeats || !choiceCode) {
-        return res.status(422).json({ error: "please fill all the fields" });
-      }
+    if (!category || !min || !max || !aFees || !aSeats || !choiceCode) {
+      return res.status(422).json({ error: "please fill all the fields" });
+    }
 
-      if (!filter) {
-        return res.status(404).json({ error: "This choiceCode not Exists" });
-      }
-      const checkDep = await Colleges.findOne({
-        department: { $elemMatch: { choiceCode } },
-      });
+    if (!filter) {
+      return res.status(404).json({ error: "This choiceCode not Exists" });
+    }
+    const checkDep = await Colleges.findOne({
+      department: { $elemMatch: { choiceCode } },
+    });
 
-      if (!checkDep) {
-        return res.status(404).json({ error: "Department not exists" });
-      }
+    if (!checkDep) {
+      return res.status(404).json({ error: "Department not exists" });
+    }
 
-      const checkCollegeCategory = await CollegeCategory.findOne({
+    const checkCollegeCategory = await CollegeCategory.findOne({
+      Category: category,
+    });
+
+    if (!checkCollegeCategory) {
+      await new CollegeCategory({
         Category: category,
-      });
+      }).save();
+    }
 
-      if (!checkCollegeCategory) {
-        await new CollegeCategory({
-          Category: category,
-        }).save();
-      }
-
-      const checkCat = await Colleges.findOne({
-        department: {
-          $elemMatch: {
-            choiceCode,
-            categories: {
-              $elemMatch: { category },
-            },
+    const checkCat = await Colleges.findOne({
+      department: {
+        $elemMatch: {
+          choiceCode,
+          categories: {
+            $elemMatch: { category },
           },
         },
-      });
-      if (checkCat) {
-        return res.status(422).json({ error: "Category already added" });
-      }
-      const addCat = await Colleges.findOneAndUpdate(filter, update);
-      res.status(201).json({ msg: "Category Added" });
-    } else {
-      res.status(403).json({ error: "Access Denied" });
+      },
+    });
+    if (checkCat) {
+      return res.status(422).json({ error: "Category already added" });
     }
+    const addCat = await Colleges.findOneAndUpdate(filter, update);
+    res.status(201).json({ msg: "Category Added" });
   } catch (err) {
     res.status(500).json({ error: "Internal Server Error" });
   }

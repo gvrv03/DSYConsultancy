@@ -77,6 +77,7 @@ const Steps = () => {
 
         {!context.loginStatus && (
           <button
+            data-aos="fade-up"
             onClick={function () {
               router.push("/Home");
             }}

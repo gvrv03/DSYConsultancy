@@ -11,6 +11,7 @@ import {
   sendPasswordResetEmail,
   signInWithPopup,
   updateProfile,
+  updatePhoneNumber,
   sendEmailVerification,
   //roles
   getIdTokenResult,

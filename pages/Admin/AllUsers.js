@@ -12,27 +12,23 @@ import {
 import Loader2 from "../../Components/Loader2";
 
 import exportFromJSON from "export-from-json";
+import { useUserContext } from "directsecondyearadmission/Context/UserContext";
 
 const AllUsers = () => {
   const context = useContext(collegeContext);
   const [data, setdata] = useState(null);
-  const [token, setToken] = useState("");
-  const [checkUser, setcheckUser] = useState(false);
+  const { userUID } = useUserContext();
 
   const fileName = "UsersData";
   const exportType = "xls";
 
-  const jsonData = data
+  const jsonData = data;
   console.log(jsonData);
   const ExportToExcel = () => {
-    exportFromJSON({ jsonData , fileName, exportType });
+    exportFromJSON({ jsonData, fileName, exportType });
   };
 
   useEffect(() => {
-    if (localStorage.getItem("token")) {
-      setToken(localStorage.getItem("token"));
-    }
-
     const getUsers = async () => {
       setdata(await getallUsers());
     };
@@ -45,7 +41,7 @@ const AllUsers = () => {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        Authorization: token,
+        Authorization: userUID,
       },
       body: JSON.stringify({
         newRole: userRole,
@@ -122,12 +118,15 @@ const AllUsers = () => {
                     </td>
                     <td className="px-3 py-2 font-semibold  text-xs mt-2 cursor-pointer flex justify-between items-center border-none text-left">
                       <div
-                        onClick={() =>
-                          handleRole(
-                            i.role == "user" ? PUBLIC_ADMINKEY : "user",
-                            i._id
-                          )
-                        }
+                        onClick={() => {
+                          i.role != process.env.NEXT_PUBLIC_ROOTKEY &&
+                            handleRole(
+                              i.role == "user"
+                                ? process.env.NEXT_PUBLIC_ADMINKEY
+                                : "user",
+                              i._id
+                            );
+                        }}
                       >
                         {i.role == PUBLIC_ROOTKEY ? "Root" : i.role}
                       </div>

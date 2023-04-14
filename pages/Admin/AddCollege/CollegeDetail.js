@@ -7,18 +7,14 @@ import { toast } from "react-toastify";
 import { useContext } from "react";
 import collegeContext from "directsecondyearadmission/Context/collegeContext";
 import PopUpModal from "directsecondyearadmission/Components/PopUpModal";
+import { useUserContext } from "directsecondyearadmission/Context/UserContext";
 const CollegeDetail = () => {
   const context = useContext(collegeContext);
-  console.log(context.username);
+  const { userUID } = useUserContext();
   const [cDetails, setCDetails] = useState({});
   const [requiredState, setRequired] = useState(false);
-  const [token, setToken] = useState("");
 
-  useEffect(() => {
-    if (localStorage.getItem("token")) {
-      setToken(localStorage.getItem("token"));
-    }
-  }, []);
+
   const onChange = (e) => {
     setCDetails({
       ...cDetails,
@@ -97,7 +93,7 @@ const CollegeDetail = () => {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        "Authorization": token,
+        Authorization: userUID,
       },
       body: JSON.stringify({
         name: cName,

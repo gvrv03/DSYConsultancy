@@ -58,7 +58,7 @@ const EducationDetails = ({ userData }) => {
     };
 
     return (
-      <div className={`fixed top-0 ${modalOpen} left-0 h-full  w-full   `}>
+      <div data-aos="fade-up" className={`fixed top-0 ${modalOpen} left-0 h-full  w-full   `}>
         <div className="z-10  relative w-full flex justify-center overflow-y-scroll  items-center h-full modalColor">
           <div className="absolute overflow-y-scroll h-full w-full  sm:w-4/6 sm:h-4/5  mt-24 sm:mt-0 rounded-sm bg-white">
             <ModelHeader toggle={toggleUser} name="Education Detail" />

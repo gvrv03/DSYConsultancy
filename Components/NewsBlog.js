@@ -2,8 +2,16 @@ import Link from "next/link";
 import React from "react";
 
 const NewsBlog = (props) => {
-  const { author, title, description, url, urlToImage, publishedAt, content } =
-    props;
+  const {
+    author,
+    title,
+    description,
+    url,
+    urlToImage,
+    publishedAt,
+    key,
+    content,
+  } = props;
 
   const date = new Date(publishedAt);
 
@@ -12,7 +20,7 @@ const NewsBlog = (props) => {
 
   return (
     <Link href={url} legacyBehavior>
-      <article className="flex flex-col h-auto bg-white cursor-pointer ">
+      <section className="flex flex-col h-auto bg-white cursor-pointer ">
         <p
           rel="noopener noreferrer"
           aria-label="Te nulla oportere reprimique his dolorum"
@@ -40,7 +48,7 @@ const NewsBlog = (props) => {
             <span>Published At : {dateNew} </span>
           </div>
         </div>
-      </article>
+      </section>
     </Link>
   );
 };

@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useContext, useEffect } from "react";
 import CollegeState from "directsecondyearadmission/Context/CollegeState";
 import collegeContext from "directsecondyearadmission/Context/collegeContext";
+import { useUserContext } from "directsecondyearadmission/Context/UserContext";
 const InstituteCheck = () => {
   const context = useContext(collegeContext);
 
@@ -13,15 +14,7 @@ const InstituteCheck = () => {
       [e.target.name]: e.target.value,
     });
   };
-
-  const [token, setToken] = useState("");
-
-  useEffect(() => {
-    if (localStorage.getItem("token")) {
-      setToken(localStorage.getItem("token"));
-    }
-  }, []);
-
+  const { userUID } = useUserContext();
   const onCheck = async (e) => {
     e.preventDefault();
     const { insCode } = instituteCode;
@@ -32,7 +25,7 @@ const InstituteCheck = () => {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        Authorization: token,
+        Authorization: userUID,
       },
       body: JSON.stringify({
         instituteCode: insCode,

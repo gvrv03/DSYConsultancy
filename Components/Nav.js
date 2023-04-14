@@ -11,11 +11,11 @@ import { useRouter } from "next/router";
 import { useUserAuth } from "directsecondyearadmission/Context/UserAuthContext";
 import { useUserContext } from "directsecondyearadmission/Context/UserContext";
 const Nav = () => {
-  const status = useContext(collegeContext);
   const [nav, setnav] = useState("hidden");
   const router = useRouter;
   const [overlay, setOverlay] = useState("");
-  const { token,user } = useUserAuth();
+  const { allUserDetail } = useUserContext();
+  const { token, user } = useUserAuth();
   // console.log(token);
   // const { user.displayName, photoURL } = user && user;
   const closeNav = () => {
@@ -280,7 +280,8 @@ const Nav = () => {
                   );
                 })}
 
-                {status.userAllData.role == status.adminKey && (
+                {(allUserDetail.role === process.env.NEXT_PUBLIC_ADMINKEY ||
+                  allUserDetail.role === process.env.NEXT_PUBLIC_ROOTKEY) && (
                   <div className="flex  items-center  mb-2">
                     <i
                       className={`bi-bar-chart-line-fill p-1 px-2 bg-blue-50 rounded-sm   text-sm text-slate-800 bi mr-5`}
