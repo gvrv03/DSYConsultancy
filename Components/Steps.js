@@ -25,7 +25,10 @@ const Steps = () => {
 
   const Card = (props) => {
     return (
-      <div className="p-4 bg-white  shadow-md md:h-auto h-60 flex flex-col text-center items-center">
+      <div
+        data-aos="fade-up"
+        className="p-4 bg-white  shadow-md md:h-auto h-60 flex flex-col text-center items-center"
+      >
         <div className="w-20 h-20 inline-flex items-center justify-center rounded-full bg-indigo-100 text-indigo-500 mb-5 flex-shrink-0">
           <i className={`bi ${props.icon} text-3xl`}></i>
         </div>
@@ -43,10 +46,16 @@ const Steps = () => {
     <section className="text-gray-600 body-font">
       <div className="container px-5 mx-auto">
         <div className="text-center mb-20">
-          <h1 className="sm:text-3xl text-2xl font-medium title-font text-gray-900 mb-4">
+          <h1
+            data-aos="fade-up"
+            className="sm:text-3xl text-2xl font-medium title-font text-gray-900 mb-4"
+          >
             Process
           </h1>
-          <p className="text-base leading-relaxed xl:w-2/4 lg:w-3/4 mx-auto text-gray-500s">
+          <p
+            data-aos="fade-up"
+            className="text-base leading-relaxed xl:w-2/4 lg:w-3/4 mx-auto text-gray-500s"
+          >
             End-to-end Finding College & Admission Process Simplified
           </p>
           <div className="flex mt-6 justify-center">

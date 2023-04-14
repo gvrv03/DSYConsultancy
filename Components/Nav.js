@@ -9,13 +9,14 @@ import collegeContext from "directsecondyearadmission/Context/collegeContext";
 import { LoginStatus } from "directsecondyearadmission/Layout/CollegeLayout";
 import { useRouter } from "next/router";
 import { useUserAuth } from "directsecondyearadmission/Context/UserAuthContext";
+import { useUserContext } from "directsecondyearadmission/Context/UserContext";
 const Nav = () => {
   const status = useContext(collegeContext);
   const [nav, setnav] = useState("hidden");
   const router = useRouter;
   const [overlay, setOverlay] = useState("");
   const { token,user } = useUserAuth();
-  console.log(token);
+  // console.log(token);
   // const { user.displayName, photoURL } = user && user;
   const closeNav = () => {
     if (nav == "block") {

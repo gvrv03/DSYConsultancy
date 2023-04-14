@@ -72,49 +72,14 @@ export default function HomeLayout({ children }) {
     );
   };
 
-  const UserData = () => {
-    const router = useRouter();
-    return (
-      <div className="bgColor m-auto  hidden  mb-5  p-5 flex-wrap  text-white  justify-between md:flex items-center container rounded-sm">
-        <div className="avtarP">{context.username.charAt(0).toUpperCase()}</div>
-        <div className="mt-2 sm:mt-0  ">
-          <h1 className="text-center font-semibold text-2xl">
-            {context.username}
-          </h1>
-          <p className=" text-center text-xs">Welcome to DSY consultancy !</p>
-        </div>
-        <div className="flex mt-2  sm:mt-0  flex-col items-center">
-          {router.pathname == "/Profile" ? (
-            ""
-          ) : (
-            <Link
-              href={{
-                pathname: `/Profile`,
-                query: {
-                  id: context.userId,
-                },
-              }}
-              className=" text-xs"
-            >
-              Mange your profile
-            </Link>
-          )}
-          <a href="/" className=" text-xs">
-            Track your Admission journey
-          </a>
-        </div>
-      </div>
-    );
-  };
-
   if (user) {
     return (
       <>
         <section className="body-font md:mt-20   mt-0 px-5">
           {/* <UserData /> */}
-          <div className="container    home  ">
-            <aside className={`screenSidebar shadow-md rounded-sm `}>
-              <div className="rounded-sm">
+          <div className="container  gap-5  flex m-auto  ">
+            <aside className={` bg-white w-full hidden md:block p-5 md:w-1/5  shadow-md rounded-sm `}>
+              <div className="rounded-sm ">
                 {/* <SideUserData /> */}
                 <ul className="mb-2">
                   <li>
@@ -167,7 +132,7 @@ export default function HomeLayout({ children }) {
               {/* <div className="sideAds">Space for ads</div> */}
             </aside>
 
-            <div className="screenLayout mt-20 md:mt-0 ">{children}</div>
+            <div className="md:w-4/5 w-full h-screen  overflow-y-scroll mt-20  md:mt-0 ">{children}</div>
           </div>
         </section>
       </>

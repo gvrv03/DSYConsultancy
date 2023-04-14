@@ -3,13 +3,46 @@ import { createContext } from "react";
 import baseUrl from "directsecondyearadmission/baseUrl";
 import collegeContext from "./collegeContext";
 import { useRouter } from "next/router";
+import { useState } from "react";
+import { useEffect } from "react";
 
 const userContext = createContext();
 export function UserContexProvider({ children }) {
-  // Update Basic Details
-
   const { openModal } = useContext(collegeContext);
   const router = useRouter();
+  const [userUID, setuserUID] = useState("");
+  const [allUserDetail, setallUserDetail] = useState({});
+
+  // console.log(userUID);
+  useEffect(() => {
+    const getFirebaseID = () => {
+      setuserUID(localStorage.getItem("firebaseuid"));
+    };
+
+    getFirebaseID();
+
+    const getSingleUserData = async () => {
+      const res = await fetch(
+        baseUrl + "/api/User/" + localStorage.getItem("firebaseuid"),
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      const userData = await res.json();
+      if (userData.error) {
+        return {
+          notFound: true,
+        };
+      }
+      setallUserDetail(userData);
+      return userData;
+    };
+    getSingleUserData();
+  }, []);
 
   const updateBasicDetailsUser = async (
     fullName,
@@ -150,6 +183,8 @@ export function UserContexProvider({ children }) {
         updateUserContact,
         updateEdutDetailsUser,
         preferenceDetailsUser,
+        allUserDetail,
+        userUID,
       }}
     >
       {children}

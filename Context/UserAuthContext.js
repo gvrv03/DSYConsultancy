@@ -102,7 +102,7 @@ export function UserAuthContexProvider({ children }) {
   async function signUIn(email, password) {
     const res = await signInWithEmailAndPassword(auth, email, password);
     localStorage.setItem("token", await res.user.getIdToken());
-
+    localStorage.setItem("firebaseuid", res.user.uid);
     return res;
   }
   function logOut() {
@@ -126,6 +126,8 @@ export function UserAuthContexProvider({ children }) {
       }),
     });
     localStorage.setItem("token", await res.user.getIdToken());
+    localStorage.setItem("firebaseuid", res.user.uid);
+
     // console.log(res.user.getIdToken());
     return res;
   }

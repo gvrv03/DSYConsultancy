@@ -1,5 +1,6 @@
 @import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css");
 @tailwind base;
+@import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
 @tailwind components;
 @tailwind utilities;
 .buy-container {
@@ -9,6 +10,8 @@
 body {
   background-color: var(--pBackground);
   color: black;
+  font-family: 'Poppins', sans-serif;
+
 }
 
 /* VAriables */
@@ -159,7 +162,7 @@ th {
   width: 20%;
   padding: 10px;
   /* margin-right: 20px; */
-  height: 100vh;
+  height: auto;
 }
 .sideAds {
   width: 100%;
@@ -203,7 +206,7 @@ th {
     position: absolute;
     /* display: none; */
     top: 60px;
-    height: 100vh;
+    height: auto;
     left: -100%;
     background-color: rgb(255, 255, 255);
 

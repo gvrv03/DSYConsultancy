@@ -151,6 +151,7 @@ const Home = () => {
               content="DSY consultancy | Direct Second Year Admission Consultancy"
             />
           </Head>
+
           <section className="w-full bg-sky-50 mb-5 sm:mb-0">
             <div className="container mt-14 px-5 m-auto ">
               <i className="bi text-2xl justify-start items-center py-5 bi-megaphone-fill flex">
@@ -169,8 +170,13 @@ const Home = () => {
               </i>
             </div>
           </section>
+
           <section className="  h-screen md:h-full  heroBg text-black sm:h-auto   ">
-            <div className="container   mx-auto flex px-5  md:justify-between justify-start h-full  pt-0 md:flex-row flex-col items-center">
+            <div
+              data-aos="fade-up"
+              data-aos-delay="100"
+              className="container mx-auto flex px-5  md:justify-between justify-start h-full  pt-0 md:flex-row flex-col items-center"
+            >
               <div className="lg:flex-grow md:w-1/2 lg:pr-24 md:pr-16 flex flex-col md:items-start md:text-left  md:mb-0 items-center text-center">
                 <h1 className="title-font text-left font-normal sm:text-4xl text-3xl   ">
                   <span className="font-bold"> Direct Second Year</span>{" "}
@@ -214,6 +220,7 @@ const Home = () => {
                 </div>
                 <AppDown />
               </div>
+
               <div className="lg:max-w-lg lg:w-full md:w-1/2 w-5/6">
                 <img
                   className="object-cover object-center w-full rounded-sm"
@@ -228,6 +235,8 @@ const Home = () => {
             <div className="rounded-lg container  m-auto w-full grid grid-flow-row sm:grid-flow-row grid-cols-1 sm:grid-cols-3 py-9 divide-y-2 sm:divide-y-0 sm:divide-x-2 divide-gray-100 bg-white-500 z-10">
               {listUser.map((listUsers, index) => (
                 <div
+                  data-aos="fade-up"
+                  data-aos-delay="500"
                   className="flex items-center justify-start sm:justify-center py-4 sm:py-6 w-8/12 px-4 sm:w-auto mx-auto sm:mx-0"
                   key={index}
                 >
@@ -247,13 +256,17 @@ const Home = () => {
             </div>
             <div className="absolute bg-black-600 opacity-5 w-11/12 roudned-lg h-64 sm:h-48 top-0 mt-8 mx-auto left-0 right-0"></div>
           </div>
-          <section className="text-gray-600 mt-20 body-font">
+
+          <section data-aos="fade-up" className="text-gray-600 mt-20 body-font">
             <div className="container px-5 py-5 mx-auto">
               <div className="text-center mb-20">
-                <h1 className="sm:text-3xl text-2xl font-medium title-font text-gray-900 mb-4">
+                <h1
+                  data-aos="fade-up"
+                  className="sm:text-3xl text-2xl font-medium title-font text-gray-900 mb-4"
+                >
                   University
                 </h1>
-                <p>
+                <p data-aos="fade-up">
                   Lorem ipsum dolor sit amet consectetur adipisicing elit. Omnis
                   commodi molestiae veniam, fuga laborum nam.
                 </p>
@@ -268,7 +281,7 @@ const Home = () => {
           </section>
           <Steps />
           <Pricing />
-          <Teams />
+          {/* <Teams /> */}
         </>
       )}
     </>

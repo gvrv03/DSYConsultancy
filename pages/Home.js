@@ -8,15 +8,16 @@ import Head from "next/head";
 import Link from "next/link";
 import { GetCurrentLocation } from "directsecondyearadmission/quieries/GetCurrentLocation";
 import { useUserAuth } from "directsecondyearadmission/Context/UserAuthContext";
+import { useUserContext } from "directsecondyearadmission/Context/UserContext";
 const Home = () => {
   const context = useContext(collegeContext);
-  const loginStatus = context.loginStatus;
+
   const [coOrdinates, setcoOrdinates] = useState({});
   const [token, setToken] = useState("");
+  const { allUserDetail } = useUserContext();
 
   const { user } = useUserAuth();
 
-  console.log(user);
   useEffect(() => {
     if (localStorage.getItem("token")) {
       setToken(localStorage.getItem("token"));
@@ -102,57 +103,81 @@ const Home = () => {
   };
   const HeaderCard = () => {
     const name = user.displayName;
-    const [progress, setProgress] = useState(context.profileCompletion);
-    return (
-      <div className="mb-5   shadow-md border">
-        <div className="bg-white p-5   flex sm:flex-row flex-col-reverse items-center w-full  justify-between rounded-sm ">
-          <div className="flex flex-col sm:w-2/4 w-full justify-around">
-            <div>
-              <p className="text-base font-semibold">
-                Hey {name}, Your profile is incomplete !
-              </p>
-              <p className="text-sm mt-3 text-slate-400">
-                Complete your profile and we will help you in building better
-                college recommendations for you.
-              </p>
+    const [progress, setProgress] = useState(allUserDetail.profileCompletion);
+
+    if (allUserDetail.profileCompletion != 100) {
+      return (
+        <div className="mb-5   shadow-md border">
+          <div className="bg-white p-5   flex sm:flex-row flex-col-reverse items-center w-full  justify-between rounded-sm ">
+            <div className="flex flex-col sm:w-2/4 w-full justify-around">
+              <div>
+                <p className="text-base font-semibold">
+                  Hey {name}, Your profile is incomplete !
+                </p>
+                <p className="text-sm mt-3 text-slate-400">
+                  Complete your profile and we will help you in building better
+                  college recommendations for you.
+                </p>
+              </div>
+              <Link
+                href={{
+                  pathname: `/Profile`,
+                  query: {
+                    id: context.userId,
+                  },
+                }}
+                legacyBehavior
+              >
+                <button
+                  type="button"
+                  className="font-bold bg-slate-600 text-white px-10 mt-5 py-3"
+                >
+                  {" "}
+                  Complete Your Profile
+                </button>
+              </Link>
             </div>
-            <Link
-              href={{
-                pathname: `/Profile`,
-                query: {
-                  id: context.userId,
-                },
-              }}
-              legacyBehavior
-            >
-              <button
-                type="button"
-                className="font-bold bg-slate-600 text-white px-10 mt-5 py-3"
+
+            <div className="sm:mb-0  mb-10">
+              <img width={200} src="/img/counsellor.svg" alt="" />
+            </div>
+          </div>
+
+          <div className="w-full p-5 bg-white">
+            <div className="w-full bg-gray-200 rounded-full dark:bg-gray-200">
+              <div
+                className="bg-slate-400 text-xs font-medium text-blue-100 text-center p-0.5 leading-none rounded-full"
+                style={{ width: progress + "%" }}
               >
                 {" "}
-                Complete Your Profile
-              </button>
-            </Link>
-          </div>
-
-          <div className="sm:mb-0  mb-10">
-            <img width={200} src="/img/counsellor.svg" alt="" />
-          </div>
-        </div>
-
-        <div className="w-full p-5 bg-white">
-          <div className="w-full bg-gray-200 rounded-full dark:bg-gray-200">
-            <div
-              className="bg-slate-400 text-xs font-medium text-blue-100 text-center p-0.5 leading-none rounded-full"
-              style={{ width: progress + "%" }}
-            >
-              {" "}
-              {progress}%
+                {progress}%
+              </div>
             </div>
           </div>
         </div>
-      </div>
-    );
+      );
+    } else {
+      return (
+        <div className="mb-5   shadow-md border">
+          <div className="bg-white p-5   flex sm:flex-row flex-col-reverse items-center w-full  justify-between rounded-sm ">
+            <div className="flex flex-col sm:w-2/4 w-full justify-around">
+              <div>
+                <p className="text-base font-semibold">
+                  Hey {name}, Your profile is Complete !
+                </p>
+                <p className="text-sm mt-3 text-slate-400">
+                  Enjoy our Services
+                </p>
+              </div>
+            </div>
+
+            <div className="sm:mb-0  mb-10">
+              <img width={200} src="/img/counsellor.svg" alt="" />
+            </div>
+          </div>
+        </div>
+      );
+    }
   };
   return (
     <HomeLayout>
