@@ -28,12 +28,15 @@ const ContactDetails = ({ userData }) => {
 
     const updateContDetails = async (e) => {
       e.preventDefault();
-      const { mobileNo, email, city, state } = contactDetails;
-      updateUserContact(mobileNo, email, city, state, user.uid);
+      const { email, city, state } = contactDetails;
+      updateUserContact(user.phoneNumber, email, city, state, user.uid);
     };
 
     return (
-      <div data-aos="fade-up" className={`fixed top-0 ${modalOpen} left-0 h-full  w-full   `}>
+      <div
+        data-aos="fade-up"
+        className={`fixed top-0 ${modalOpen} left-0 h-full  w-full   `}
+      >
         <div className="z-10  relative w-full flex justify-center  items-center h-full modalColor">
           <div className="absolute h-full w-full  sm:w-4/6 sm:h-4/5  mt-24 sm:mt-0 rounded-sm bg-white">
             <ModelHeader toggle={toggleUser} name="Contact Detail" />
@@ -42,25 +45,6 @@ const ContactDetails = ({ userData }) => {
               className="w-full sm:mt-14 mt-5 px-5 sm:px-0 grid place-items-center"
             >
               <div className="grid grid-cols-1  w-full sm:grid-cols-2 gap-5 sm:w-2/4 ">
-                <div className="flex flex-col ">
-                  <label
-                    htmlFor="MoNum"
-                    className="leading-7 text-sm text-gray-600"
-                  >
-                    Mobile Number
-                  </label>
-                  <input
-                    type="number"
-                    id="MoNum"
-                    required={requiredState}
-                    onChange={onChange}
-                    value={
-                      contactDetails.mobileNo ? contactDetails.mobileNo : ""
-                    }
-                    name="mobileNo"
-                    className="w-full bg-white rounded-sm  border border-gray-300 text-base outline-none text-gray-700 py-1 px-3 "
-                  />
-                </div>
                 <div className="flex flex-col ">
                   <label
                     htmlFor="email"
@@ -144,11 +128,11 @@ const ContactDetails = ({ userData }) => {
       <div className=" flex flex-wrap mt-3 justify-between items-center">
         <div className="w-2/6 detailWrap">
           <div className="text-slate-400 text-sm">Mobile No.</div>
-          <div className="text-sm">{contactDetail.mobileNo}</div>
+          <div className="text-sm">{user.phoneNumber}</div>
         </div>
         <div className="w-2/6 detailWrap">
           <div className="text-slate-400 text-sm">E-mail Address</div>
-          <div className="text-sm">{userData.credentails.email}</div>
+          <div className="text-sm">{user.email}</div>
         </div>
         <div className="w-2/6 detailWrap">
           <div className="text-slate-400 text-sm">City</div>
