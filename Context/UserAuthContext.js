@@ -37,28 +37,36 @@ export function UserAuthContexProvider({ children }) {
   }, []);
 
   const sendOTP = async (phoneNo) => {
-    const applicationVerifier = new RecaptchaVerifier(
-      "recaptcha-container",
-      {},
-      auth
-    );
-    await applicationVerifier.render();
-    const provider = new PhoneAuthProvider(auth);
-    const verificationId = await provider.verifyPhoneNumber(
-      "+" + phoneNo,
-      applicationVerifier
-    );
-    setverificatioIDPhone(verificationId);
-    return "OTP send to " + phoneNo;
+    try {
+      const applicationVerifier = new RecaptchaVerifier(
+        "recaptcha-container",
+        {},
+        auth
+      );
+      await applicationVerifier.render();
+      const provider = new PhoneAuthProvider(auth);
+      const verificationId = await provider.verifyPhoneNumber(
+        "+" + phoneNo,
+        applicationVerifier
+      );
+      setverificatioIDPhone(verificationId);
+      return "OTP send to " + phoneNo;
+    } catch (error) {
+      return "Try after some Time";
+    }
   };
 
   const verifyOTPServer = async (otp) => {
-    const phoneCredential = PhoneAuthProvider.credential(
-      verificatioIDPhone,
-      otp
-    );
-    await updatePhoneNumber(user, phoneCredential);
-    return "Update Phone No";
+    try {
+      const phoneCredential = PhoneAuthProvider.credential(
+        verificatioIDPhone,
+        otp
+      );
+      await updatePhoneNumber(user, phoneCredential);
+      return "Update Phone No";
+    } catch (error) {
+      return "Try after some Time";
+    }
   };
 
   async function signUp(emailUser, password, name) {

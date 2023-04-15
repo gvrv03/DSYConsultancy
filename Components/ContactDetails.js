@@ -43,10 +43,6 @@ const ContactDetails = ({ userData }) => {
               className="w-full sm:mt-14 mt-5 px-5 sm:px-0 grid place-items-center"
             >
               <div className="grid grid-cols-1  w-full sm:grid-cols-2 gap-5 sm:w-2/4 ">
-                <div>
-                  <div className=" text-sm text-gray-600">Mobile No</div>
-                  <VerifyPhone />
-                </div>
                 <div className="flex flex-col ">
                   <label
                     htmlFor="email"

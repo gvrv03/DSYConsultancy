@@ -14,15 +14,26 @@ const VerifyPhone = () => {
   console.log(user);
   const sendOTPClient = async (e) => {
     e.preventDefault();
-    const res = await sendOTP(phoneNo);
-    setresMsg(res);
-    setsendCode(true);
+    if (phoneNo) {
+      const res = await sendOTP(phoneNo);
+      setresMsg(res);
+      setsendCode(true);
+    } else {
+      setresMsg("Enter Phone Number");
+    }
   };
+
+  if (resMsg) {
+    setTimeout(() => {
+      setresMsg("");
+    }, 2000);
+  }
 
   const verifyOTPClient = async (e) => {
     e.preventDefault();
     const res = await verifyOTPServer(parseInt(verifyOTP));
     setresMsg(res);
+    setsendCode(false);
   };
 
   const handleOnChange = (data) => {
@@ -43,13 +54,17 @@ const VerifyPhone = () => {
         <div className="flex  flex-col gap-2 justify-center">
           <PhoneInput country={"us"} value={phoneNo} onChange={setphoneNo} />
           {resMsg && (
-            <div className="bg-red-100 px-10 py-1  border-2 border-red-200 text-center text-red-700 font-bold">
+            <div className="bg-red-100 px-10 py-1  border-2 border-red-200 text-center text-red-700 font-semibold">
               {resMsg}
             </div>
           )}
           {!sendCode && <div id="recaptcha-container"></div>}
           {!sendCode && (
-            <button type="button" className=" rounded-sm pBtn px-10 py-2 ">
+            <button
+              onClick={sendOTPClient}
+              type="button"
+              className=" rounded-sm pBtn px-10 py-2 "
+            >
               Send Code{" "}
             </button>
           )}
