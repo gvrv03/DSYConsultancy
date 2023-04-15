@@ -9,6 +9,7 @@ import Link from "next/link";
 import { GetCurrentLocation } from "directsecondyearadmission/quieries/GetCurrentLocation";
 import { useUserAuth } from "directsecondyearadmission/Context/UserAuthContext";
 import { useUserContext } from "directsecondyearadmission/Context/UserContext";
+import VerifyPhone from "directsecondyearadmission/Components/VerifyPhone";
 const Home = () => {
   const context = useContext(collegeContext);
 
@@ -71,7 +72,7 @@ const Home = () => {
 
         <div className="sm:mb-0 mb-10">
           {/* <img width={100} src="/img/counsellor2.svg" alt="" /> */}
-          <Image src="/img/counsellor2.svg" width={250} height={150} />
+          <Image src="/img/counsellor2.svg" width={130} height={130} />
         </div>
       </div>
     );
@@ -96,7 +97,7 @@ const Home = () => {
         </div>
 
         <div className="sm:mb-0 mb-10">
-          <Image width={250} src="/img/Insurance.svg" height={150} alt="" />
+          <Image width={130} height={130} src="/img/Insurance.svg" alt="" />
         </div>
       </div>
     );
@@ -107,7 +108,7 @@ const Home = () => {
 
     if (allUserDetail.profileCompletion != 100) {
       return (
-        <div className="mb-5   shadow-md border">
+        <div className="   shadow-md border">
           <div className="bg-white p-5   flex sm:flex-row flex-col-reverse items-center w-full  justify-between rounded-sm ">
             <div className="flex flex-col sm:w-2/4 w-full justify-around">
               <div>
@@ -139,7 +140,12 @@ const Home = () => {
             </div>
 
             <div className="sm:mb-0  mb-10">
-              <img width={200} src="/img/counsellor.svg" alt="" />
+              <Image
+                width={180}
+                height={130}
+                src="/img/counsellor.svg"
+                alt=""
+              />
             </div>
           </div>
 
@@ -172,7 +178,12 @@ const Home = () => {
             </div>
 
             <div className="sm:mb-0  mb-10">
-              <img width={200} src="/img/counsellor.svg" alt="" />
+              <Image
+                width={180}
+                height={130}
+                src="/img/counsellor.svg"
+                alt=""
+              />
             </div>
           </div>
         </div>
@@ -190,7 +201,14 @@ const Home = () => {
 
         <meta name="title" content="DSY consultancy | Home" />
       </Head>
-      <HeaderCard />
+
+      <div className="flex md:flex-row flex-col gap-5 justify-between items-start mb-5">
+        <HeaderCard />
+        <div className=" p-5 h-full  w-full md:w-96   bg-white shadow-md rounded-sm">
+          <h2 className="mb-5 font-bold">Update Phone Number</h2>
+          <VerifyPhone />
+        </div>
+      </div>
       <div className="md:flex-row flex-col flex gap-5 ">
         <CounsellorCard />
         <InsuranceCard />

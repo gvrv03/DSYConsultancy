@@ -11,10 +11,12 @@ import {
   sendPasswordResetEmail,
   signInWithPopup,
   updateProfile,
-  updatePhoneNumber,
   sendEmailVerification,
   //roles
   getIdTokenResult,
+  updatePhoneNumber,
+  RecaptchaVerifier,
+  PhoneAuthProvider,
 } from "firebase/auth";
 
 import { auth } from "directsecondyearadmission/firebase";
@@ -25,6 +27,7 @@ const userAuthContext = createContext();
 export function UserAuthContexProvider({ children }) {
   const [user, setuser] = useState("");
   const [token, settoken] = useState("");
+  const [verificatioIDPhone, setverificatioIDPhone] = useState("");
 
   useEffect(() => {
     const getToken = () => {
@@ -33,27 +36,30 @@ export function UserAuthContexProvider({ children }) {
     getToken();
   }, []);
 
-  async function checkRole(token, uid) {
-    // await authAdmin.setCustomUserClaims(uid).then(() => {
-    //   console.log("You are admin");
-    // });
+  const sendOTP = async (phoneNo) => {
+    const applicationVerifier = new RecaptchaVerifier(
+      "recaptcha-container",
+      {},
+      auth
+    );
+    await applicationVerifier.render();
+    const provider = new PhoneAuthProvider(auth);
+    const verificationId = await provider.verifyPhoneNumber(
+      "+" + phoneNo,
+      applicationVerifier
+    );
+    setverificatioIDPhone(verificationId);
+    return "OTP send to " + phoneNo;
+  };
 
-    // to check role
-    auth.currentUser
-      .getIdTokenResult()
-      .then((idTokenResult) => {
-        // if (!!idTokenResult.claims.admin) {
-        //   console.log("Show admin UI.");
-        // } else {
-        //   console.log("Show regular user UI.");
-        // }
-
-        console.log(idTokenResult);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  }
+  const verifyOTPServer = async (otp) => {
+    const phoneCredential = PhoneAuthProvider.credential(
+      verificatioIDPhone,
+      otp
+    );
+    await updatePhoneNumber(user, phoneCredential);
+    return "Update Phone No";
+  };
 
   async function signUp(emailUser, password, name) {
     const res = await createUserWithEmailAndPassword(auth, emailUser, password);
@@ -160,8 +166,9 @@ export function UserAuthContexProvider({ children }) {
         logOut,
         token,
         updateUserProfile,
-        checkRole,
         signWithGoogle,
+        sendOTP,
+        verifyOTPServer,
         resetPassword,
       }}
     >

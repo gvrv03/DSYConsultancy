@@ -1,9 +1,8 @@
 import { useRouter } from "next/router";
 import React from "react";
-import { useContext } from "react";
-import collegeContext from "directsecondyearadmission/Context/collegeContext";
+import { useUserAuth } from "directsecondyearadmission/Context/UserAuthContext";
 const Steps = () => {
-  const context = useContext(collegeContext);
+  const { user } = useUserAuth();
   const router = useRouter();
   const cardList = [
     {
@@ -27,7 +26,7 @@ const Steps = () => {
     return (
       <div
         data-aos="fade-up"
-        className="p-4 bg-white  shadow-md md:h-auto h-60 flex flex-col text-center items-center"
+        className="p-4 bg-white  shadow-md md:h-auto h-auto max-w-md flex flex-col text-center items-center"
       >
         <div className="w-20 h-20 inline-flex items-center justify-center rounded-full bg-indigo-100 text-indigo-500 mb-5 flex-shrink-0">
           <i className={`bi ${props.icon} text-3xl`}></i>
@@ -43,7 +42,7 @@ const Steps = () => {
   };
 
   return (
-    <section className="text-gray-600 body-font">
+    <section className="text-gray-600  body-font">
       <div className="container px-5 mx-auto">
         <div className="text-center mb-20">
           <h1
@@ -62,20 +61,27 @@ const Steps = () => {
             <div className="w-16 h-1 rounded-full bg-indigo-500 inline-flex"></div>
           </div>
         </div>
-        <div className=" gap-5  grid md:grid-cols-3 grid-cols-1  place-items-center">
-          {cardList.map((item, index) => {
-            return (
-              <Card
-                icon={item.icon}
-                name={item.name}
-                desc={item.desc}
-                key={index}
-              />
-            );
-          })}
+        <div className="flex items-center gap-5 flex-col md:flex-row justify-between">
+          <div>
+            <div className=" flex flex-col gap-5">
+              {cardList.map((item, index) => {
+                return (
+                  <Card
+                    icon={item.icon}
+                    name={item.name}
+                    desc={item.desc}
+                    key={index}
+                  />
+                );
+              })}
+            </div>
+          </div>
+          <div>
+            <img src="/img/steps.svg" alt="" srcset="" />
+          </div>
         </div>
 
-        {!context.loginStatus && (
+        {user && (
           <button
             data-aos="fade-up"
             onClick={function () {
