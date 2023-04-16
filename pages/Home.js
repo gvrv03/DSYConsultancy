@@ -105,30 +105,24 @@ const Home = () => {
   const HeaderCard = () => {
     const name = user.displayName;
     const [progress, setProgress] = useState(allUserDetail.profileCompletion);
+    console.log(allUserDetail.profileCompletion);
 
     if (allUserDetail.profileCompletion != 100) {
       return (
-        <div className="   shadow-md border">
+        <div className="  w-full shadow-md border">
           <div className="bg-white p-5   flex sm:flex-row flex-col-reverse items-center w-full  justify-between rounded-sm ">
             <div className="flex flex-col sm:w-2/4 w-full justify-around">
               <div>
-                <p className="text-base font-semibold">
-                  Hey {name}, Your profile is incomplete !
+                <p className="text-base  font-semibold">
+                  Hey <span className="pColor">{name}</span> , Your profile is
+                  incomplete !
                 </p>
-                <p className="text-sm mt-3 text-slate-400">
+                <p className="text-sm mt-3 text-justify text-slate-400">
                   Complete your profile and we will help you in building better
                   college recommendations for you.
                 </p>
               </div>
-              <Link
-                href={{
-                  pathname: `/Profile`,
-                  query: {
-                    id: context.userId,
-                  },
-                }}
-                legacyBehavior
-              >
+              <Link href="/Profile" legacyBehavior>
                 <button
                   type="button"
                   className="font-bold bg-slate-600 text-white px-10 mt-5 py-3"
@@ -137,6 +131,17 @@ const Home = () => {
                   Complete Your Profile
                 </button>
               </Link>
+              <div className="w-full py-5 bg-white">
+                <div className="w-full bg-gray-200 rounded-full dark:bg-gray-200">
+                  <div
+                    className="bg-slate-400 text-xs font-medium text-blue-100 text-center p-0.5 leading-none rounded-full"
+                    style={{ width: progress + "%" }}
+                  >
+                    {" "}
+                    {progress}%
+                  </div>
+                </div>
+              </div>
             </div>
 
             <div className="sm:mb-0  mb-10">
@@ -148,28 +153,17 @@ const Home = () => {
               />
             </div>
           </div>
-
-          <div className="w-full p-5 bg-white">
-            <div className="w-full bg-gray-200 rounded-full dark:bg-gray-200">
-              <div
-                className="bg-slate-400 text-xs font-medium text-blue-100 text-center p-0.5 leading-none rounded-full"
-                style={{ width: progress + "%" }}
-              >
-                {" "}
-                {progress}%
-              </div>
-            </div>
-          </div>
         </div>
       );
     } else {
       return (
-        <div className="mb-5   shadow-md border">
+        <div className="w-full shadow-md border">
           <div className="bg-white p-5   flex sm:flex-row flex-col-reverse items-center w-full  justify-between rounded-sm ">
             <div className="flex flex-col sm:w-2/4 w-full justify-around">
               <div>
                 <p className="text-base font-semibold">
-                  Hey {name}, Your profile is Complete !
+                  Hey <span className="pColor">{name}</span> , Your profile is
+                  Complete !
                 </p>
                 <p className="text-sm mt-3 text-slate-400">
                   Enjoy our Services
@@ -204,7 +198,7 @@ const Home = () => {
 
       <div className="flex md:flex-row flex-col gap-5 justify-between items-start mb-5">
         <HeaderCard />
-        <div className=" p-5 h-full  w-full md:w-96   bg-white shadow-md rounded-sm">
+        <div className=" p-5  w-full md:max-w-sm   bg-white shadow-md rounded-sm">
           <h2 className="mb-5 font-bold">Update Phone Number</h2>
           <VerifyPhone />
         </div>

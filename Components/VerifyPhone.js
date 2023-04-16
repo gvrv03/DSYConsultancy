@@ -11,7 +11,6 @@ const VerifyPhone = () => {
   const [verifyOTP, setverifyOTP] = useState("");
   const [resMsg, setresMsg] = useState("");
   const { sendOTP, verifyOTPServer, user } = useUserAuth();
-  console.log(user);
   const sendOTPClient = async (e) => {
     e.preventDefault();
     if (phoneNo) {
