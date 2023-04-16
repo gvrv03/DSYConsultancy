@@ -54,8 +54,11 @@ const VerifyPhone = () => {
         <div className="flex  flex-col gap-2 justify-center">
           <PhoneInput country={"us"} value={phoneNo} onChange={setphoneNo} />
           {resMsg && (
-            <div className="bg-red-100 px-10 py-1  border-2 border-red-200 text-center text-red-700 font-semibold">
-              {resMsg}
+            <div
+              class="bg-orange-100 text-sm font-semibold border-l-4 border-orange-500 text-orange-700 p-4"
+              role="alert"
+            >
+              <p> {resMsg}</p>
             </div>
           )}
           {!sendCode && <div id="recaptcha-container"></div>}

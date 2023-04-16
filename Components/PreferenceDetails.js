@@ -266,25 +266,25 @@ const PreferenceDetails = ({ userData, CollegeData }) => {
       </div>
 
       <div className=" flex flex-wrap mt-3 justify-between items-center">
-        <div className="w-2/6 detailWrap">
+        <div className="md:w-2/6 w-full pb-5">
           <div className="text-slate-400 text-sm">Univercity</div>
           <div className="text-sm">{preferenceDetail.university}</div>
         </div>
-        <div className="w-2/6 detailWrap">
+        <div className="md:w-2/6 w-full pb-5">
           <div className="text-slate-400 text-sm">Branch</div>
           <div className="text-sm">{preferenceDetail.branch}</div>
         </div>
-        <div className="w-2/6 detailWrap">
+        <div className="md:w-2/6 w-full pb-5">
           <div className="text-slate-400 text-sm">Location</div>
           <div className="text-sm">{preferenceDetail.location}</div>
         </div>
       </div>
       <div className=" flex flex-wrap mt-3  items-center">
-        <div className="w-2/6 detailWrap">
+        <div className="md:w-2/6 w-full pb-5">
           <div className="text-slate-400 text-sm">College Type</div>
           <div className="text-sm">{preferenceDetail.collegeType}</div>
         </div>
-        <div className="w-2/6 detailWrap">
+        <div className="md:w-2/6 w-full pb-5">
           <div className="text-slate-400 text-sm">Need a loan?</div>
           <div className="text-sm">{preferenceDetail.needLoan}</div>
         </div>

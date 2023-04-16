@@ -264,15 +264,15 @@ const BasicDetails = ({ userData }) => {
       </div>
 
       <div className=" flex flex-wrap mt-3 justify-between items-center">
-        <div className="w-2/6 detailWrap">
+        <div className="md:w-2/6 w-full pb-5">
           <div className="text-slate-400 text-sm">Full Name</div>
           <div className="text-sm">{basicDetail.fName}</div>
         </div>
-        <div className="w-2/6 detailWrap">
+        <div className="md:w-2/6 w-full pb-5">
           <div className="text-slate-400 text-sm">DOB</div>
           <div className="text-sm"> {basicDetail.dob}</div>
         </div>
-        <div className="w-2/6 detailWrap">
+        <div className="md:w-2/6 w-full pb-5">
           <div className="text-slate-400 text-sm">Social Category</div>
           <div className="text-sm"> {basicDetail.socialCategory}</div>
           <div className="text-sm"></div>
@@ -280,15 +280,15 @@ const BasicDetails = ({ userData }) => {
       </div>
 
       <div className=" flex flex-wrap mt-2 justify-between items-center">
-        <div className="w-2/6 detailWrap">
+        <div className="md:w-2/6 w-full pb-5">
           <div className="text-slate-400 text-sm">Gender</div>
           <div className="text-sm">{basicDetail.gender}</div>
         </div>
-        <div className="w-2/6 detailWrap">
+        <div className="md:w-2/6 w-full pb-5">
           <div className="text-slate-400 text-sm">Marital Status</div>
           <div className="text-sm">{basicDetail.maritialStatus}</div>
         </div>
-        <div className="w-2/6 detailWrap">
+        <div className="md:w-2/6 w-full pb-5">
           <div className="text-slate-400 text-sm">Physically Challenged</div>
           <div className="text-sm">{basicDetail.phyChanged}</div>
         </div>

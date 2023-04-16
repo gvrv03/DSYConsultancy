@@ -3,6 +3,7 @@ import { useUserContext } from "directsecondyearadmission/Context/UserContext";
 import React from "react";
 import { useState } from "react";
 import ModelHeader from "./ModelHeader";
+import VerifyPhone from "./VerifyPhone";
 
 const ContactDetails = ({ userData }) => {
   const [modalOpen, setModalOpen] = useState("hidden");
@@ -45,6 +46,15 @@ const ContactDetails = ({ userData }) => {
               className="w-full sm:mt-14 mt-5 px-5 sm:px-0 grid place-items-center"
             >
               <div className="grid grid-cols-1  w-full sm:grid-cols-2 gap-5 sm:w-2/4 ">
+                <div>
+                  <div
+                   
+                    className="leading-7 text-sm text-gray-600"
+                  >
+                    Phone No.
+                  </div>
+                  <VerifyPhone />
+                </div>
                 <div className="flex flex-col ">
                   <label
                     htmlFor="email"
@@ -115,7 +125,7 @@ const ContactDetails = ({ userData }) => {
 
   const contactDetail = userData.contactDetails;
   return (
-    <div className="bg-white shadow-md p-5 mt-5 rounded-sm">
+    <div className="bg-white shadow-md  p-5 mt-5 rounded-sm">
       <ContactDetailModal />
       <div className="header flex pb-2  justify-between items-center">
         <h1 className="text-lg font-bold">Contact Details</h1>
@@ -126,22 +136,22 @@ const ContactDetails = ({ userData }) => {
       </div>
 
       <div className=" flex flex-wrap mt-3 justify-between items-center">
-        <div className="w-2/6 detailWrap">
+        <div className="md:w-2/6 w-full pb-5 ">
           <div className="text-slate-400 text-sm">Mobile No.</div>
           <div className="text-sm">{user.phoneNumber}</div>
         </div>
-        <div className="w-2/6 detailWrap">
+        <div className="md:w-2/6 w-full pb-5">
           <div className="text-slate-400 text-sm">E-mail Address</div>
           <div className="text-sm">{user.email}</div>
         </div>
-        <div className="w-2/6 detailWrap">
+        <div className="md:w-2/6 w-full pb-5">
           <div className="text-slate-400 text-sm">City</div>
           <div className="text-sm">{contactDetail.city}</div>
         </div>
       </div>
 
       <div className=" flex flex-wrap mt-2 justify-between items-center">
-        <div className="w-2/6 detailWrap">
+        <div className="md:w-2/6 w-full pb-5">
           <div className="text-slate-400 text-sm">State</div>
           <div className="text-sm">{contactDetail.state} </div>
         </div>

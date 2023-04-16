@@ -313,60 +313,60 @@ const EducationDetails = ({ userData }) => {
         Class X
       </h3>
       <div className=" flex flex-wrap mt-3 justify-between items-center">
-        <div className="w-2/6 detailWrap">
+        <div className="md:w-2/6 w-full pb-5">
           <div className="text-slate-400 text-sm">Board</div>
           <div className="text-sm">{EducationDetail.ssc.board}</div>
         </div>
-        <div className="w-2/6 detailWrap">
+        <div className="md:w-2/6 w-full pb-5">
           <div className="text-slate-400 text-sm">School</div>
           <div className="text-sm">{EducationDetail.ssc.school}</div>
         </div>
-        <div className="w-2/6 detailWrap">
+        <div className="md:w-2/6 w-full pb-5">
           <div className="text-slate-400 text-sm">Passing Year</div>
           <div className="text-sm">{EducationDetail.ssc.passingYear}</div>
         </div>
       </div>
 
       <div className=" flex flex-wrap mt-2 justify-between items-center">
-        <div className="w-2/6 detailWrap">
+        <div className="md:w-2/6 w-full pb-5">
           <div className="text-slate-400 text-sm">Mark Type</div>
           <div className="text-sm">{EducationDetail.ssc.markType}</div>
         </div>
-        <div className="w-2/6 detailWrap">
+        <div className="md:w-2/6 w-full pb-5">
           <div className="text-slate-400 text-sm">Percentage/CGPA</div>
           <div className="text-sm">{EducationDetail.ssc.percentage}</div>
         </div>
-        <div className="w-2/6 detailWrap" />
+        <div className="md:w-2/6 w-full pb-5" />
       </div>
       <div className="border-b-2 mt-5" />
       <h3 className="text-base text-slate-500 sm:font-semibold font-bold mt-5">
         Diploma
       </h3>
       <div className=" flex flex-wrap mt-3 justify-between items-center">
-        <div className="w-2/6 detailWrap">
+        <div className="md:w-2/6 w-full pb-5">
           <div className="text-slate-400 text-sm">Board</div>
           <div className="text-sm">{EducationDetail.diploma.board}</div>
         </div>
-        <div className="w-2/6 detailWrap">
+        <div className="md:w-2/6 w-full pb-5">
           <div className="text-slate-400 text-sm">College</div>
           <div className="text-sm">{EducationDetail.diploma.school}</div>
         </div>
-        <div className="w-2/6 detailWrap">
+        <div className="md:w-2/6 w-full pb-5">
           <div className="text-slate-400 text-sm">Passing Year</div>
           <div className="text-sm">{EducationDetail.diploma.passingYear}</div>
         </div>
       </div>
 
       <div className=" flex flex-wrap mt-2 justify-between items-center">
-        <div className="w-2/6 detailWrap">
+        <div className="md:w-2/6 w-full pb-5">
           <div className="text-slate-400 text-sm">Mark Type</div>
           <div className="text-sm">{EducationDetail.diploma.markType}</div>
         </div>
-        <div className="w-2/6 detailWrap">
+        <div className="md:w-2/6 w-full pb-5">
           <div className="text-slate-400 text-sm">Percentage/CGPA</div>
           <div className="text-sm">{EducationDetail.diploma.percentage}</div>
         </div>
-        <div className="w-2/6 detailWrap" />
+        <div className="md:w-2/6 w-full pb-5" />
       </div>
     </div>
   );
