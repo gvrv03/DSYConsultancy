@@ -32,12 +32,7 @@ export const SideUserData = () => {
             ""
           ) : (
             <Link
-              href={{
-                pathname: `/Profile`,
-                query: {
-                  id: user.uid,
-                },
-              }}
+              href="/Profile"
               className=" text-center  font-semibold  text-xs"
             >
               Mange your profile
@@ -84,13 +79,7 @@ export default function HomeLayout({ children }) {
                 <ul className="mb-2">
                   <li>
                     <Link
-                      href={{
-                        pathname: `/Profile`,
-                        query: {
-                          id: user.uid,
-                          // cName: props.collegeName.replace(" ", "+"),
-                        },
-                      }}
+                      href="/Profile"
                       className={`flex items-center ${
                         router.pathname == "/Profile" &&
                         "bg-sky-100 font-semibold"

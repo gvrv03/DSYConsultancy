@@ -7,11 +7,11 @@ import { useState } from "react";
 import { useContext } from "react";
 import ModelHeader from "./ModelHeader";
 
-const EducationDetails = ({ userData }) => {
+const EducationDetails = () => {
   const [modalOpen, setModalOpen] = useState("hidden");
   const [requiredState, setRequired] = useState(false);
   const { user } = useUserAuth();
-  const { updateEdutDetailsUser } = useUserContext();
+  const { updateEdutDetailsUser, setres, allUserDetail } = useUserContext();
   const [resMsg, setresMsg] = useState("");
   if (resMsg) {
     setTimeout(() => {
@@ -61,13 +61,12 @@ const EducationDetails = ({ userData }) => {
         cPercentage,
         user.uid
       );
-      setresMsg(res)
+      setresMsg(res);
+      setres(Math.random());
     };
 
     return (
-      <div
-        className={`fixed top-0 ${modalOpen} left-0 h-full  w-full   `}
-      >
+      <div className={`fixed top-0 ${modalOpen} left-0 h-full  w-full   `}>
         <div className="z-10  relative w-full flex justify-center overflow-y-scroll  items-center h-full modalColor">
           <div className="absolute overflow-y-scroll h-full w-full  sm:w-4/6 sm:h-4/5  mt-24 sm:mt-0 rounded-sm bg-white">
             <ModelHeader toggle={toggleUser} name="Education Detail" />
@@ -315,7 +314,7 @@ const EducationDetails = ({ userData }) => {
     );
   };
 
-  const EducationDetail = userData.educationDetails;
+  const EducationDetail = allUserDetail.educationDetails;
   return (
     <div className="bg-white p-5 shadow-md rounded-sm mt-5">
       <EducationDetailModal />

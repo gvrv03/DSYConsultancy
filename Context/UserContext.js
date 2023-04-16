@@ -9,6 +9,7 @@ const userContext = createContext();
 export function UserContexProvider({ children }) {
   const { user } = useUserAuth();
   const [userUID, setuserUID] = useState("");
+  const [res, setres] = useState(null);
   const [allUserDetail, setallUserDetail] = useState({});
 
   // console.log(userUID);
@@ -38,9 +39,8 @@ export function UserContexProvider({ children }) {
 
   useEffect(() => {
     getFirebaseID();
-
     getSingleUserData();
-  }, []);
+  }, [res]);
 
   const updateBasicDetailsUser = async (
     fullName,
@@ -179,6 +179,7 @@ export function UserContexProvider({ children }) {
         preferenceDetailsUser,
         allUserDetail,
         userUID,
+        setres,
       }}
     >
       {children}

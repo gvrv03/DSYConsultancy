@@ -3,14 +3,13 @@ import { useUserContext } from "directsecondyearadmission/Context/UserContext";
 import React from "react";
 import { useState } from "react";
 import ModelHeader from "./ModelHeader";
-import VerifyPhone from "./VerifyPhone";
 
-const ContactDetails = ({ userData }) => {
+const ContactDetails = () => {
   const [modalOpen, setModalOpen] = useState("hidden");
   const [requiredState, setRequired] = useState(false);
 
   const { user } = useUserAuth();
-  const { updateUserContact } = useUserContext();
+  const { updateUserContact, setres, allUserDetail } = useUserContext();
   const [resMsg, setresMsg] = useState("");
   if (resMsg) {
     setTimeout(() => {
@@ -45,6 +44,7 @@ const ContactDetails = ({ userData }) => {
         user.uid
       );
       setresMsg(res);
+      setres(Math.random());
     };
 
     return (
@@ -65,13 +65,6 @@ const ContactDetails = ({ userData }) => {
                 </div>
               )}
               <div className="grid grid-cols-1   sm:grid-cols-2 gap-5 w-full sm:w-2/4 ">
-                <div>
-                  <div className="leading-7 text-sm text-gray-600">
-                    Mobile No.
-                  </div>
-                  <VerifyPhone />
-                </div>
-
                 <div className="flex flex-col ">
                   <label
                     htmlFor="email"
@@ -140,7 +133,7 @@ const ContactDetails = ({ userData }) => {
     );
   };
 
-  const contactDetail = userData.contactDetails;
+  const contactDetail = allUserDetail.contactDetails;
   return (
     <div className="bg-white shadow-md  p-5 mt-5 rounded-sm">
       <ContactDetailModal />

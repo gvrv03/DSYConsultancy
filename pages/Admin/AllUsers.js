@@ -13,9 +13,10 @@ import Loader2 from "../../Components/Loader2";
 
 import exportFromJSON from "export-from-json";
 import { useUserContext } from "directsecondyearadmission/Context/UserContext";
+import { useAdminContext } from "directsecondyearadmission/Context/AdminContext";
 
 const AllUsers = () => {
-  const context = useContext(collegeContext);
+  const { openModal } = useAdminContext();
   const [data, setdata] = useState(null);
   const { userUID } = useUserContext();
 
@@ -33,7 +34,7 @@ const AllUsers = () => {
       setdata(await getallUsers());
     };
     getUsers();
-  }, []);
+  }, [openModal]);
 
   const router = useRouter();
   const handleRole = async (userRole, id) => {
@@ -51,10 +52,9 @@ const AllUsers = () => {
 
     const res2 = await res.json();
     if (res2.msg) {
-      context.openModal("success", res2.msg);
-      router.reload();
+      openModal("success", res2.msg);
     } else {
-      context.openModal("fail", res2.error);
+      openModal("fail", res2.error);
     }
   };
   return (

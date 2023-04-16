@@ -7,11 +7,11 @@ import { useState } from "react";
 import { useContext } from "react";
 import ModelHeader from "./ModelHeader";
 
-const PreferenceDetails = ({ userData, CollegeData }) => {
+const PreferenceDetails = ({ CollegeData }) => {
   const [modalOpen, setModalOpen] = useState("hidden");
   const [requiredState, setRequired] = useState(false);
   const { user } = useUserAuth();
-  const { preferenceDetailsUser } = useUserContext();
+  const { preferenceDetailsUser, setres, allUserDetail } = useUserContext();
   const [resMsg, setresMsg] = useState("");
   if (resMsg) {
     setTimeout(() => {
@@ -63,7 +63,7 @@ const PreferenceDetails = ({ userData, CollegeData }) => {
       e.preventDefault();
       const { university, branch, location, collegeType, needLoan } =
         preferenceDetails;
-      const res = preferenceDetailsUser(
+      const res = await preferenceDetailsUser(
         university,
         branch,
         location,
@@ -72,13 +72,11 @@ const PreferenceDetails = ({ userData, CollegeData }) => {
         user.uid
       );
       setresMsg(res);
+      setres(Math.random());
     };
 
     return (
-      <div
-        
-        className={`fixed top-0 ${modalOpen} left-0 h-full  w-full   `}
-      >
+      <div className={`fixed top-0 ${modalOpen} left-0 h-full  w-full   `}>
         <div className="z-10  relative w-full flex justify-center  items-center h-full modalColor">
           <div className="absolute h-full w-full  sm:w-4/6 sm:h-4/5  mt-24 sm:mt-0 rounded-sm bg-white">
             <ModelHeader toggle={toggleUser} name="Preferences" />
@@ -267,7 +265,7 @@ const PreferenceDetails = ({ userData, CollegeData }) => {
       </div>
     );
   };
-  const preferenceDetail = userData.preferences;
+  const preferenceDetail = allUserDetail.preferences;
   return (
     <div className="bg-white shadow-md p-5 mt-5 rounded-sm">
       <PreferenceesDetailModal />

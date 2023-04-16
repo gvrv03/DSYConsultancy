@@ -1,25 +1,22 @@
-import collegeContext from "directsecondyearadmission/Context/collegeContext";
 import { useUserAuth } from "directsecondyearadmission/Context/UserAuthContext";
 import { useUserContext } from "directsecondyearadmission/Context/UserContext";
 import { allCategory } from "directsecondyearadmission/quieries/CollegeDataQuieries";
-import { useRouter } from "next/router";
 import React from "react";
 import { useEffect } from "react";
 import { useState } from "react";
 import ModelHeader from "./ModelHeader";
 
-const BasicDetails = ({ userData }) => {
-  const { updateBasicDetailsUser, allUserDetail } = useUserContext();
+const BasicDetails = () => {
+  const { updateBasicDetailsUser, setres, allUserDetail } = useUserContext();
   const [modalOpen, setModalOpen] = useState("hidden");
   const { user } = useUserAuth();
-  
+
   const [resMsg, setresMsg] = useState("");
   if (resMsg) {
     setTimeout(() => {
       setresMsg("");
     }, 2000);
   }
-  console.log(allUserDetail);
 
   const toggleUser = () => {
     if (modalOpen == "hidden") {
@@ -52,6 +49,7 @@ const BasicDetails = ({ userData }) => {
         user.uid
       );
       setresMsg(res);
+      setres(Math.random());
     };
 
     const [allCat, setallCat] = useState([]);
@@ -265,7 +263,7 @@ const BasicDetails = ({ userData }) => {
     );
   };
 
-  const basicDetail = userData.basicDetails;
+  const basicDetail = allUserDetail.basicDetails;
   return (
     <div className="bg-white p-5 shadow-md rounded-sm ">
       <BasicDetailModal />

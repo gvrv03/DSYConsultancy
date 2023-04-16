@@ -18,7 +18,7 @@ import ContactDetails from "directsecondyearadmission/Components/ContactDetails"
 import EducationDetails from "directsecondyearadmission/Components/EducationDetails";
 import PreferenceDetails from "directsecondyearadmission/Components/PreferenceDetails";
 
-const Profile = ({ userData, CollegeData }) => {
+const Profile = ({ CollegeData }) => {
   return (
     <HomeLayout>
       <Head>
@@ -30,22 +30,19 @@ const Profile = ({ userData, CollegeData }) => {
 
         <meta name="title" content="DSY consultancy | Profile" />
       </Head>
-      <BasicDetails userData={userData} />
-      <ContactDetails userData={userData} />
-      <EducationDetails userData={userData} />
-      <PreferenceDetails userData={userData} CollegeData={CollegeData} />
+      <BasicDetails />
+      <ContactDetails />
+      <EducationDetails />
+      <PreferenceDetails CollegeData={CollegeData} />
     </HomeLayout>
   );
 };
 
-export async function getServerSideProps(context) {
-  const { id } = context.query;
-  // const context = useContext(collegeContext);
-  const userData = await getUserData(id);
+export async function getServerSideProps() {
   const CollegeData = await allColleges();
 
   return {
-    props: { userData, CollegeData },
+    props: { CollegeData },
   };
 }
 export default Profile;

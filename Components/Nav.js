@@ -190,12 +190,7 @@ const Nav = () => {
                 onClick={function () {
                   setnav("hidden");
                 }}
-                href={{
-                  pathname: `/Profile`,
-                  query: {
-                    id: user.uid,
-                  },
-                }}
+                href="/Profile"
                 className=" text-slate-400 text-sm"
               >
                 Manage Your Profile
@@ -241,15 +236,7 @@ const Nav = () => {
                   <i
                     className={`bi-person-fill p-1 px-2 bg-blue-50 rounded-sm  text-sm text-slate-800 bi mr-5`}
                   ></i>
-                  <Link
-                    href={{
-                      pathname: `/Profile`,
-                      query: {
-                        id: user.uid,
-                      },
-                    }}
-                    legacyBehavior
-                  >
+                  <Link href="/Profile" legacyBehavior>
                     <button
                       onClick={function () {
                         setnav("hidden");
