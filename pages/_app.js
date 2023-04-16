@@ -14,6 +14,7 @@ import { UserAuthContexProvider } from "directsecondyearadmission/Context/UserAu
 import { CollegeContexProvider } from "directsecondyearadmission/Context/CollegesContext";
 import { UserContexProvider } from "directsecondyearadmission/Context/UserContext";
 import { useEffect } from "react";
+import { AdminContexProvider } from "directsecondyearadmission/Context/AdminContext";
 Router.events.on("routeChangeStart", () => NProgress.start());
 Router.events.on("routeChangeComplete", () => NProgress.done());
 Router.events.on("routeChangeError", () => NProgress.done());
@@ -28,14 +29,16 @@ export default function App({ Component, pageProps }) {
     <CollegeState>
       <UserAuthContexProvider>
         <UserContexProvider>
-          <CollegeContexProvider>
-            <Nav />
-            <Component {...pageProps} />
-            <Footer />
-            <ScrollToTop showUnder={160}>
-              <i className="bi text-3xl pColor bi-arrow-up-square-fill"></i>
-            </ScrollToTop>
-          </CollegeContexProvider>
+          <AdminContexProvider>
+            <CollegeContexProvider>
+              <Nav />
+              <Component {...pageProps} />
+              <Footer />
+              <ScrollToTop showUnder={160}>
+                <i className="bi text-3xl pColor bi-arrow-up-square-fill"></i>
+              </ScrollToTop>
+            </CollegeContexProvider>
+          </AdminContexProvider>
         </UserContexProvider>
       </UserAuthContexProvider>
     </CollegeState>

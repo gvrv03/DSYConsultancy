@@ -1,8 +1,6 @@
-import react, { useState } from "react";
-import { useContext } from "react";
-import collegeContext from "directsecondyearadmission/Context/collegeContext";
+import { useAdminContext } from "directsecondyearadmission/Context/AdminContext";
 export default function PopUpModal(props) {
-  const context = useContext(collegeContext);
+  const context = useAdminContext();
 
   return (
     <div
@@ -33,17 +31,11 @@ export default function PopUpModal(props) {
                 clipRule="evenodd"
               ></path>
             </svg>
-            <span  className="sr-only">
-              Close modal
-            </span>
+            <span className="sr-only">Close modal</span>
           </button>
           <div className="p-6 w-96 text-center">
             <div className="w-full text-center  grid place-items-center">
-              <img
-                src={`/aniIcon/${props.icon}.gif `}
-                width={70}
-                alt=""
-              />
+              <img src={`/aniIcon/${props.icon}.gif `} width={70} alt="" />
             </div>
             <h3 className="mb-5 text-lg font-normal mt-5">{props.msg}</h3>
             <button

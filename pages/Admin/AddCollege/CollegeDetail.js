@@ -3,17 +3,11 @@ import AddCollegeDetails from "../AddCollegeDetails";
 import Link from "next/link";
 import InstituteCheck from "./InstituteCheck";
 import Toastmsg from "directsecondyearadmission/Components/Toastmsg";
-import { toast } from "react-toastify";
-import { useContext } from "react";
-import collegeContext from "directsecondyearadmission/Context/collegeContext";
-import PopUpModal from "directsecondyearadmission/Components/PopUpModal";
-import { useUserContext } from "directsecondyearadmission/Context/UserContext";
+import { useAdminContext } from "directsecondyearadmission/Context/AdminContext";
 const CollegeDetail = () => {
-  const context = useContext(collegeContext);
-  const { userUID } = useUserContext();
+  const { addCollegeData } = useAdminContext();
   const [cDetails, setCDetails] = useState({});
   const [requiredState, setRequired] = useState(false);
-
 
   const onChange = (e) => {
     setCDetails({
@@ -45,7 +39,7 @@ const CollegeDetail = () => {
       cEmail,
       topRecuriter,
     } = cDetails;
-    onSubmit(
+    await addCollegeData(
       cName,
       insCode,
       cUnder,
@@ -67,65 +61,6 @@ const CollegeDetail = () => {
       topRecuriter
     );
   };
-
-  async function onSubmit(
-    cName,
-    insCode,
-    cUnder,
-    cType,
-    approvedBy,
-    rating,
-    university,
-    addressLine,
-    taluka,
-    district,
-    city,
-    longitude,
-    latitude,
-    iFranmeLoc,
-    imageLogo,
-    phoneNo,
-    cWebsite,
-    cEmail,
-    topRecuriter
-  ) {
-    const res = await fetch("/api/Colleges", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: userUID,
-      },
-      body: JSON.stringify({
-        name: cName,
-        instituteCode: insCode,
-        iframe: iFranmeLoc,
-        collegeUnder: cUnder,
-        collegeType: cType,
-        university: university,
-        addressLine: addressLine,
-        taluka: taluka,
-        district: district,
-        addedBy: context.username,
-        city: city,
-        latitude: latitude,
-        longitude: longitude,
-        rating: rating,
-        contactNo: phoneNo,
-        website: cWebsite,
-        email: cEmail,
-        approvedBy: approvedBy,
-        image: imageLogo,
-        topRecruiters: topRecuriter,
-      }),
-    });
-
-    const res2 = await res.json();
-    if (res2.msg) {
-      context.openModal("success", res2.msg);
-    } else {
-      context.openModal("fail", res2.error);
-    }
-  }
 
   return (
     <>

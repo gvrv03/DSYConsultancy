@@ -1,15 +1,14 @@
 import baseUrl from "directsecondyearadmission/baseUrl";
-
+import axios from "axios";
 //get single college data
 export async function getSingleCollegeData(id) {
-  const res = await fetch(baseUrl + "/api/College/" + id, {
-    method: "GET",
+  const res = await axios.get(baseUrl + "/api/College/" + id, {
     headers: {
       "Content-Type": "application/json",
     },
   });
 
-  const data = await res.json();
+  const data = await res.data;
   if (data.error) {
     return {
       notFound: true,
@@ -30,13 +29,12 @@ export async function getSingleCollegeData(id) {
 // for show all Colleges
 export async function allColleges() {
   // for show all Colleges
-  const res = await fetch(baseUrl + "/api/Colleges", {
-    method: "GET",
+  const res = await axios.get(baseUrl + "/api/Colleges", {
     headers: {
       "Content-Type": "application/json",
     },
   });
-  const data = await res.json();
+  const data = await res.data;
   return data;
 }
 

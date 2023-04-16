@@ -71,10 +71,7 @@ const CollegeState = (props) => {
     }
   };
 
-  const getAllCategory = ()=>{
-            const res = fetch
-  }
-
+ 
   return (
     <collegeContext.Provider
       value={{

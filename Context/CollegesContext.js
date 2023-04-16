@@ -7,6 +7,8 @@ import { useState } from "react";
 const collegesContext = createContext();
 export function CollegeContexProvider({ children }) {
   // to get All Colleges
+
+  
   async function getAllColleges() {
     // for show all Colleges
     const res = await fetch(baseUrl + "/api/Colleges", {

@@ -1,46 +1,44 @@
 import { useContext } from "react";
 import { createContext } from "react";
 import baseUrl from "directsecondyearadmission/baseUrl";
-import collegeContext from "./collegeContext";
-import { useRouter } from "next/router";
 import { useState } from "react";
 import { useEffect } from "react";
+import { useUserAuth } from "./UserAuthContext";
 
 const userContext = createContext();
 export function UserContexProvider({ children }) {
-  const { openModal } = useContext(collegeContext);
-  const router = useRouter();
+  const { user } = useUserAuth();
   const [userUID, setuserUID] = useState("");
   const [allUserDetail, setallUserDetail] = useState({});
 
   // console.log(userUID);
-  useEffect(() => {
-    const getFirebaseID = () => {
-      setuserUID(localStorage.getItem("firebaseuid"));
-    };
+  const getSingleUserData = async () => {
+    const res = await fetch(
+      baseUrl + "/api/User/" + localStorage.getItem("firebaseuid"),
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    const userData = await res.json();
+    if (userData.error) {
+      return {
+        notFound: true,
+      };
+    }
+    setallUserDetail(userData);
+    return userData;
+  };
 
+  const getFirebaseID = () => {
+    setuserUID(localStorage.getItem("firebaseuid"));
+  };
+
+  useEffect(() => {
     getFirebaseID();
 
-    const getSingleUserData = async () => {
-      const res = await fetch(
-        baseUrl + "/api/User/" + localStorage.getItem("firebaseuid"),
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
-
-      const userData = await res.json();
-      if (userData.error) {
-        return {
-          notFound: true,
-        };
-      }
-      setallUserDetail(userData);
-      return userData;
-    };
     getSingleUserData();
   }, []);
 
@@ -71,10 +69,9 @@ export function UserContexProvider({ children }) {
 
     const res2 = await res.json();
     if (res2.msg) {
-       return res2.msg;
-      
+      return res2.msg;
     } else {
-       return res2.error;
+      return res2.error;
     }
   };
 
@@ -96,7 +93,6 @@ export function UserContexProvider({ children }) {
     const res2 = await res.json();
     if (res2.msg) {
       return res2.msg;
-      
     } else {
       return res2.error;
     }
@@ -137,10 +133,9 @@ export function UserContexProvider({ children }) {
 
     const res2 = await res.json();
     if (res2.msg) {
-       return res2.msg;
-      
+      return res2.msg;
     } else {
-       return res2.error;
+      return res2.error;
     }
   };
 
@@ -169,10 +164,9 @@ export function UserContexProvider({ children }) {
 
     const res2 = await res.json();
     if (res2.msg) {
-       return res2.msg;
-      
+      return res2.msg;
     } else {
-       return res2.error;
+      return res2.error;
     }
   };
 

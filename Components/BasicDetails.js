@@ -9,16 +9,17 @@ import { useState } from "react";
 import ModelHeader from "./ModelHeader";
 
 const BasicDetails = ({ userData }) => {
-  const router = useRouter();
-  const { updateBasicDetailsUser } = useUserContext();
+  const { updateBasicDetailsUser, allUserDetail } = useUserContext();
   const [modalOpen, setModalOpen] = useState("hidden");
   const { user } = useUserAuth();
+  
   const [resMsg, setresMsg] = useState("");
   if (resMsg) {
     setTimeout(() => {
       setresMsg("");
     }, 2000);
   }
+  console.log(allUserDetail);
 
   const toggleUser = () => {
     if (modalOpen == "hidden") {

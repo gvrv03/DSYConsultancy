@@ -4,9 +4,8 @@ import Link from "next/link";
 import "suneditor/dist/css/suneditor.min.css"; // Import Sun Editor's CSS File
 import AddCollegeDetails from "../AddCollegeDetails";
 import InstituteCheck from "./InstituteCheck";
-import { toast } from "react-toastify";
 import Toastmsg from "directsecondyearadmission/Components/Toastmsg";
-import { useUserContext } from "directsecondyearadmission/Context/UserContext";
+import { useAdminContext } from "directsecondyearadmission/Context/AdminContext";
 
 const Stepper = () => {
   return (
@@ -56,11 +55,10 @@ const SunEditor = dynamic(() => import("suneditor-react"), {
 });
 
 const TextEditor = () => {
-  const { userUID } = useUserContext();
+  const { addDescription } = useAdminContext();
   const CollegeTextEditor = () => {
     const [description, setDescription] = useState({});
 
- 
     const onChange = (e) => {
       setDescription({
         ...description,
@@ -74,28 +72,7 @@ const TextEditor = () => {
     const addDetails = async (e) => {
       e.preventDefault();
       const { collegeDetail, insCode } = description;
-      onSubmit(collegeDetail, insCode);
-    };
-
-    const onSubmit = async (collegeDetail, insCode) => {
-      const res = await fetch("/api/addDescription", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: userUID,
-        },
-        body: JSON.stringify({
-          collegeDetail: collegeDetail,
-          instituteCode: insCode,
-        }),
-      });
-
-      const res2 = await res.json();
-      if (res2.msg) {
-        toast.success(res2.msg);
-      } else {
-        toast.error(res2.error);
-      }
+      await addDescription(collegeDetail, insCode);
     };
 
     return (

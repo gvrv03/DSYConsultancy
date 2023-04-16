@@ -5,6 +5,7 @@ import InstituteCheck from "./InstituteCheck";
 import { toast } from "react-toastify";
 import Toastmsg from "directsecondyearadmission/Components/Toastmsg";
 import { useUserContext } from "directsecondyearadmission/Context/UserContext";
+import { useAdminContext } from "directsecondyearadmission/Context/AdminContext";
 
 const Stepper = () => {
   return (
@@ -49,14 +50,7 @@ const Stepper = () => {
 const AddDepartment = () => {
   const [requiredState, setRequired] = useState(false);
   const [depDetails, setDepDetails] = useState({});
-  const [token, setToken] = useState("");
-  const { userUID } = useUserContext();
-
-  useEffect(() => {
-    if (localStorage.getItem("token")) {
-      setToken(localStorage.getItem("token"));
-    }
-  }, []);
+  const { addDepartment, addUserCategory, addImagesData } = useAdminContext();
   const onChange = (e) => {
     setDepDetails({
       ...depDetails,
@@ -67,30 +61,7 @@ const AddDepartment = () => {
   const addDep = async (e) => {
     e.preventDefault();
     const { courseName, annualFees, choiceCode, insCode } = depDetails;
-    onSubmit(courseName, annualFees, choiceCode, insCode);
-  };
-
-  const onSubmit = async (courseName, annualFees, choiceCode, insCode) => {
-    const res = await fetch("/api/addDepartment", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: userUID,
-      },
-      body: JSON.stringify({
-        courseName: courseName,
-        instituteCode: insCode,
-        annalFee: annualFees,
-        choiceCode: choiceCode,
-      }),
-    });
-
-    const res2 = await res.json();
-    if (res2.msg) {
-      toast.success(res2.msg, {});
-    } else {
-      toast.error(res2.error, {});
-    }
+    addDepartment(courseName, annualFees, choiceCode, insCode);
   };
 
   const AddImage = () => {
@@ -106,28 +77,7 @@ const AddDepartment = () => {
     const addImages = async (e) => {
       e.preventDefault();
       const { cImage, insCode } = addImage;
-      onSubmit(cImage, insCode);
-    };
-
-    const onSubmit = async (cImage, insCode) => {
-      const res = await fetch("/api/addImages", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: token,
-        },
-        body: JSON.stringify({
-          instituteCode: insCode,
-          imageUrl: cImage,
-        }),
-      });
-
-      const res2 = await res.json();
-      if (res2.msg) {
-        toast.success(res2.msg, {});
-      } else {
-        toast.error(res2.error, {});
-      }
+      await addImagesData(cImage, insCode);
     };
 
     return (
@@ -180,39 +130,7 @@ const AddDepartment = () => {
     const addCat = async (e) => {
       e.preventDefault();
       const { category, Annualfees, Min, Max, Seats, choiceCode } = catDetails;
-      onSubmit(category, Annualfees, Min, Max, Seats, choiceCode);
-    };
-
-    const onSubmit = async (
-      category,
-      Annualfees,
-      Min,
-      Max,
-      Seats,
-      choiceCode
-    ) => {
-      const res = await fetch("/api/addCategory", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: token,
-        },
-        body: JSON.stringify({
-          category: category,
-          min: Min,
-          max: Max,
-          aFees: Annualfees,
-          aSeats: Seats,
-          choiceCode: choiceCode,
-        }),
-      });
-
-      const res2 = await res.json();
-      if (res2.msg) {
-        toast.success(res2.msg, {});
-      } else {
-        toast.error(res2.error, {});
-      }
+      await addUserCategory(category, Annualfees, Min, Max, Seats, choiceCode);
     };
 
     return (
