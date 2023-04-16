@@ -12,6 +12,12 @@ const EducationDetails = ({ userData }) => {
   const [requiredState, setRequired] = useState(false);
   const { user } = useUserAuth();
   const { updateEdutDetailsUser } = useUserContext();
+  const [resMsg, setresMsg] = useState("");
+  if (resMsg) {
+    setTimeout(() => {
+      setresMsg("");
+    }, 2000);
+  }
   const toggleUser = () => {
     if (modalOpen == "hidden") {
       setModalOpen("block");
@@ -42,7 +48,7 @@ const EducationDetails = ({ userData }) => {
         cMarkType,
         cPercentage,
       } = eductaionDetails;
-      updateEdutDetailsUser(
+      const res = await updateEdutDetailsUser(
         sBoard,
         sSchool,
         sPassYear,
@@ -55,10 +61,13 @@ const EducationDetails = ({ userData }) => {
         cPercentage,
         user.uid
       );
+      setresMsg(res)
     };
 
     return (
-      <div data-aos="fade-up" className={`fixed top-0 ${modalOpen} left-0 h-full  w-full   `}>
+      <div
+        className={`fixed top-0 ${modalOpen} left-0 h-full  w-full   `}
+      >
         <div className="z-10  relative w-full flex justify-center overflow-y-scroll  items-center h-full modalColor">
           <div className="absolute overflow-y-scroll h-full w-full  sm:w-4/6 sm:h-4/5  mt-24 sm:mt-0 rounded-sm bg-white">
             <ModelHeader toggle={toggleUser} name="Education Detail" />
@@ -66,6 +75,14 @@ const EducationDetails = ({ userData }) => {
               onSubmit={updateEdutDetails}
               className="w-full px-5  pb-10 pt-5 sm:pt-0 mt-5 grid overflow-y-scroll place-items-center"
             >
+              {resMsg && (
+                <div
+                  class="bg-orange-100 text-sm w-full sm:w-2/4  mb-10 font-semibold border-l-4 border-orange-500 text-orange-700 px-4 py-2"
+                  role="alert"
+                >
+                  <p> {resMsg}</p>
+                </div>
+              )}
               <h2 className=" w-full font-semibold  sm:w-2/4">
                 Class X (required)
               </h2>

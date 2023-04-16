@@ -71,10 +71,10 @@ export function UserContexProvider({ children }) {
 
     const res2 = await res.json();
     if (res2.msg) {
-      openModal("success", res2.msg);
-      router.reload();
+       return res2.msg;
+      
     } else {
-      openModal("fail", res2.error);
+       return res2.error;
     }
   };
 
@@ -95,10 +95,10 @@ export function UserContexProvider({ children }) {
 
     const res2 = await res.json();
     if (res2.msg) {
-      openModal("success", res2.msg);
-      router.reload();
+      return res2.msg;
+      
     } else {
-      openModal("fail", res2.error);
+      return res2.error;
     }
   };
 
@@ -137,10 +137,10 @@ export function UserContexProvider({ children }) {
 
     const res2 = await res.json();
     if (res2.msg) {
-      openModal("success", res2.msg);
-      router.reload();
+       return res2.msg;
+      
     } else {
-      openModal("fail", res2.error);
+       return res2.error;
     }
   };
 
@@ -169,10 +169,10 @@ export function UserContexProvider({ children }) {
 
     const res2 = await res.json();
     if (res2.msg) {
-      openModal("success", res2.msg);
-      router.reload();
+       return res2.msg;
+      
     } else {
-      openModal("fail", res2.error);
+       return res2.error;
     }
   };
 

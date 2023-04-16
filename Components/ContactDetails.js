@@ -3,13 +3,19 @@ import { useUserContext } from "directsecondyearadmission/Context/UserContext";
 import React from "react";
 import { useState } from "react";
 import ModelHeader from "./ModelHeader";
-import VerifyPhone from "./VerifyPhone";
 
 const ContactDetails = ({ userData }) => {
   const [modalOpen, setModalOpen] = useState("hidden");
   const [requiredState, setRequired] = useState(false);
+
   const { user } = useUserAuth();
   const { updateUserContact } = useUserContext();
+  const [resMsg, setresMsg] = useState("");
+  if (resMsg) {
+    setTimeout(() => {
+      setresMsg("");
+    }, 2000);
+  }
 
   const toggleUser = () => {
     if (modalOpen == "hidden") {
@@ -30,14 +36,18 @@ const ContactDetails = ({ userData }) => {
     const updateContDetails = async (e) => {
       e.preventDefault();
       const { email, city, state } = contactDetails;
-      updateUserContact(user.phoneNumber, email, city, state, user.uid);
+      const res = await updateUserContact(
+        user.phoneNumber,
+        email,
+        city,
+        state,
+        user.uid
+      );
+      setresMsg(res);
     };
 
     return (
-      <div
-        data-aos="fade-up"
-        className={`fixed top-0 ${modalOpen} left-0 h-full  w-full   `}
-      >
+      <div className={`fixed top-0 ${modalOpen} left-0 h-full  w-full   `}>
         <div className="z-10  relative w-full flex justify-center  items-center h-full modalColor">
           <div className="absolute h-full w-full  sm:w-4/6 sm:h-4/5  mt-24 sm:mt-0 rounded-sm bg-white">
             <ModelHeader toggle={toggleUser} name="Contact Detail" />
@@ -45,16 +55,15 @@ const ContactDetails = ({ userData }) => {
               onSubmit={updateContDetails}
               className="w-full sm:mt-14 mt-5 px-5 sm:px-0 grid place-items-center"
             >
-              <div className="grid grid-cols-1  w-full sm:grid-cols-2 gap-5 sm:w-2/4 ">
-                <div>
-                  <div
-                   
-                    className="leading-7 text-sm text-gray-600"
-                  >
-                    Phone No.
-                  </div>
-                  <VerifyPhone />
+              {resMsg && (
+                <div
+                  class="bg-orange-100 text-sm w-full sm:w-2/4  mb-10 font-semibold border-l-4 border-orange-500 text-orange-700 px-4 py-2"
+                  role="alert"
+                >
+                  <p> {resMsg}</p>
                 </div>
+              )}
+              <div className="grid grid-cols-1   sm:grid-cols-2 gap-5 w-full sm:w-2/4 ">
                 <div className="flex flex-col ">
                   <label
                     htmlFor="email"

@@ -13,6 +13,13 @@ const BasicDetails = ({ userData }) => {
   const { updateBasicDetailsUser } = useUserContext();
   const [modalOpen, setModalOpen] = useState("hidden");
   const { user } = useUserAuth();
+  const [resMsg, setresMsg] = useState("");
+  if (resMsg) {
+    setTimeout(() => {
+      setresMsg("");
+    }, 2000);
+  }
+
   const toggleUser = () => {
     if (modalOpen == "hidden") {
       setModalOpen("block");
@@ -34,7 +41,7 @@ const BasicDetails = ({ userData }) => {
       const { fullName, socialCategory, dob, gender, marStatus, phyChanged } =
         basicDetails;
 
-      updateBasicDetailsUser(
+      const res = await updateBasicDetailsUser(
         fullName,
         socialCategory,
         dob,
@@ -43,6 +50,7 @@ const BasicDetails = ({ userData }) => {
         phyChanged,
         user.uid
       );
+      setresMsg(res);
     };
 
     const [allCat, setallCat] = useState([]);
@@ -55,10 +63,7 @@ const BasicDetails = ({ userData }) => {
     }, []);
 
     return (
-      <div
-        data-aos="fade-up"
-        className={`fixed top-0 ${modalOpen} left-0 h-full  w-full   `}
-      >
+      <div className={`fixed top-0 ${modalOpen} left-0 h-full  w-full   `}>
         <div className="z-10  relative w-full flex justify-center  items-center h-full modalColor">
           <div className="absolute h-full w-full  sm:w-4/6 sm:h-4/5  mt-24 sm:mt-0 rounded-sm bg-white">
             <ModelHeader toggle={toggleUser} name="Basic Detail" />
@@ -66,6 +71,14 @@ const BasicDetails = ({ userData }) => {
               onSubmit={updateBasicDetails}
               className="w-full sm:mt-14 mt-5 px-5 sm:px-0 grid place-items-center"
             >
+              {resMsg && (
+                <div
+                  class="bg-orange-100 text-sm w-full sm:w-2/4  mb-10 font-semibold border-l-4 border-orange-500 text-orange-700 px-4 py-2"
+                  role="alert"
+                >
+                  <p> {resMsg}</p>
+                </div>
+              )}
               <div className="grid grid-cols-1  w-full sm:grid-cols-2 gap-5 sm:w-2/4 ">
                 <div className="flex flex-col ">
                   <label
