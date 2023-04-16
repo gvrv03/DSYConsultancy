@@ -164,7 +164,7 @@ const College = () => {
             <img
               className="rounded-full border-blue-900 border-2 h-20 w-20 "
               src={props.image}
-              alt=""
+              alt={props.collegeName}
             />
           </div>
           <div className="">
@@ -213,27 +213,24 @@ const College = () => {
               }}
               type="button"
               target="_blank"
-              className="pBtn  text-center px-3 w-full text-xs py-2">
-              
-                Read More
-              
+              className="pBtn  text-center px-3 w-full text-xs py-2"
+            >
+              Read More
             </Link>
 
             <Link
               href={`tel:+91${props.contactNo}`}
               type="button"
-              className="border  text-center px-3 w-full text-xs py-2">
-              
-                Make a call
-              
+              className="border  text-center px-3 w-full text-xs py-2"
+            >
+              Make a call
             </Link>
             <Link
               href={`tel:+91${props.contactNo}`}
               type="button"
-              className="border  text-center px-3 w-full text-xs py-2">
-              
-                Save
-              
+              className="border  text-center px-3 w-full text-xs py-2"
+            >
+              Save
             </Link>
           </div>
         </div>
@@ -313,16 +310,15 @@ const College = () => {
 
   const NavItem = (props) => {
     return (
-      (<Link
+      <Link
         href={props.location}
         className="text-gray-700 hover:bg-sky-100 pl-5  block  mx-5 py-2 text-sm"
         role="menuitem"
         tabIndex="-1"
-        id="menu-item-0">
-
+        id="menu-item-0"
+      >
         {props.name}
-
-      </Link>)
+      </Link>
     );
   };
 
@@ -429,83 +425,84 @@ const College = () => {
       );
     };
 
-    return <>
-      <div className="relative mb-5 rounded-sm    shadow-md items-center p-5 flex justify-between h-14  bg-white w-full">
-        <div>
-          <ol className="flex h-8 space-x-2">
-            <li className="flex items-center">
-              <Link
-                href="/"
-                rel="noopener noreferrer"
-                title="Back to homepage"
-                className="hover:underline">
+    return (
+      <>
+        <div className="relative mb-5 rounded-sm    shadow-md items-center p-5 flex justify-between h-14  bg-white w-full">
+          <div>
+            <ol className="flex h-8 space-x-2">
+              <li className="flex items-center">
+                <Link
+                  href="/"
+                  rel="noopener noreferrer"
+                  title="Back to homepage"
+                  className="hover:underline"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 20 20"
+                    fill="currentColor"
+                    className="w-5 h-5 pr-1 dark:text-gray-400"
+                  >
+                    <path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"></path>
+                  </svg>
+                </Link>
+              </li>
 
+              <li className="flex items-center space-x-2">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 20 20"
+                  viewBox="0 0 32 32"
+                  aria-hidden="true"
                   fill="currentColor"
-                  className="w-5 h-5 pr-1 dark:text-gray-400"
+                  className="w-2 h-2 mt-1 transform rotate-90 fill-current dark:text-gray-600"
                 >
-                  <path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"></path>
+                  <path d="M32 30.031h-32l16-28.061z"></path>
                 </svg>
+                <a
+                  rel="noopener noreferrer"
+                  href="#"
+                  className="flex items-center px-1 capitalize hover:underline cursor-default"
+                >
+                  Colleges
+                </a>
+              </li>
+            </ol>
+          </div>
 
-              </Link>
-            </li>
-
-            <li className="flex items-center space-x-2">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 32 32"
-                aria-hidden="true"
-                fill="currentColor"
-                className="w-2 h-2 mt-1 transform rotate-90 fill-current dark:text-gray-600"
-              >
-                <path d="M32 30.031h-32l16-28.061z"></path>
-              </svg>
-              <a
-                rel="noopener noreferrer"
-                href="#"
-                className="flex items-center px-1 capitalize hover:underline cursor-default"
-              >
-                Colleges
-              </a>
-            </li>
-          </ol>
-        </div>
-
-        <div className="cursor-pointer relative block md:hidden">
-          <i className="bi bi-funnel-fill mr-4" onClick={toggleUser}></i>
-          <span onClick={toggleUser} className="text-slate-400">
-            Filter
-          </span>
-          <div
-            className={`absolute ${userOpen} right-0 z-10 mt-2 w-80 origin-top-right rounded-sm bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none`}
-            role="menu"
-            aria-orientation="vertical"
-            aria-labelledby="menu-button"
-            tabIndex="-1"
-          >
-            <div className="py-5" role="none">
-              {items.map((item, index) => {
-                return (
-                  <NavItem
-                    location={item.Location}
-                    name={item.Name}
-                    key={index}
-                  />
-                );
-              })}
-              <div className="h-1 mx-5 my-5 bg-slate-50" />
-              <CollegeUnder />
-              <div className="h-1 mx-5 my-5 bg-slate-50" />
-              <DistrictFilter />
-              <div className="h-1  mx-5 my-5 bg-slate-50" />
-              <CollegeNameFilter />
+          <div className="cursor-pointer relative block md:hidden">
+            <i className="bi bi-funnel-fill mr-4" onClick={toggleUser}></i>
+            <span onClick={toggleUser} className="text-slate-400">
+              Filter
+            </span>
+            <div
+              className={`absolute ${userOpen} right-0 z-10 mt-2 w-80 origin-top-right rounded-sm bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none`}
+              role="menu"
+              aria-orientation="vertical"
+              aria-labelledby="menu-button"
+              tabIndex="-1"
+            >
+              <div className="py-5" role="none">
+                {items.map((item, index) => {
+                  return (
+                    <NavItem
+                      location={item.Location}
+                      name={item.Name}
+                      key={index}
+                    />
+                  );
+                })}
+                <div className="h-1 mx-5 my-5 bg-slate-50" />
+                <CollegeUnder />
+                <div className="h-1 mx-5 my-5 bg-slate-50" />
+                <DistrictFilter />
+                <div className="h-1  mx-5 my-5 bg-slate-50" />
+                <CollegeNameFilter />
+              </div>
             </div>
           </div>
         </div>
-      </div>
-    </>;
+      </>
+    );
   };
 
   return (

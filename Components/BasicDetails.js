@@ -72,7 +72,7 @@ const BasicDetails = () => {
             >
               {resMsg && (
                 <div
-                  class="bg-orange-100 text-sm w-full sm:w-2/4  mb-10 font-semibold border-l-4 border-orange-500 text-orange-700 px-4 py-2"
+                  className="bg-orange-100 text-sm w-full sm:w-2/4  mb-10 font-semibold border-l-4 border-orange-500 text-orange-700 px-4 py-2"
                   role="alert"
                 >
                   <p> {resMsg}</p>

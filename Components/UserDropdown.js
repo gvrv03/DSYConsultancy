@@ -1,101 +1,73 @@
 import * as React from "react";
-import Box from "@mui/material/Box";
-import Avatar from "@mui/material/Avatar";
-import Menu from "@mui/material/Menu";
-import MenuItem from "@mui/material/MenuItem";
-import ListItemIcon from "@mui/material/ListItemIcon";
-import Divider from "@mui/material/Divider";
-import IconButton from "@mui/material/IconButton";
-import Tooltip from "@mui/material/Tooltip";
-import PersonAdd from "@mui/icons-material/PersonAdd";
-import Settings from "@mui/icons-material/Settings";
-import Logout from "@mui/icons-material/Logout";
-import { useRouter } from "next/router";
 import { useUserAuth } from "directsecondyearadmission/Context/UserAuthContext";
+import Link from "next/link";
+import { useState } from "react";
 
 export default function UserDropdown() {
-  const [anchorEl, setAnchorEl] = React.useState(null);
   const { user, logOut } = useUserAuth();
-  const open = Boolean(anchorEl);
-  const handleClick = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
-  const handleClose = () => {
-    setAnchorEl(null);
+  const [dropDown, setdropDown] = useState("hidden");
+  const handleDrop = () => {
+    if (dropDown === "hidden") {
+      setdropDown("block");
+    } else {
+      setdropDown("hidden");
+    }
   };
   return (
-    <React.Fragment>
-      <Box sx={{ display: "flex", alignItems: "center", textAlign: "center" }}>
-        <Tooltip title="Account settings">
-          <IconButton
-            onClick={handleClick}
-            size="small"
-            sx={{ ml: 2 }}
-            aria-controls={open ? "account-menu" : undefined}
-            aria-haspopup="true"
-            aria-expanded={open ? "true" : undefined}
-          >
-            <Avatar sx={{ width: 32, height: 32 }}>
-              {user.displayName.charAt(0).toUpperCase()}
-            </Avatar>
-          </IconButton>
-        </Tooltip>
-      </Box>
-      <Menu
-        anchorEl={anchorEl}
-        id="account-menu"
-        open={open}
-        onClose={handleClose}
-        onClick={handleClose}
-        PaperProps={{
-          elevation: 0,
-          sx: {
-            overflow: "visible",
-            filter: "drop-shadow(0px 2px 8px rgba(0,0,0,0.32))",
-            mt: 1.5,
-            "& .MuiAvatar-root": {
-              width: 32,
-              height: 32,
-              ml: -0.5,
-              mr: 1,
-            },
-            "&:before": {
-              content: '""',
-              display: "block",
-              position: "absolute",
-              top: 0,
-              right: 14,
-              width: 10,
-              height: 10,
-              bgcolor: "background.paper",
-              transform: "translateY(-50%) rotate(45deg)",
-              zIndex: 0,
-            },
-          },
-        }}
-        transformOrigin={{ horizontal: "right", vertical: "top" }}
-        anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
+    <div className="relative">
+      <div className="">
+        <div className="w-8 h-8   rounded-full grid place-items-center bg-gray-100 cursor-pointer">
+          {!user.photoURL ? (
+            <i className="bi bi-person-fill"></i>
+          ) : (
+            <img
+
+              onClick={handleDrop}
+            
+              src={user.photoURL}
+              alt={user.displayName}
+              className="rounded-full border-2  border-gray-400 "
+            />
+          )}
+        </div>
+      </div>
+
+      <div
+        className={`absolute  bg-white border ${dropDown} right-0 w-72 p-5 mt-5`}
       >
-        <MenuItem onClick={handleClose}>
-          <Avatar /> Profile
-        </MenuItem>
-        <MenuItem onClick={handleClose}>
-          <Avatar /> My account
-        </MenuItem>
-        <Divider />
-        <MenuItem onClick={handleClose}>
-          <ListItemIcon>
-            <Settings fontSize="small" />
-          </ListItemIcon>
-          Settings
-        </MenuItem>
-        <MenuItem onClick={logOut}>
-          <ListItemIcon>
-            <Logout fontSize="small" />
-          </ListItemIcon>
-          Logout
-        </MenuItem>
-      </Menu>
-    </React.Fragment>
+        <h2>
+          Hello !{" "}
+          <span className="font-semibold pColor">{user.displayName} </span>
+        </h2>
+
+        <div className="h-1 mt-5  bg-gray-200" />
+        <Link onClick={handleDrop} href="/Profile" className="mt-5 flex gap-5">
+          <i className="bi bi-person-fill"></i>
+          <span className="text-gray-500">Profile</span>
+        </Link>
+
+        <Link onClick={handleDrop} href="/Help" className="mt-5 flex gap-5">
+          <i className="bi bi-info-circle-fill"></i>
+          <span className="text-gray-500">Help</span>
+        </Link>
+
+        <Link
+          onClick={handleDrop}
+          href="/AccountSetting"
+          className="mt-5 flex gap-5"
+        >
+          <i className="bi bi-gear-fill"></i>
+          <span className="text-gray-500">Account Setting</span>
+        </Link>
+
+        <button
+          onClick={logOut}
+          className="mt-5 pBtn w-full py-2  justify-center font-semibold flex gap-5"
+        >
+          <i className="bi bi-gear-fill"></i>
+          <span className="">Sign Out</span>
+        </button>
+      </div>
+    </div>
   );
 }

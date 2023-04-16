@@ -255,7 +255,7 @@ const AllCollege = () => {
           <img
             className="rounded-full border-blue-900 border-2 h-20 w-20 "
             src={props.image}
-            alt=""
+            alt={props.cName}
           />
         </div>
         <div className="font-bold flex justify-between  text-blue-900  text-xs py-2">

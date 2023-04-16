@@ -53,7 +53,7 @@ const AllColleges = () => {
                       <img
                         src={i.image}
                         className="w-10 h-10 rounded-full  border border-blue-900"
-                        alt=""
+                        alt={i.name}
                       />{" "}
                     </td>
                     <td className="px-3 py-2  mt-2 border-none">{i.name}</td>

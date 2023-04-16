@@ -72,7 +72,12 @@ const Home = () => {
 
         <div className="sm:mb-0 mb-10">
           {/* <img width={100} src="/img/counsellor2.svg" alt="" /> */}
-          <Image src="/img/counsellor2.svg" width={130} height={130} />
+          <Image
+            alt="DSY counsellor"
+            src="/img/counsellor2.svg"
+            width={130}
+            height={130}
+          />
         </div>
       </div>
     );
@@ -97,7 +102,12 @@ const Home = () => {
         </div>
 
         <div className="sm:mb-0 mb-10">
-          <Image width={130} height={130} src="/img/Insurance.svg" alt="" />
+          <Image
+            width={130}
+            height={130}
+            src="/img/Insurance.svg"
+            alt="DSY Insurance"
+          />
         </div>
       </div>
     );
@@ -149,7 +159,7 @@ const Home = () => {
                 width={180}
                 height={130}
                 src="/img/counsellor.svg"
-                alt=""
+                alt="DSY counsellor"
               />
             </div>
           </div>
@@ -176,7 +186,7 @@ const Home = () => {
                 width={180}
                 height={130}
                 src="/img/counsellor.svg"
-                alt=""
+                alt="DSY counsellor"
               />
             </div>
           </div>

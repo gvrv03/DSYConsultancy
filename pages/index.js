@@ -2,13 +2,15 @@ import Pricing from "directsecondyearadmission/Components/Pricing";
 import Link from "next/link";
 import Steps from "directsecondyearadmission/Components/Steps";
 import Typewriter from "typewriter-effect";
-import Teams from "directsecondyearadmission/Components/Teams";
+import Background from "../public/img/heroBG.svg";
 import { useContext, useState, useEffect } from "react";
 import Head from "next/head";
 import collegeContext from "directsecondyearadmission/Context/collegeContext";
 import { useRouter } from "next/router";
 import Loading from "directsecondyearadmission/Components/Loading";
 import { useUserAuth } from "directsecondyearadmission/Context/UserAuthContext";
+import NewsLetter from "directsecondyearadmission/Components/NewsLetter";
+import MarquHome from "directsecondyearadmission/Components/MarquHome";
 const CollegeCard = () => {
   const Card = () => {
     return (
@@ -120,7 +122,6 @@ const Home = () => {
       icon: "bi-ui-checks",
     },
   ];
-  const status = useContext(collegeContext);
   const { user } = useUserAuth();
 
   const HomeAds = () => {
@@ -151,27 +152,9 @@ const Home = () => {
               content="DSY consultancy | Direct Second Year Admission Consultancy"
             />
           </Head>
+          <MarquHome />
 
-          <section className="w-full bg-sky-50 mb-5 sm:mb-0">
-            <div className="container mt-14 px-5 m-auto ">
-              <i className="bi text-2xl justify-start items-center py-5 bi-megaphone-fill flex">
-                <marquee
-                  direction="right"
-                  scrollamount="12"
-                  className="px-5 text-base"
-                >
-                  Admission for Direct second Year will be started{" "}
-                  <span className="ml-5 ">
-                    <a href="/Home " className="cursor-pointer z-50">
-                      Click Here
-                    </a>
-                  </span>
-                </marquee>
-              </i>
-            </div>
-          </section>
-
-          <section className="  h-screen md:h-full  heroBg text-black sm:h-auto   ">
+          <section className=" bg-white  h-screen py-10  md:-mt-28 text-black    ">
             <div
               data-aos="fade-up"
               data-aos-delay="100"
@@ -236,7 +219,7 @@ const Home = () => {
               {listUser.map((listUsers, index) => (
                 <div
                   data-aos="fade-up"
-                  data-aos-delay={300}
+                  // data-aos-delay={300}
                   className="flex items-center justify-start sm:justify-center py-4 sm:py-6 w-8/12 px-4 sm:w-auto mx-auto sm:mx-0"
                   key={index}
                 >
@@ -282,6 +265,8 @@ const Home = () => {
           <Steps />
           <Pricing />
           {/* <Teams /> */}
+
+          <NewsLetter />
         </>
       )}
     </>

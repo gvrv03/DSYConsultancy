@@ -77,7 +77,7 @@ const Steps = () => {
             </div>
           </div>
           <div>
-            <img src="/img/steps.svg" alt="" srcset="" />
+            <img src="/img/steps.svg" alt="" srcSet="" />
           </div>
         </div>
 

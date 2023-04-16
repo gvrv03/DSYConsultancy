@@ -1,24 +1,20 @@
 import HomeLayout from "directsecondyearadmission/Layout/HomeLayout";
 import React, { useState, useEffect } from "react";
-import baseUrl from "directsecondyearadmission/baseUrl";
 
 import Link from "next/link";
 import Head from "next/head";
-import collegeContext from "directsecondyearadmission/Context/collegeContext";
-import { useContext } from "react";
-import { useRouter } from "next/router";
-import { getUserData } from "directsecondyearadmission/quieries/UserDataQuieries";
 import {
   allCategory,
   allColleges,
 } from "directsecondyearadmission/quieries/CollegeDataQuieries";
 import BasicDetails from "directsecondyearadmission/Components/BasicDetails";
-import { ModelHeader } from "directsecondyearadmission/Components/ModelHeader";
 import ContactDetails from "directsecondyearadmission/Components/ContactDetails";
 import EducationDetails from "directsecondyearadmission/Components/EducationDetails";
 import PreferenceDetails from "directsecondyearadmission/Components/PreferenceDetails";
+import { useUserAuth } from "directsecondyearadmission/Context/UserAuthContext";
 
 const Profile = ({ CollegeData }) => {
+  const { user } = useUserAuth();
   return (
     <HomeLayout>
       <Head>

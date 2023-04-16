@@ -28,7 +28,7 @@ const Nav = () => {
       <li
         className={` ${
           router.pathname == props.location && "text-blue-600"
-        } block   py-2  pl-3 pr-4 text-sm rounded-sm  md:p-0`}
+        } block   py-2 font-semibold  pl-3 pr-4 text-sm rounded-sm  md:p-0`}
       >
         <Link href={props.location} onClick={closeNav} aria-current="page">
           <i
@@ -68,7 +68,7 @@ const Nav = () => {
 
   return (
     <>
-      <nav className="bg-white  sm:px-4 py-2.5 0 fixed w-full z-20 top-0 left-0 border-b border-gray-200 ">
+      <nav className="  sm:px-4 py-2.5  bg-white fixed w-full z-20 top-0 left-0 ">
         <div className="container  flex px-5 flex-wrap items-center justify-between mx-auto">
           <Link href="/" className="">
             <img
@@ -124,7 +124,7 @@ const Nav = () => {
             id="navbar-sticky"
           >
             <ul
-              className={`md:flex flex-col  hidden  bg-gray-50 md:flex-row md:space-x-8 md:mt-0 md:text-sm md:font-medium md:border-0 md:bg-white  `}
+              className={`md:flex flex-col  hidden   md:flex-row md:space-x-8 md:mt-0 md:text-sm md:font-medium md:border-0   `}
             >
               {TopNav.map((item, index) => {
                 return (
@@ -199,7 +199,7 @@ const Nav = () => {
           ) : (
             <div className="mx-5 py-5 font-bold text-2xl pColor border-b">
               {/* DSY */}
-              <img src="/img/DSY.svg" alt="" className="w-24" />
+              <img src="/img/DSY.svg" alt="DSY logo" className="w-24" />
             </div>
           )}
           <div className="p-5">
