@@ -3,6 +3,7 @@ import { useUserContext } from "directsecondyearadmission/Context/UserContext";
 import React from "react";
 import { useState } from "react";
 import ModelHeader from "./ModelHeader";
+import VerifyPhone from "./VerifyPhone";
 
 const ContactDetails = ({ userData }) => {
   const [modalOpen, setModalOpen] = useState("hidden");
@@ -64,6 +65,13 @@ const ContactDetails = ({ userData }) => {
                 </div>
               )}
               <div className="grid grid-cols-1   sm:grid-cols-2 gap-5 w-full sm:w-2/4 ">
+                <div>
+                  <div className="leading-7 text-sm text-gray-600">
+                    Mobile No.
+                  </div>
+                  <VerifyPhone />
+                </div>
+
                 <div className="flex flex-col ">
                   <label
                     htmlFor="email"
