@@ -170,9 +170,30 @@ export function UserContexProvider({ children }) {
     }
   };
 
+  const reportIssue = async (issue, objectId) => {
+    const res = await fetch("/api/reportIssue", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        issue: issue,
+        objectID: objectId,
+      }),
+    });
+
+    const res2 = await res.json();
+    if (res2.msg) {
+      return res2.msg;
+    } else {
+      return res2.error;
+    }
+  };
+
   return (
     <userContext.Provider
       value={{
+        reportIssue,
         updateBasicDetailsUser,
         updateUserContact,
         updateEdutDetailsUser,

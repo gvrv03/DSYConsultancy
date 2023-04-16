@@ -2,6 +2,9 @@ import HomeLayout from "directsecondyearadmission/Layout/HomeLayout";
 import React from "react";
 import Head from "next/head";
 import Link from "next/link";
+import { useUserContext } from "directsecondyearadmission/Context/UserContext";
+import { useState } from "react";
+import VerifyPhone from "directsecondyearadmission/Components/VerifyPhone";
 
 const NotiRemind = () => {
   return (
@@ -73,18 +76,54 @@ const NotiRemind = () => {
 };
 
 const ReportIssue = () => {
+  const { reportIssue, allUserDetail } = useUserContext();
+  const [issue, setissue] = useState("");
+  const [resMsg, setresMsg] = useState("");
+  if (resMsg) {
+    setTimeout(() => {
+      setresMsg("");
+    }, 2000);
+  }
+  const onChange = (e) => {
+    setissue({
+      ...issue,
+      [e.target.name]: e.target.value,
+    });
+  };
+  const handleClick = async (e) => {
+    e.preventDefault();
+    const res = await reportIssue(issue.issueName, allUserDetail._id);
+    setresMsg(res);
+    // console.log(res);
+  };
   return (
     <div className="bg-white p-5  shadow-md mt-5 rounded-sm ">
       <p className="font-bold text-lg">Report an Issue</p>
 
       <textarea
+        onChange={onChange}
+        value={issue.issueName ? issue.issueName : ""}
+        name="issueName"
         rows="5"
         placeholder="Which issue do you have?"
         className="border w-full mt-5 bg-white   outline-none p-5 text-sm"
       ></textarea>
 
+      {resMsg && (
+        <div
+          class="bg-orange-100 text-sm w-full mb-10 font-semibold border-l-4 border-orange-500 text-orange-700 px-4 py-2"
+          role="alert"
+        >
+          <p> {resMsg}</p>
+        </div>
+      )}
+
       <div className="flex justify-end mt-5">
-        <button type="button" className="pBtn px-10 rounded-sm   w-52 py-2">
+        <button
+          onClick={handleClick}
+          type="button"
+          className="pBtn px-10 rounded-sm   w-52 py-2"
+        >
           Submit
         </button>
       </div>
@@ -92,65 +131,60 @@ const ReportIssue = () => {
   );
 };
 
+const PasswordChange = () => {
+  return (
+    <div className=" bg-white p-5  flex flex-col justify-between gap-2 w-full">
+      {" "}
+      <h4 className="font-semibold mb-5">Change Password</h4>
+      <input
+        type="text"
+        placeholder="Enter the password"
+        className="border outline-none rounded-sm w-full px-2 py-2"
+      />
+      <Link href="/Forgot" className="text-xs text-right w-full ">
+        Forgot Password ?
+      </Link>
+      <button className="pBtn py-2">Update Password</button>
+    </div>
+  );
+};
+
+const EmailChange = () => {
+  return (
+    <div className=" bg-white p-5  flex flex-col justify-between gap-2 w-full">
+      {" "}
+      <h4 className="font-semibold mb-5">Change E-mail</h4>
+      <input
+        type="text"
+        placeholder="Enter the Email"
+        className="border outline-none rounded-sm w-full px-2 py-2"
+      />
+      <button className="pBtn py-2">Update Password</button>
+    </div>
+  );
+};
+
 const AccountSetting = () => {
   return (
     <HomeLayout>
-       <Head>
+      <Head>
         <title>DSY consultancy | Account Setting</title>
         <meta
           name="keywords"
           content="Direct Second Year Admission, Consultancy Services, Admission Assistance, Education Counseling, Admission Consultancy, College Admission Guidance, Admission Process, Admission Requirements, Engineering Admissions, After Diploma Admissions, DSY, Direct Second Year Admission Consultancy | DSY, Direct Second Year Admission Consultancy, Direct Second Year Admission, DSY consultancy, DSY consultancy | Account Setting"
         />
 
-        <meta
-          name="title"
-          content="DSY consultancy | Account Setting"
-        />
+        <meta name="title" content="DSY consultancy | Account Setting" />
       </Head>
       <NotiRemind />
       <ReportIssue />
-
-      <div className="bg-white shadow-md p-5  mt-5 rounded-sm ">
-        <p className="font-bold text-lg">Change Password</p>
-        <div className="mt-5 flex flex-col sm:flex-row gap-5">
-          <div className="w-full ">
-            <p className="text-slate-400">Current Password</p>
-            <input
-              type="text"
-              name=""
-              className="border bg-white  text-sm outline-none w-full mt-2 rounded-sm px-4 py-2"
-            />
-          </div>
-
-          <div className="w-full ">
-            <p className="text-slate-400">New Password</p>
-            <input
-              type="text"
-              name=""
-              className="border bg-white  text-sm outline-none w-full mt-2 rounded-sm px-4 py-2"
-            />
-          </div>
-
-          <div className="w-full ">
-            <p className="text-slate-400">Conform Password</p>
-            <input
-              type="text"
-              name=""
-              className="border bg-white  text-sm outline-none w-full mt-2 rounded-sm px-4 py-2"
-            />
-          </div>
+      <div className=" mt-5 flex flex-col md:flex-row gap-5">
+        <EmailChange />
+        <PasswordChange />
+        <div className="bg-white h-auto p-5 w-full">
+          <h4 className="font-semibold mb-5">Update Phone Number</h4>
+          <VerifyPhone />
         </div>
-        <p className="text-xs text-right my-5 pColor font-semibold ">
-          <Link href="/Forgot">
-             Forgot Password?
-          </Link>
-        </p>
-       <div className="mt-5 flex justify-end">
-       <button type="button" className="pBtn px-10 w-52 rounded-sm py-2">
-          {" "}
-          Change password
-        </button>
-       </div>
       </div>
     </HomeLayout>
   );

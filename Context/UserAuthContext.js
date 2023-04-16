@@ -13,7 +13,6 @@ import {
   updateProfile,
   sendEmailVerification,
   //roles
-  getIdTokenResult,
   updatePhoneNumber,
   RecaptchaVerifier,
   PhoneAuthProvider,
@@ -50,9 +49,9 @@ export function UserAuthContexProvider({ children }) {
         applicationVerifier
       );
       setverificatioIDPhone(verificationId);
-      return "OTP send to " + phoneNo;
+      return { msg: "Send OTP to " + phoneNo };
     } catch (error) {
-      return "Try after some Time";
+      return { error: error.code.slice(5, error.code.length) };
     }
   };
 
@@ -62,10 +61,11 @@ export function UserAuthContexProvider({ children }) {
         verificatioIDPhone,
         otp
       );
-      await updatePhoneNumber(user, phoneCredential);
-      return "Update Phone No";
+      const res = await updatePhoneNumber(user, phoneCredential);
+      console.log(res);
+      return { msg: "Phone Nmber Updated" };  
     } catch (error) {
-      return "Try after some Time";
+      return { error: error.code.slice(5, error.code.length) };
     }
   };
 

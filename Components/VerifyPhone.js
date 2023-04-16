@@ -11,14 +11,22 @@ const VerifyPhone = () => {
   const [verifyOTP, setverifyOTP] = useState("");
   const [resMsg, setresMsg] = useState("");
   const { sendOTP, verifyOTPServer, user } = useUserAuth();
+  const [spinner, setspinner] = useState(false);
   const sendOTPClient = async (e) => {
     e.preventDefault();
+    setspinner(true);
     if (phoneNo) {
       const res = await sendOTP(phoneNo);
-      setresMsg(res);
-      setsendCode(true);
+      if (res.msg) {
+        setresMsg(res.msg);
+        setsendCode(true);
+      } else {
+        setresMsg(res.error);
+      }
+      setspinner(false);
     } else {
       setresMsg("Enter Phone Number");
+      setspinner(false);
     }
   };
 
@@ -30,9 +38,17 @@ const VerifyPhone = () => {
 
   const verifyOTPClient = async (e) => {
     e.preventDefault();
+    setspinner(true);
+
     const res = await verifyOTPServer(parseInt(verifyOTP));
-    setresMsg(res);
-    setsendCode(false);
+    if (res.msg) {
+      setresMsg(res);
+      setsendCode(false);
+      setspinner(false);
+    } else {
+      setresMsg(res.error);
+      setspinner(false);
+    }
   };
 
   const handleOnChange = (data) => {
@@ -65,8 +81,14 @@ const VerifyPhone = () => {
             <button
               onClick={sendOTPClient}
               type="button"
-              className=" rounded-sm pBtn px-10 py-2 "
+              className=" rounded-sm flex justify-center items-center gap-10 pBtn px-10 py-2 "
             >
+              {spinner && (
+                <img
+                  src="https://media.tenor.com/wpSo-8CrXqUAAAAj/loading-loading-forever.gif"
+                  className="w-5"
+                />
+              )}
               Send Code{" "}
             </button>
           )}
@@ -82,8 +104,14 @@ const VerifyPhone = () => {
               <button
                 onClick={verifyOTPClient}
                 type="button"
-                className="  rounded-sm pBtn mt-5 px-10 py-2 "
+                className="  rounded-sm flex justify-center gap-10 items-center pBtn mt-5 px-10 py-2 "
               >
+                {spinner && (
+                  <img
+                    src="https://media.tenor.com/wpSo-8CrXqUAAAAj/loading-loading-forever.gif"
+                    className="w-5"
+                  />
+                )}
                 Verify OTP
               </button>
             </div>

@@ -1,4 +1,3 @@
-
 import { useUserAuth } from "directsecondyearadmission/Context/UserAuthContext";
 import Auth from "directsecondyearadmission/Layout/Auth";
 import Link from "next/link";
@@ -9,7 +8,7 @@ const Forgot = () => {
   const [userData, setuserData] = useState({});
   const [requiredState, setRequired] = useState(false);
   const [msg, setmsg] = useState("");
-  const { resetPassword } = useUserAuth();
+  const { resetPassword, user } = useUserAuth();
 
   const onChange = (e) => {
     setuserData({
@@ -29,10 +28,11 @@ const Forgot = () => {
       setmsg(error.code);
     }
   };
-  return (
-    <Auth>
-      <div className="w-full bg-white rounded-sm shadow-lg md:mt-0 sm:max-w-md xl:p-0 ">
-        <div className="px-5 space-y-4 md:space-y-6 pt-5 ">
+
+  const Forgotten = () => {
+    return (
+      <div className="w-full bg-white p-5 rounded-sm shadow-lg md:mt-0 sm:max-w-md  ">
+        <div className="  pt-5 ">
           <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 text-center md:text-2xl ">
             Forgot Password
           </h1>
@@ -41,7 +41,7 @@ const Forgot = () => {
               {msg}
             </h3>
           )}
-          <form onSubmit={handleSubmit} className="space-y-4 md:space-y-6">
+          <form onSubmit={handleSubmit} className=" flex flex-col gap-4">
             <div>
               <div className="block mb-2 text-sm font-medium text-gray-900 ">
                 Your email
@@ -64,7 +64,7 @@ const Forgot = () => {
             >
               Forgot Password
             </button>
-            <p className="text-sm font-light text-gray-500  dark:text-gray-400">
+            <p className="text-sm font-light text-center text-gray-500  dark:text-gray-400">
               Don&apos;t have an account yet ?{" "}
               <Link
                 href="/SignUp"
@@ -76,6 +76,18 @@ const Forgot = () => {
           </form>
         </div>
       </div>
+    );
+  };
+  if (user) {
+    return (
+      <div className="w-full h-screen grid place-items-center p-5">
+        <Forgotten />
+      </div>
+    );
+  }
+  return (
+    <Auth>
+      <Forgotten />
     </Auth>
   );
 };
