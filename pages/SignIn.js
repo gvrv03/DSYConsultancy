@@ -7,10 +7,14 @@ import { useUserAuth } from "directsecondyearadmission/Context/UserAuthContext";
 const SignIn = () => {
   const [userData, setuserData] = useState({});
   const [requiredState, setRequired] = useState(false);
-  const { signUIn, user } = useUserAuth;
+  const { signIn, user } = useUserAuth();
   const [msg, setmsg] = useState("");
   const router = useRouter();
-
+  if (msg) {
+    setTimeout(() => {
+      setmsg("");
+    }, 2000);
+  }
   if (user) {
     router.push("/");
   }
@@ -24,10 +28,9 @@ const SignIn = () => {
     e.preventDefault();
     setmsg("");
     try {
-      await signUIn(userData.email, userData.password);
-      // router.push("/");
+      await signIn(userData.email, userData.password);
     } catch (error) {
-      setmsg(error.code);
+      setmsg(error.code.slice(5, error.code.length));
     }
   };
   console.log(userData);
@@ -38,10 +41,13 @@ const SignIn = () => {
           <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 text-center md:text-2xl ">
             Sign In
           </h1>
-          {msg != "" && (
-            <h3 className="bg-red-100 text-center py-2 border border-red-200 font-bold text-red-700 ">
-              {msg}
-            </h3>
+          {msg && (
+            <div
+              className="bg-orange-100 text-sm w-full  mb-10 font-semibold border-l-4 border-orange-500 text-orange-700 px-4 py-2"
+              role="alert"
+            >
+              <p> {msg}</p>
+            </div>
           )}
 
           <form onSubmit={handleSubmit} className="space-y-4 md:space-y-6">

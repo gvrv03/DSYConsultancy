@@ -8,8 +8,13 @@ import { useRouter } from "next/router";
 const SignIn = () => {
   const [userData, setuserData] = useState({});
   const { signUp, user } = useUserAuth();
-  const [requiredState, setRequired] = useState(false);
+  const [requiredState, setRequired] = useState(true);
   const [msg, setmsg] = useState("");
+  if (msg) {
+    setTimeout(() => {
+      setmsg("");
+    }, 2000);
+  }
   const router = useRouter();
   const onChange = (e) => {
     setuserData({
@@ -17,17 +22,20 @@ const SignIn = () => {
       [e.target.name]: e.target.value,
     });
   };
-  // if (user) {
-  //   router.push("/");
-  // }
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     setmsg("");
-    try {
-      await signUp(userData.email, userData.password, userData.userName);
-    } catch (error) {
-      setmsg(error.code);
+
+    const res = await signUp(
+      userData.email,
+      userData.password,
+      userData.userName,
+      userData.gender
+    );
+    if (res.msg) {
+      setmsg(res.msg);
+    } else {
+      setmsg(res.error);
     }
   };
   return (
@@ -37,10 +45,13 @@ const SignIn = () => {
           <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 text-center md:text-2xl ">
             Sign Up
           </h1>
-          {msg != "" && (
-            <h3 className="bg-red-100 text-center py-2 border border-red-200 font-bold text-red-700 ">
-              {msg}
-            </h3>
+          {msg && (
+            <div
+              className="bg-orange-100 text-sm w-full  mb-10 font-semibold border-l-4 border-orange-500 text-orange-700 px-4 py-2"
+              role="alert"
+            >
+              <p> {msg}</p>
+            </div>
           )}
 
           <form onSubmit={handleSubmit} className="space-y-4 md:space-y-6">
@@ -59,6 +70,40 @@ const SignIn = () => {
                 className=" text-gray-900 sm:text-sm rounded-sm  outline-none block w-full p-2.5 bg-gray-100 "
                 placeholder="Your Name"
               />
+            </div>
+            <div>
+              <label
+                htmlFor="gender"
+                className="block mb-2 text-sm font-medium text-gray-900 "
+              >
+                You are
+              </label>
+              <div className=" flex gap-5">
+                <div className="flex justify-start gap-2 text-xs">
+                  <input
+                    type="radio"
+                    required={requiredState}
+                    onChange={onChange}
+                    name="gender"
+                    value="Male"
+                    className=" text-gray-900 sm:text-sm rounded-sm  outline-none block w-full p-2.5 bg-gray-100 "
+                    placeholder="Your Name"
+                  />
+                  <span>Male</span>
+                </div>
+                <div className="flex justify-start gap-2 text-xs">
+                  <input
+                    type="radio"
+                    required={requiredState}
+                    onChange={onChange}
+                    name="gender"
+                    value="Female"
+                    className=" text-gray-900 sm:text-sm rounded-sm  outline-none block w-full p-2.5 bg-gray-100 "
+                    placeholder="Your Name"
+                  />
+                  <span>Female</span>
+                </div>
+              </div>
             </div>
             <div>
               <label

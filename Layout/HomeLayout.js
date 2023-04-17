@@ -47,6 +47,8 @@ export const SideUserData = () => {
 export default function HomeLayout({ children }) {
   const router = useRouter();
   const { user } = useUserAuth();
+  const { emailVerified, phoneNumber } = user ? user : {};
+  console.log(user);
   const { allUserDetail } = useUserContext();
 
   const ListItem = (props) => {
@@ -121,9 +123,16 @@ export default function HomeLayout({ children }) {
               {/* <div className="sideAds">Space for ads</div> */}
             </aside>
 
-            <div className="md:w-4/5 w-full h-screen  overflow-y-scroll mt-20  md:mt-0 ">
-              {children}
-            </div>
+            {emailVerified === false || phoneNumber === null ? (
+              <div className="md:w-4/5 bg-white p-5 w-full h-screen  overflow-y-scroll mt-20  md:mt-0 ">
+                {emailVerified === false && "Please Verify Your Email"}
+                {phoneNumber === null && "Please Verify Your Phone Nuumber"}
+              </div>
+            ) : (
+              <div className="md:w-4/5 w-full h-screen  overflow-y-scroll mt-20  md:mt-0 ">
+                {children}
+              </div>
+            )}
           </div>
         </section>
       </>

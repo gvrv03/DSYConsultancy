@@ -16,8 +16,7 @@ const Nav = () => {
   const [overlay, setOverlay] = useState("");
   const { allUserDetail } = useUserContext();
   const { token, user } = useUserAuth();
-  // console.log(token);
-  // const { user.displayName, photoURL } = user && user;
+  const { photoURL, displayName } = user ? user : {};
   const closeNav = () => {
     if (nav == "block") {
     }
@@ -173,18 +172,14 @@ const Nav = () => {
             <div className=" flex  flex-col justify-between items-start  bgColor w-full top-0 p-5">
               <div className="w-24 grid place-items-center h-24 rounded-full overflow-hidden mb-5 border-white border-4 ">
                 <span className="font-extrabold  grid place-items-center  text-black bg-white w-full h-full text-5xl">
-                  {user.photoURL ? (
-                    <img src={user.photoURL} width={100} height={100} />
-                  ) : (
-                    status.displayName.charAt(0)
-                  )}
+                  {photoURL && <img src={photoURL} width={100} height={100} />}
                 </span>
               </div>
               <h1 className="text-white  font-bold text-xl">
                 Welcome to DSY Consultancy
               </h1>
               <h1 className="text-white my-4  font-semibold text-lg">
-                {user.displayName}
+                {displayName}
               </h1>
               <Link
                 onClick={function () {

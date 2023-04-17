@@ -18,12 +18,10 @@ export default function UserDropdown() {
       <div className="">
         <div className="w-8 h-8   rounded-full grid place-items-center bg-gray-100 cursor-pointer">
           {!user.photoURL ? (
-            <i className="bi bi-person-fill"></i>
+            <i onClick={handleDrop} className="bi bi-person-fill"></i>
           ) : (
             <img
-
               onClick={handleDrop}
-            
               src={user.photoURL}
               alt={user.displayName}
               className="rounded-full border-2  border-gray-400 "

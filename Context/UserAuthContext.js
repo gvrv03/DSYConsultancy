@@ -16,19 +16,39 @@ import {
   updatePhoneNumber,
   RecaptchaVerifier,
   PhoneAuthProvider,
-  
-  
 } from "firebase/auth";
 
 import { auth } from "directsecondyearadmission/firebase";
 import { useEffect } from "react";
 import { useState } from "react";
+import { useAdminContext } from "./AdminContext";
 
 const userAuthContext = createContext();
 export function UserAuthContexProvider({ children }) {
   const [user, setuser] = useState("");
   const [token, settoken] = useState("");
   const [verificatioIDPhone, setverificatioIDPhone] = useState("");
+
+  const [toastMsg, settoastMsg] = useState({
+    state: "hidden",
+    icon: "success",
+    msg: "Already Exist",
+  });
+  const closeModal = () => {
+    settoastMsg({
+      state: "hidden",
+      icon: "",
+      msg: "",
+    });
+  };
+
+  const openModal = (icon, msg) => {
+    settoastMsg({
+      state: "block",
+      icon: icon,
+      msg: msg,
+    });
+  };
 
   useEffect(() => {
     const getToken = () => {
@@ -65,58 +85,65 @@ export function UserAuthContexProvider({ children }) {
       );
       const res = await updatePhoneNumber(user, phoneCredential);
       console.log(res);
-      return { msg: "Phone Nmber Updated" };  
+      return { msg: "Phone Nmber Updated" };
     } catch (error) {
       return { error: error.code.slice(5, error.code.length) };
     }
   };
 
-  async function signUp(emailUser, password, name) {
-    const res = await createUserWithEmailAndPassword(auth, emailUser, password);
-    const { displayName, email, photoURL, reloadUserInfo, uid } = res.user;
+  async function signUp(emailUser, password, name, gender) {
+    try {
+      const res = await createUserWithEmailAndPassword(
+        auth,
+        emailUser,
+        password
+      );
+      await updateProfile(auth.currentUser, {
+        displayName: name,
+        photoURL:
+          gender === "Male" ? "/img/maleUser.svg" : "/img/femaleUser.svg",
+      });
+      const { displayName, email, photoURL, reloadUserInfo, uid } =
+        auth.currentUser;
+      await fetch("/api/signUp", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          userPhoto: photoURL,
+          fName: displayName,
+          email: email,
+          password: reloadUserInfo.passwordHash,
+          firebaseID: uid,
+        }),
+      });
 
-    await fetch("/api/signUp", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        userPhoto: photoURL,
-        fName: displayName,
-        email: email,
-        password: reloadUserInfo.passwordHash,
-        firebaseID: uid,
-      }),
-    });
-    await updateProfile(auth.currentUser, {
-      displayName: name,
-      photoURL: "https://example.com/jane-q-user/profile2.jpg",
-    });
-    console.log(displayName);
-    await sendEmailVerification(res.user);
-    return res;
+      await sendEmailVerification(res.user);
+      return { msg: "Account Created" };
+    } catch (error) {
+      console.log(error);
+      return { error: error.code.slice(5, error.code.length) };
+    }
   }
 
   async function updateUserProfile() {
     const res = await updateProfile(auth.currentUser, {
       displayName: "Gaurav NAenaware",
-      phoneNumber: "+11234567890",
       photoURL: "https://example.com/jane-q-user/profile2.jpg",
     })
       .then(() => {
         console.log("Profile updated!");
-        // ...
       })
       .catch((error) => {
         console.log(error);
-        // ...
       });
 
     console.log(auth.currentUser);
     return res;
   }
 
-  async function signUIn(email, password) {
+  async function signIn(email, password) {
     const res = await signInWithEmailAndPassword(auth, email, password);
     localStorage.setItem("token", await res.user.getIdToken());
     localStorage.setItem("firebaseuid", res.user.uid);
@@ -125,6 +152,7 @@ export function UserAuthContexProvider({ children }) {
   function logOut() {
     return signOut(auth);
   }
+
   async function signWithGoogle() {
     const googleAuthProvider = new GoogleAuthProvider();
     const res = await signInWithPopup(auth, googleAuthProvider);
@@ -172,7 +200,7 @@ export function UserAuthContexProvider({ children }) {
       value={{
         user,
         signUp,
-        signUIn,
+        signIn,
         logOut,
         token,
         updateUserProfile,
