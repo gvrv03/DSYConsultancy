@@ -12,6 +12,8 @@ const VerifyPhone = () => {
   const [resMsg, setresMsg] = useState("");
   const { sendOTP, verifyOTPServer, user } = useUserAuth();
   const [spinner, setspinner] = useState(false);
+
+
   const sendOTPClient = async (e) => {
     e.preventDefault();
     setspinner(true);
@@ -36,13 +38,15 @@ const VerifyPhone = () => {
     }, 2000);
   }
 
+
+
   const verifyOTPClient = async (e) => {
     e.preventDefault();
     setspinner(true);
 
     const res = await verifyOTPServer(parseInt(verifyOTP));
     if (res.msg) {
-      setresMsg(res);
+      setresMsg(res.msg);
       setsendCode(false);
       setspinner(false);
     } else {
@@ -81,6 +85,7 @@ const VerifyPhone = () => {
             <button
               onClick={sendOTPClient}
               type="button"
+              disabled={spinner ? true : false}
               className=" rounded-sm flex justify-center items-center gap-10 pBtn px-10 py-2 "
             >
               {spinner && (
@@ -95,16 +100,25 @@ const VerifyPhone = () => {
           {sendCode && (
             <div className="mt-5 flex flex-col gap-2">
               <OtpForm
-                className=""
                 containerStyle={WidthFull}
                 onChange={handleOnChange}
                 numberOfInputs={6}
                 secureInput={false}
               />
+              <div>
+                <button
+                  onClick={sendOTPClient}
+                  type="button"
+                  className=" pColor float-right font-semibold my-2 "
+                >
+                  Resend OTP ?
+                </button>
+              </div>
               <button
                 onClick={verifyOTPClient}
+                disabled={spinner ? true : false}
                 type="button"
-                className="  rounded-sm flex justify-center gap-10 items-center pBtn mt-5 px-10 py-2 "
+                className="  rounded-sm flex justify-center gap-10 items-center pBtn  px-10 py-2 "
               >
                 {spinner && (
                   <img
