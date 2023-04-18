@@ -2,7 +2,9 @@ import HomeLayout from "directsecondyearadmission/Layout/HomeLayout";
 import React from "react";
 import Head from "next/head";
 import Image from "next/image";
+import { useUserContext } from "directsecondyearadmission/Context/UserContext";
 const Counsellor = () => {
+  const { openCalender } = useUserContext();
   return (
     <HomeLayout>
       <Head>
@@ -25,7 +27,13 @@ const Counsellor = () => {
             </p>
           </div>
 
-          <button type="button" className="pBtn px-10 mt-5 py-3">
+          <button
+            onClick={() => {
+              openCalender("Counselling");
+            }}
+            type="button"
+            className="pBtn px-10 mt-5 py-3"
+          >
             {" "}
             Schedule a call
           </button>

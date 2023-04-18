@@ -11,7 +11,7 @@ import { useUserAuth } from "directsecondyearadmission/Context/UserAuthContext";
 import { useUserContext } from "directsecondyearadmission/Context/UserContext";
 import VerifyPhone from "directsecondyearadmission/Components/VerifyPhone";
 const Home = () => {
-  const context = useContext(collegeContext);
+  const { openCalender } = useUserContext();
 
   const [coOrdinates, setcoOrdinates] = useState({});
   const [token, setToken] = useState("");
@@ -64,7 +64,13 @@ const Home = () => {
             </p>
           </div>
 
-          <button type="button" className="pBtn px-10 mt-5 py-3">
+          <button
+            onClick={() => {
+              openCalender("Counselling");
+            }}
+            type="button"
+            className="pBtn px-10 mt-5 py-3"
+          >
             {" "}
             Schedule a call
           </button>
@@ -95,7 +101,13 @@ const Home = () => {
             </p>
           </div>
 
-          <button type="button" className="pBtn px-10 mt-5 py-3">
+          <button
+            onClick={() => {
+              openCalender("Insurance");
+            }}
+            type="button"
+            className="pBtn px-10 mt-5 py-3"
+          >
             {" "}
             Schedule a call
           </button>

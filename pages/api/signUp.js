@@ -25,7 +25,7 @@ const signUpUser = async (req, res) => {
       firebaseID,
     };
 
-    const user = await User.findOne({ "credentails.email": email });
+    const user = await User.findOne({ "credentails.firebaseID": firebaseID });
     if (!user) {
       const userStatus = await new User({
         credentails: credentail,

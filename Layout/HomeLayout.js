@@ -134,7 +134,9 @@ export default function HomeLayout({ children }) {
                         <i className="bi bi-envelope-fill  text-3xl "></i>
                       </div>{" "}
                     </div>
-                    <h3 className="font-semibold">Check your Email to Verify</h3>
+                    <h3 className="font-semibold">
+                      Check your Email to Verify
+                    </h3>
                     <VerifyEmail />
                   </div>
                 )}

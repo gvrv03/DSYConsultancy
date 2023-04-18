@@ -74,8 +74,8 @@ const AllUsers = () => {
           <thead className="border-none  text-sm ">
             <tr className="bg-blue-50 border-none">
               <th className="border-none py-3  text-left px-3">Sr. No.</th>
-              <th className="border-none py-3  text-left px-3">Name</th>
-              <th className="border-none py-3 text-left px-3">Username</th>
+              <th className="border-none py-3  text-left px-3">Photo</th>
+              <th className="border-none py-3 text-left px-3">Name</th>
               <th className="border-none py-3 text-left px-3">Email</th>
               <th className="border-none py-3 text-left px-3">Gender</th>
               <th className="border-none py-3 text-left px-3">Location</th>
@@ -95,11 +95,15 @@ const AllUsers = () => {
                       <span className="text-black">{index + 1}</span>
                     </td>
                     <td className="px-3 py-2  mt-2 border-none text-left ">
-                      {i.credentails.fName}
+                      <img
+                      className="border rounded-full  w-10 h-10"
+                        src={i.credentails.userPhoto}
+                        alt={i.credentails.fName}
+                      />
                     </td>
                     <td className="px-3 py-2  mt-2 border-none">
                       {" "}
-                      {i.credentails.username}
+                      {i.credentails.fName}
                     </td>
                     <td className="px-3 py-2  mt-2 border-none">
                       {i.credentails.email}
@@ -117,7 +121,7 @@ const AllUsers = () => {
                       {i.profileCompletion}%
                     </td>
                     <td className="px-3 py-2 font-semibold  text-xs mt-2 cursor-pointer flex justify-between items-center border-none text-left">
-                      <div
+                      <button
                         onClick={() => {
                           i.role != process.env.NEXT_PUBLIC_ROOTKEY &&
                             handleRole(
@@ -129,7 +133,7 @@ const AllUsers = () => {
                         }}
                       >
                         {i.role == PUBLIC_ROOTKEY ? "Root" : i.role}
-                      </div>
+                      </button>
                     </td>
                   </tr>
                 );

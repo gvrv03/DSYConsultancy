@@ -4,6 +4,7 @@ import baseUrl from "directsecondyearadmission/baseUrl";
 import { useState } from "react";
 import { useEffect } from "react";
 import { useUserAuth } from "./UserAuthContext";
+import Calender from "directsecondyearadmission/Components/Calender";
 
 const userContext = createContext();
 export function UserContexProvider({ children }) {
@@ -11,6 +12,23 @@ export function UserContexProvider({ children }) {
   const [userUID, setuserUID] = useState("");
   const [res, setres] = useState(null);
   const [allUserDetail, setallUserDetail] = useState({});
+  const [calState, setCalState] = useState({
+    state: "hidden",
+    forWhich: "",
+  });
+  const closeCalender = () => {
+    setCalState({
+      state: "hidden",
+      forWhich: "",
+    });
+  };
+
+  const openCalender = (Counseling) => {
+    setCalState({
+      state: "grid",
+      forWhich: Counseling,
+    });
+  };
 
   // console.log(userUID);
   const getSingleUserData = async () => {
@@ -190,6 +208,30 @@ export function UserContexProvider({ children }) {
     }
   };
 
+  const schedule = async (
+    name,
+    scheduleTime,
+    scheduleFor,
+    scheduleDate,
+    objectId
+  ) => {
+    const res = await fetch("/api/schedule", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        name: name,
+        scheduleTime: scheduleTime,
+        scheduleFor: scheduleFor,
+        scheduleDate: scheduleDate,
+        objectID: objectId,
+      }),
+    });
+    const res2 = await res.json();
+    return res2;
+  };
+
   return (
     <userContext.Provider
       value={{
@@ -201,8 +243,14 @@ export function UserContexProvider({ children }) {
         allUserDetail,
         userUID,
         setres,
+
+        // Calender
+        closeCalender,
+        schedule,
+        openCalender,
       }}
     >
+      <Calender state={calState.state} forWhich={calState.forWhich} />
       {children}
     </userContext.Provider>
   );
