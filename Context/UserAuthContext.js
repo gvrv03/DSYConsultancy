@@ -2,6 +2,9 @@ import { useContext } from "react";
 import { createContext } from "react";
 import baseUrl from "directsecondyearadmission/baseUrl";
 
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
@@ -12,6 +15,7 @@ import {
   signInWithPopup,
   updateProfile,
   sendEmailVerification,
+
   //roles
   updatePhoneNumber,
   RecaptchaVerifier,
@@ -21,34 +25,12 @@ import {
 import { auth } from "directsecondyearadmission/firebase";
 import { useEffect } from "react";
 import { useState } from "react";
-import { useAdminContext } from "./AdminContext";
 
 const userAuthContext = createContext();
 export function UserAuthContexProvider({ children }) {
   const [user, setuser] = useState("");
   const [token, settoken] = useState("");
   const [verificatioIDPhone, setverificatioIDPhone] = useState("");
-
-  const [toastMsg, settoastMsg] = useState({
-    state: "hidden",
-    icon: "success",
-    msg: "Already Exist",
-  });
-  const closeModal = () => {
-    settoastMsg({
-      state: "hidden",
-      icon: "",
-      msg: "",
-    });
-  };
-
-  const openModal = (icon, msg) => {
-    settoastMsg({
-      state: "block",
-      icon: icon,
-      msg: msg,
-    });
-  };
 
   useEffect(() => {
     const getToken = () => {
@@ -91,6 +73,18 @@ export function UserAuthContexProvider({ children }) {
     }
   };
 
+  const verifyEmail = async (email, user) => {
+    try {
+      const actionCodeSettings = {
+        url: baseUrl + "?email=" + email,
+      };
+      await sendEmailVerification(user, actionCodeSettings);
+      return { msg: "Check your mail to Verify" };
+    } catch (error) {
+      return { error: error.code.slice(5, error.code.length) };
+    }
+  };
+
   async function signUp(emailUser, password, name, gender) {
     try {
       const res = await createUserWithEmailAndPassword(
@@ -118,8 +112,19 @@ export function UserAuthContexProvider({ children }) {
           firebaseID: uid,
         }),
       });
+      await verifyEmail(emailUser, res.user);
 
-      await sendEmailVerification(res.user);
+      toast.success("Check your Email to Verify", {
+        position: "top-left",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
+
       return { msg: "Account Created" };
     } catch (error) {
       console.log(error);
@@ -205,11 +210,13 @@ export function UserAuthContexProvider({ children }) {
         token,
         updateUserProfile,
         signWithGoogle,
+        verifyEmail,
         sendOTP,
         verifyOTPServer,
         resetPassword,
       }}
     >
+      <ToastContainer />
       {children}
     </userAuthContext.Provider>
   );

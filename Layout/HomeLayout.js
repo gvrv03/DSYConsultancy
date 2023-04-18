@@ -9,6 +9,8 @@ import collegeContext from "directsecondyearadmission/Context/collegeContext";
 
 import { useUserAuth } from "directsecondyearadmission/Context/UserAuthContext";
 import { useUserContext } from "directsecondyearadmission/Context/UserContext";
+import VerifyPhone from "directsecondyearadmission/Components/VerifyPhone";
+import VerifyEmail from "directsecondyearadmission/Components/VerifyEmail";
 
 export const SideUserData = () => {
   const router = useRouter();
@@ -124,9 +126,29 @@ export default function HomeLayout({ children }) {
             </aside>
 
             {emailVerified === false || phoneNumber === null ? (
-              <div className="md:w-4/5 bg-white p-5 w-full h-screen  overflow-y-scroll mt-20  md:mt-0 ">
-                {emailVerified === false && "Please Verify Your Email"}
-                {phoneNumber === null && "Please Verify Your Phone Nuumber"}
+              <div className="md:w-4/5 bg-white p-5 w-full h-screen  gap-10 flex  flex-col justify-center items-center  overflow-y-scroll mt-20  md:mt-0 ">
+                {emailVerified === false && (
+                  <div className="p-5 w-96 flex justify-center bg-gray-100 rounded-sm flex-col ">
+                    <div className="flex justify-center">
+                      <div className="w-20 h-20 mb-5 text-red-500 bg-white rounded-full  grid place-items-center">
+                        <i className="bi bi-envelope-fill  text-3xl "></i>
+                      </div>{" "}
+                    </div>
+                    <h3 className="font-semibold">Check your Email to Verify</h3>
+                    <VerifyEmail />
+                  </div>
+                )}
+                {phoneNumber === null && (
+                  <div className="p-5 w-96 itce flex justify-center bg-gray-100 rounded-sm flex-col ">
+                    <div className="flex justify-center">
+                      <div className="w-20 h-20 mb-5 text-blue-500 bg-white rounded-full  grid place-items-center">
+                        <i className="bi bi-telephone-fill  text-3xl "></i>
+                      </div>{" "}
+                    </div>
+                    <h3 className="font-semibold">Verify your phone Number</h3>
+                    <VerifyPhone />
+                  </div>
+                )}
               </div>
             ) : (
               <div className="md:w-4/5 w-full h-screen  overflow-y-scroll mt-20  md:mt-0 ">

@@ -31,8 +31,10 @@ const signUpUser = async (req, res) => {
         credentails: credentail,
         "basicDetails.fName": fName,
       }).save();
+      return res.status(201).json({ msg: "Account Created", userStatus });
     }
-    return res.status(201).json({ msg: "Account Created", userStatus });
+    res.status(500).json({ error: "Already Exists" });
+
   } catch (err) {
     res.status(500).json({ error: "Internal Server Error" });
   }
