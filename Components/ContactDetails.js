@@ -9,7 +9,7 @@ const ContactDetails = () => {
   const [modalOpen, setModalOpen] = useState("hidden");
   const [requiredState, setRequired] = useState(false);
 
-  const { user } = useUserAuth();
+  const { user, newEmailpdate } = useUserAuth();
   const { updateUserContact, setres, allUserDetail } = useUserContext();
   const [resMsg, setresMsg] = useState("");
   if (resMsg) {
@@ -37,6 +37,8 @@ const ContactDetails = () => {
     const updateContDetails = async (e) => {
       e.preventDefault();
       const { email, city, state } = contactDetails;
+      const res2 = await newEmailpdate("gauravnarnaware311200359@gmail.com");
+      console.log(res2);
       const res = await updateUserContact(
         user.phoneNumber,
         email,
@@ -44,6 +46,7 @@ const ContactDetails = () => {
         state,
         user.uid
       );
+
       setresMsg(res);
       setres(Math.random());
     };
@@ -70,23 +73,9 @@ const ContactDetails = () => {
                   <div className="leading-7 text-sm text-gray-600">
                     Mobile No
                   </div>
-                  <VerifyPhone />
-                </div>
-                <div className="flex flex-col ">
-                  <label
-                    htmlFor="email"
-                    className="leading-7 text-sm text-gray-600"
-                  >
-                    E-mail
-                  </label>
-                  <input
-                    type="email"
-                    required={requiredState}
-                    onChange={onChange}
-                    value={contactDetails.email ? contactDetails.email : ""}
-                    name="email"
-                    className="w-full bg-white rounded-sm  border border-gray-300 text-base outline-none text-gray-700 py-1 px-3 "
-                  />
+                  <div className="-mt-2">
+                    <VerifyPhone />
+                  </div>{" "}
                 </div>
 
                 <div className="flex flex-col ">

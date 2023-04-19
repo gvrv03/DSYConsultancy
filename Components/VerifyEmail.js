@@ -5,9 +5,11 @@ import PhoneInput from "react-phone-input-2";
 import OtpForm from "react-otp-ui";
 import "react-phone-input-2/lib/style.css";
 import { WidthFull } from "@mui/icons-material";
+import ChangeEmail from "./ChangeEmail";
 const VerifyEmail = () => {
   const [resMsg, setresMsg] = useState("");
   const { verifyEmail, user } = useUserAuth();
+  const [changeEmail, setchangeEmail] = useState(false);
 
   const { email } = user ? user : {};
 
@@ -29,23 +31,36 @@ const VerifyEmail = () => {
     <div className="h-full">
       {/* <h1 className="font-bold pColor">Verify Yor Phone Number</h1> */}
       <div className="mt-2">
-        <div className="flex  flex-col gap-2 justify-center">
-          {resMsg && (
-            <div
-              className="bg-orange-100 text-sm font-semibold border-l-4 border-orange-500 text-orange-700 p-4"
-              role="alert"
+        {changeEmail ? (
+          <ChangeEmail />
+        ) : (
+          <div className="flex  flex-col gap-2 justify-center">
+            {resMsg && (
+              <div
+                className="bg-orange-100 text-sm font-semibold border-l-4 border-orange-500 text-orange-700 p-4"
+                role="alert"
+              >
+                <p> {resMsg}</p>
+              </div>
+            )}
+            <button
+              type="button"
+              onClick={handleEmail}
+              className=" mt-2 rounded-sm flex justify-center gap-10 items-center pBtn  px-10 py-2 "
             >
-              <p> {resMsg}</p>
-            </div>
-          )}
-          <button
-            type="button"
-            onClick={handleEmail}
-            className=" mt-5 rounded-sm flex justify-center gap-10 items-center pBtn  px-10 py-2 "
-          >
-            Resend Link
-          </button>
-        </div>
+              Resend Link
+            </button>
+            <button
+              type="button"
+              onClick={() => {
+                setchangeEmail(true);
+              }}
+              className="font-semibold text-center pColor text-xs float-right"
+            >
+              Change Email ?
+            </button>
+          </div>
+        )}
       </div>{" "}
     </div>
   );

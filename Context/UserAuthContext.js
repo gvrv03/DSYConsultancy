@@ -20,6 +20,7 @@ import {
   updatePhoneNumber,
   RecaptchaVerifier,
   PhoneAuthProvider,
+  updateEmail,
 } from "firebase/auth";
 
 import { auth } from "directsecondyearadmission/firebase";
@@ -38,6 +39,16 @@ export function UserAuthContexProvider({ children }) {
     };
     getToken();
   }, []);
+
+  const newEmailUpdate = async (newEmail) => {
+    try {
+      const res = await updateEmail(user, newEmail);
+      console.log(res);
+      return { msg: "Email has been changes" };
+    } catch (error) {
+      return { error: error.code.slice(5, error.code.length) };
+    }
+  };
 
   const sendOTP = async (phoneNo) => {
     try {
@@ -214,6 +225,8 @@ export function UserAuthContexProvider({ children }) {
         sendOTP,
         verifyOTPServer,
         resetPassword,
+
+        newEmailUpdate,
       }}
     >
       <ToastContainer />

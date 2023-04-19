@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useUserContext } from "directsecondyearadmission/Context/UserContext";
 import { useState } from "react";
 import VerifyPhone from "directsecondyearadmission/Components/VerifyPhone";
+import ChangeEmail from "directsecondyearadmission/Components/ChangeEmail";
 
 const NotiRemind = () => {
   return (
@@ -151,15 +152,10 @@ const PasswordChange = () => {
 
 const EmailChange = () => {
   return (
-    <div className=" bg-white p-5  flex flex-col justify-between gap-2 w-full">
+    <div className=" bg-white p-5  flex flex-col gap-2 w-full">
       {" "}
       <h4 className="font-semibold mb-5">Change E-mail</h4>
-      <input
-        type="text"
-        placeholder="Enter the Email"
-        className="border outline-none rounded-sm w-full px-2 py-2"
-      />
-      <button className="pBtn py-2">Update Password</button>
+      <ChangeEmail />
     </div>
   );
 };
