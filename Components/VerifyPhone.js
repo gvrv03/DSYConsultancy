@@ -92,6 +92,7 @@ const VerifyPhone = () => {
                 <img
                   src="https://media.tenor.com/wpSo-8CrXqUAAAAj/loading-loading-forever.gif"
                   className="w-5"
+                  alt="spinner"
                 />
               )}
               Send Code{" "}

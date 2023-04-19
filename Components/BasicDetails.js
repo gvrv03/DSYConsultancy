@@ -4,13 +4,14 @@ import { allCategory } from "directsecondyearadmission/quieries/CollegeDataQuier
 import React from "react";
 import { useEffect } from "react";
 import { useState } from "react";
+import Loader2 from "./Loader2";
 import ModelHeader from "./ModelHeader";
 
 const BasicDetails = () => {
   const { updateBasicDetailsUser, setres, allUserDetail } = useUserContext();
   const [modalOpen, setModalOpen] = useState("hidden");
   const { user } = useUserAuth();
-
+  const [loading, setloading] = useState(false);
   const [resMsg, setresMsg] = useState("");
   if (resMsg) {
     setTimeout(() => {
@@ -35,6 +36,7 @@ const BasicDetails = () => {
     };
 
     const updateBasicDetails = async (e) => {
+      setloading(true);
       e.preventDefault();
       const { fullName, socialCategory, dob, gender, marStatus, phyChanged } =
         basicDetails;
@@ -50,6 +52,7 @@ const BasicDetails = () => {
       );
       setresMsg(res);
       setres(Math.random());
+      setloading(false);
     };
 
     const [allCat, setallCat] = useState([]);
@@ -264,6 +267,17 @@ const BasicDetails = () => {
   };
 
   const basicDetail = allUserDetail.basicDetails;
+  if (!basicDetail) {
+    return (
+      <div className="bg-white shadow-md p-5 mt-5 grid place-items-center rounded-sm h-52">
+        <img
+          src="https://media.tenor.com/wpSo-8CrXqUAAAAj/loading-loading-forever.gif"
+          className="w-10"
+          alt="spinner"
+        />
+      </div>
+    );
+  }
   return (
     <div className="bg-white p-5 shadow-md rounded-sm ">
       <BasicDetailModal />

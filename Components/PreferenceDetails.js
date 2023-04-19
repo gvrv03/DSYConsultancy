@@ -269,6 +269,17 @@ const PreferenceDetails = () => {
     );
   };
   const preferenceDetail = allUserDetail.preferences;
+  if (!preferenceDetail) {
+    return (
+      <div className="bg-white shadow-md p-5 mt-5 grid place-items-center rounded-sm h-52">
+        <img
+          src="https://media.tenor.com/wpSo-8CrXqUAAAAj/loading-loading-forever.gif"
+          className="w-10"
+          alt="spinner"
+        />
+      </div>
+    );
+  }
   return (
     <div className="bg-white shadow-md p-5 mt-5 rounded-sm">
       <PreferenceesDetailModal />

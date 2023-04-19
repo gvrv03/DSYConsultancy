@@ -28,6 +28,7 @@ export default async (req, res) => {
     }
 
     const progress = await User.findOne({ "credentails.firebaseID": id });
+    
     let newProcess = 40;
     const process = 40;
     if (progress.profileCompletion < 40) {
