@@ -3,23 +3,27 @@ import { createContext } from "react";
 import baseUrl from "directsecondyearadmission/baseUrl";
 import { useEffect } from "react";
 import { useState } from "react";
+import axios from "axios";
 
 const collegesContext = createContext();
 export function CollegeContexProvider({ children }) {
   // to get All Colleges
-
-  
+  const [allColleges, setallColleges] = useState([]);
   async function getAllColleges() {
     // for show all Colleges
-    const res = await fetch(baseUrl + "/api/Colleges", {
-      method: "GET",
+    const res = await axios.get(baseUrl + "/api/Colleges", {
       headers: {
         "Content-Type": "application/json",
       },
     });
-    const data = await res.json();
+    const data = await res.data;
+    setallColleges(data);
     return data;
   }
+
+  useEffect(() => {
+    getAllColleges();
+  }, []);
 
   // for show all Category
   async function allCategory() {
@@ -35,7 +39,9 @@ export function CollegeContexProvider({ children }) {
   }
 
   return (
-    <collegesContext.Provider value={{ getAllColleges, allCategory }}>
+    <collegesContext.Provider
+      value={{ getAllColleges, allCategory, allColleges }}
+    >
       {children}
     </collegesContext.Provider>
   );

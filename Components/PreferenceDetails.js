@@ -1,4 +1,5 @@
 import collegeContext from "directsecondyearadmission/Context/collegeContext";
+import { useCollegesContext } from "directsecondyearadmission/Context/CollegesContext";
 import { useUserAuth } from "directsecondyearadmission/Context/UserAuthContext";
 import { useUserContext } from "directsecondyearadmission/Context/UserContext";
 import { useRouter } from "next/router";
@@ -7,33 +8,35 @@ import { useState } from "react";
 import { useContext } from "react";
 import ModelHeader from "./ModelHeader";
 
-const PreferenceDetails = ({ CollegeData }) => {
+const PreferenceDetails = () => {
   const [modalOpen, setModalOpen] = useState("hidden");
   const [requiredState, setRequired] = useState(false);
   const { user } = useUserAuth();
   const { preferenceDetailsUser, setres, allUserDetail } = useUserContext();
+  const { allColleges } = useCollegesContext();
+
   const [resMsg, setresMsg] = useState("");
   if (resMsg) {
     setTimeout(() => {
       setresMsg("");
     }, 2000);
   }
-  const districtName = CollegeData.map((item) => item.location.district);
+  const districtName = allColleges.map((item) => item.location.district);
 
   // To get category Name
-  const removeDubDist = CollegeData.filter(
+  const removeDubDist = allColleges.filter(
     (district, index) =>
       !districtName.includes(district.location.district, index + 1)
   );
 
-  const univercityName = CollegeData.map((item) => item.university);
-  const removeDubUniversity = CollegeData.filter(
+  const univercityName = allColleges.map((item) => item.university);
+  const removeDubUniversity = allColleges.filter(
     (university, index) =>
       !univercityName.includes(university.university, index + 1)
   );
 
   let depName = [];
-  CollegeData.map((item) =>
+  allColleges.map((item) =>
     item.department.map((course) => {
       depName.push(course.courseName);
     })

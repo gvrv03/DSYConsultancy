@@ -10,6 +10,7 @@ import { GetCurrentLocation } from "directsecondyearadmission/quieries/GetCurren
 import { useUserAuth } from "directsecondyearadmission/Context/UserAuthContext";
 import { useUserContext } from "directsecondyearadmission/Context/UserContext";
 import VerifyPhone from "directsecondyearadmission/Components/VerifyPhone";
+import { useCollegesContext } from "directsecondyearadmission/Context/CollegesContext";
 const Home = () => {
   const { openCalender } = useUserContext();
 
@@ -44,7 +45,6 @@ const Home = () => {
         }),
       });
 
-      console.log(await res.json());
     };
     // GetCurrentLocation(coOrdinates.latitude, coOrdinates.longitude, token);
     updateLocation();
@@ -127,7 +127,7 @@ const Home = () => {
   const HeaderCard = () => {
     const name = user.displayName;
     const [progress, setProgress] = useState(allUserDetail.profileCompletion);
-    console.log(allUserDetail.profileCompletion);
+  
 
     if (allUserDetail.profileCompletion != 100) {
       return (

@@ -53,7 +53,6 @@ const BasicDetails = () => {
     };
 
     const [allCat, setallCat] = useState([]);
-    
     useEffect(() => {
       const getCat = async () => {
         const res = await allCategory();

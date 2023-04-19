@@ -1,20 +1,12 @@
 import HomeLayout from "directsecondyearadmission/Layout/HomeLayout";
 import React, { useState, useEffect } from "react";
-
-import Link from "next/link";
 import Head from "next/head";
-import {
-  allCategory,
-  allColleges,
-} from "directsecondyearadmission/quieries/CollegeDataQuieries";
 import BasicDetails from "directsecondyearadmission/Components/BasicDetails";
 import ContactDetails from "directsecondyearadmission/Components/ContactDetails";
 import EducationDetails from "directsecondyearadmission/Components/EducationDetails";
 import PreferenceDetails from "directsecondyearadmission/Components/PreferenceDetails";
-import { useUserAuth } from "directsecondyearadmission/Context/UserAuthContext";
 
 const Profile = ({ CollegeData }) => {
-  const { user } = useUserAuth();
   return (
     <HomeLayout>
       <Head>
@@ -29,16 +21,9 @@ const Profile = ({ CollegeData }) => {
       <BasicDetails />
       <ContactDetails />
       <EducationDetails />
-      <PreferenceDetails CollegeData={CollegeData} />
+      <PreferenceDetails />
     </HomeLayout>
   );
 };
 
-export async function getServerSideProps() {
-  const CollegeData = await allColleges();
-
-  return {
-    props: { CollegeData },
-  };
-}
 export default Profile;
