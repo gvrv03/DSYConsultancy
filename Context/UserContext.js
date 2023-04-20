@@ -31,6 +31,14 @@ export function UserContexProvider({ children }) {
     });
   };
 
+  const getCityByLongLat = async (long, lati) => {
+    const res = await fetch(
+      `https://us1.locationiq.com/v1/reverse?key=pk.d5ab121ede3d7781118559aadc917331&lat=${lati}&lon=${long}&format=json`
+    );
+
+    return await res.json();
+  };
+
   const getCurrentLocation = async () => {
     navigator.geolocation.getCurrentPosition(async function (position) {
       const res = await fetch("/api/updateUserLocation", {
@@ -268,7 +276,7 @@ export function UserContexProvider({ children }) {
         closeCalender,
         schedule,
         openCalender,
-
+        getCityByLongLat,
         coOrdinates,
       }}
     >

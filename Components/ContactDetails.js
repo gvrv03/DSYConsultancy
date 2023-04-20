@@ -36,12 +36,10 @@ const ContactDetails = () => {
 
     const updateContDetails = async (e) => {
       e.preventDefault();
-      const { email, city, state } = contactDetails;
-      const res2 = await newEmailpdate("gauravnarnaware311200359@gmail.com");
-      console.log(res2);
+      const { city, state } = contactDetails;
       const res = await updateUserContact(
         user.phoneNumber,
-        email,
+        user.email,
         city,
         state,
         user.uid

@@ -4043,6 +4043,11 @@ react-calendar@^4.2.1:
     get-user-locale "^2.2.1"
     prop-types "^15.6.0"
 
+react-circular-progressbar@^2.1.0:
+  version "2.1.0"
+  resolved "https://registry.npmjs.org/react-circular-progressbar/-/react-circular-progressbar-2.1.0.tgz"
+  integrity sha512-xp4THTrod4aLpGy68FX/k1Q3nzrfHUjUe5v6FsdwXBl3YVMwgeXYQKDrku7n/D6qsJA9CuunarAboC2xCiKs1g==
+
 react-dom@^18.2.0:
   version "18.2.0"
   resolved "https://registry.npmjs.org/react-dom/-/react-dom-18.2.0.tgz"
@@ -4055,6 +4060,11 @@ react-export-table-to-excel@^1.0.6:
   version "1.0.6"
   resolved "https://registry.npmjs.org/react-export-table-to-excel/-/react-export-table-to-excel-1.0.6.tgz"
   integrity sha512-2NKyor1rFFEqYDXQq5tPoVNwwdv5kT8DWc65wAmDa9Hi0441qHj0tOxegWhpW0vlCM2TypIsw+ghzIr900U4RA==
+
+react-geolocated@^4.0.3:
+  version "4.0.3"
+  resolved "https://registry.npmjs.org/react-geolocated/-/react-geolocated-4.0.3.tgz"
+  integrity sha512-p+BObdbWT4kINILkUZtqkWHippBsCLnQ+dyx9Bnd+m3086Xkw7VKWxcFavCd2pG6AM50jsiMJiDu0+DjelnT9g==
 
 react-gist@^1.2.4:
   version "1.2.4"
