@@ -1,24 +1,31 @@
-import Authenticated from "../../Helpers/Authenticated";
 import initDB from "../../Helpers/initDB";
 import User from "../../Modal/User";
 initDB();
 
-export default Authenticated(async (req, res) => {
-  const { latitude, longitude } = req.body;
+export default async (req, res) => {
+  const { latitude, longitude, UID } = req.body;
   try {
-    let id = req.decoded.userData._id;
+    if (!latitude || !longitude || !UID) {
+      return res.status(401).json({ error: "Please fill all the fields" });
+    }
+
     let coOrdinates = {
       longitude: longitude,
       latitude: latitude,
     };
 
     const filter = { coOrdinates: coOrdinates };
-    await User.findByIdAndUpdate(id, filter);
+    const userData = await User.findOneAndUpdate(
+      { "credentails.firebaseID": UID },
+      filter
+    );
 
-    res.status(201).json({
-      Location: coOrdinates,
-    });
+    if (!userData) {
+      return res.status(500).json({ error: "User Not Exist" });
+    }
+
+    res.status(201).json(coOrdinates);
   } catch (err) {
-    res.status(500).json({ error: "Internal Server Error" });
+    return res.status(500).json({ error: "Internal Server Error" });
   }
-});
+};

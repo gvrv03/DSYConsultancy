@@ -8,10 +8,11 @@ import Calender from "directsecondyearadmission/Components/Calender";
 
 const userContext = createContext();
 export function UserContexProvider({ children }) {
-  const { user } = useUserAuth();
   const [userUID, setuserUID] = useState("");
   const [res, setres] = useState(null);
   const [allUserDetail, setallUserDetail] = useState({});
+  const [coOrdinates, setcoOrdinates] = useState();
+
   const [calState, setCalState] = useState({
     state: "hidden",
     forWhich: "",
@@ -23,10 +24,28 @@ export function UserContexProvider({ children }) {
     });
   };
 
-  const openCalender = (Counseling) => {
+  const openCalender = (forWhat) => {
     setCalState({
       state: "grid",
-      forWhich: Counseling,
+      forWhich: forWhat,
+    });
+  };
+
+  const getCurrentLocation = async () => {
+    navigator.geolocation.getCurrentPosition(async function (position) {
+      const res = await fetch("/api/updateUserLocation", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          latitude: position.coords.latitude,
+          longitude: position.coords.longitude,
+          UID: localStorage.getItem("firebaseuid"),
+        }),
+      });
+
+      setcoOrdinates({ data: await res.json() });
     });
   };
 
@@ -57,6 +76,7 @@ export function UserContexProvider({ children }) {
 
   useEffect(() => {
     getFirebaseID();
+    getCurrentLocation();
     getSingleUserData();
   }, [res]);
 
@@ -248,6 +268,8 @@ export function UserContexProvider({ children }) {
         closeCalender,
         schedule,
         openCalender,
+
+        coOrdinates,
       }}
     >
       <Calender state={calState.state} forWhich={calState.forWhich} />
