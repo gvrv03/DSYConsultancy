@@ -18,34 +18,6 @@ const collegeSchema = new Schema({
     type: Number,
     default: 1,
   },
-  department: [
-    {
-      courseName: String,
-      annalFee: Number,
-      choiceCode: Number,
-      cName: String,
-      categories: [
-        {
-          category: {
-            type: String,
-          },
-          min: {
-            type: Number,
-          },
-          max: {
-            type: Number,
-          },
-          aFees: {
-            type: Number,
-          },
-          aSeats: {
-            type: Number,
-          },
-        },
-      ],
-    },
-  ],
-
   location: {
     addressLine: String,
     taluka: String,

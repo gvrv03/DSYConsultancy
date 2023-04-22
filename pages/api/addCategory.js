@@ -1,67 +1,49 @@
-import Authenticated from "directsecondyearadmission/Helpers/Authenticated";
-import {
-  PUBLIC_ADMINKEY,
-  PUBLIC_ROOTKEY,
-} from "directsecondyearadmission/quieries/UserKeys";
 import initDB from "../../Helpers/initDB";
 import CollegeCategory from "directsecondyearadmission/Modal/CollegeCategory";
 import Colleges from "../../Modal/Colleges";
+import CollegeDepartment from "directsecondyearadmission/Modal/CollegeDepartment";
 initDB();
 
 export default async (req, res) => {
   const { category, min, max, aFees, aSeats, choiceCode } = req.body;
-  let studentCategory = {
-    category,
-    min,
-    max,
-    aFees,
-    aSeats,
-  };
 
-  const filter = { department: { $elemMatch: { choiceCode } } };
-  const update = { $push: { "department.$.categories": studentCategory } };
   try {
     if (!category || !min || !max || !aFees || !aSeats || !choiceCode) {
       return res.status(422).json({ error: "please fill all the fields" });
     }
 
-    if (!filter) {
-      return res.status(404).json({ error: "This choiceCode not Exists" });
-    }
-    const checkDep = await Colleges.findOne({
-      department: { $elemMatch: { choiceCode } },
+    const checkDep = await CollegeDepartment.findOne({
+      choiceCode: choiceCode,
     });
-
     if (!checkDep) {
       return res.status(404).json({ error: "Department not exists" });
     }
 
-    const checkCollegeCategory = await CollegeCategory.findOne({
-      Category: category,
+    let CollegeId = checkDep.CollegeDetails;
+    let depId = checkDep._id;
+
+    const checkDepCat = await CollegeCategory.findOne({
+      CollegeDepartment: depId,
+      category,
     });
 
-    if (!checkCollegeCategory) {
-      await new CollegeCategory({
-        Category: category,
-      }).save();
+    if (checkDepCat) {
+      return res.status(404).json({ error: "Category Already Exists" });
     }
 
-    const checkCat = await Colleges.findOne({
-      department: {
-        $elemMatch: {
-          choiceCode,
-          categories: {
-            $elemMatch: { category },
-          },
-        },
-      },
-    });
-    if (checkCat) {
-      return res.status(422).json({ error: "Category already added" });
-    }
-    const addCat = await Colleges.findOneAndUpdate(filter, update);
-    res.status(201).json({ msg: "Category Added" });
+    let studentCategory = {
+      category,
+      min,
+      max,
+      aFees,
+      aSeats,
+      CollegeDetails: CollegeId,
+      CollegeDepartment: depId,
+    };
+
+    const addCat = await CollegeCategory(studentCategory).save();
+    res.status(201).json({ msg: "Category Added", addCat });
   } catch (err) {
-    res.status(500).json({ error: "Internal Server Error" });
+    res.status(500).json({ error: "Internal Server Error", err });
   }
 };

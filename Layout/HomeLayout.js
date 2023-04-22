@@ -51,7 +51,7 @@ export default function HomeLayout({ children }) {
   const router = useRouter();
   const { user } = useUserAuth();
   const { emailVerified, phoneNumber } = user ? user : {};
-  console.log(user);
+  // console.log(user);
   const { allUserDetail } = useUserContext();
 
   const ListItem = (props) => {

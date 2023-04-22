@@ -1,3 +1,4 @@
+import { useAdminContext } from "directsecondyearadmission/Context/AdminContext";
 import collegeContext from "directsecondyearadmission/Context/collegeContext";
 import { useCollegesContext } from "directsecondyearadmission/Context/CollegesContext";
 import { useUserAuth } from "directsecondyearadmission/Context/UserAuthContext";
@@ -14,20 +15,30 @@ const PreferenceDetails = () => {
   const { user } = useUserAuth();
   const { preferenceDetailsUser, setres, allUserDetail } = useUserContext();
   const { allColleges } = useCollegesContext();
+  const { allDepartments } = useAdminContext();
 
   const [resMsg, setresMsg] = useState("");
+
+  if (!allDepartments) {
+    return <div>Waiting...</div>;
+  }
   if (resMsg) {
     setTimeout(() => {
       setresMsg("");
     }, 2000);
   }
-  const districtName = allColleges.map((item) => item.location.district);
-
-  // To get category Name
-  const removeDubDist = allColleges.filter(
-    (district, index) =>
-      !districtName.includes(district.location.district, index + 1)
-  );
+  const districtName =
+    allDepartments &&
+    allDepartments.map((item) => item.CollegeDetails.location.district);
+  const removeDubDist =
+    allDepartments &&
+    allDepartments.filter(
+      (district, index) =>
+        !districtName.includes(
+          district.CollegeDetails.location.district,
+          index + 1
+        )
+    );
 
   const univercityName = allColleges.map((item) => item.university);
   const removeDubUniversity = allColleges.filter(
@@ -36,11 +47,9 @@ const PreferenceDetails = () => {
   );
 
   let depName = [];
-  allColleges.map((item) =>
-    item.department.map((course) => {
-      depName.push(course.courseName);
-    })
-  );
+  allDepartments.map((item) => {
+    depName.push(item.courseName);
+  });
 
   const removeDubBranch = depName.filter(
     (course, index) => !depName.includes(course, index + 1)
@@ -203,17 +212,18 @@ const PreferenceDetails = () => {
                     className="w-full bg-white rounded-sm  border border-gray-300 text-base outline-none text-gray-700 py-1 px-3 "
                   />
                   <datalist id="District" name="district">
-                    {removeDubDist.map((item, index) => {
-                      return (
-                        <option
-                          key={index}
-                          value={item.location.district}
-                          className="text-left text-sm"
-                        >
-                          {item.location.district}
-                        </option>
-                      );
-                    })}
+                    {removeDubDist &&
+                      removeDubDist.map((item, index) => {
+                        return (
+                          <option
+                            key={index}
+                            value={item.CollegeDetails.location.district}
+                            className="text-left text-sm"
+                          >
+                            {item.CollegeDetails.location.district}
+                          </option>
+                        );
+                      })}
                   </datalist>
                 </div>
 
@@ -272,11 +282,7 @@ const PreferenceDetails = () => {
   if (!preferenceDetail) {
     return (
       <div className="bg-white shadow-md p-5 mt-5 grid place-items-center rounded-sm h-52">
-        <img
-          src="https://media.tenor.com/wpSo-8CrXqUAAAAj/loading-loading-forever.gif"
-          className="w-10"
-          alt="spinner"
-        />
+        <img src="/img/loadingSpinner.gif" className="w-10" alt="spinner" />
       </div>
     );
   }

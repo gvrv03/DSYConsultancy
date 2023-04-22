@@ -11,6 +11,8 @@ const AdminContext = createContext();
 export function AdminContexProvider({ children }) {
   const { userUID } = useUserContext();
   const { user } = useUserAuth();
+  const [allDepartments, setallDepartments] = useState("");
+  // console.log(allDepartments);
   const [toastMsg, settoastMsg] = useState({
     state: "hidden",
     icon: "success",
@@ -30,6 +32,17 @@ export function AdminContexProvider({ children }) {
       icon: icon,
       msg: msg,
     });
+  };
+
+  const getAllDepartment = async () => {
+    const res = await fetch("/api/addDepartment", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    const data = await res.json();
+    setallDepartments(data);
   };
 
   const addDepartment = async (courseName, annualFees, choiceCode, insCode) => {
@@ -186,12 +199,19 @@ export function AdminContexProvider({ children }) {
       openModal("fail", res2.error);
     }
   };
+
+  useEffect(() => {
+    getAllDepartment();
+  }, []);
+
   return (
     <AdminContext.Provider
       value={{
+        getAllDepartment,
         addCollegeData,
         addImagesData,
         addDescription,
+        allDepartments,
         addUserCategory,
         addDepartment, // popup
         openModal,

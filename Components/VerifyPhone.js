@@ -90,7 +90,7 @@ const VerifyPhone = () => {
             >
               {spinner && (
                 <img
-                  src="https://media.tenor.com/wpSo-8CrXqUAAAAj/loading-loading-forever.gif"
+                  src="/img/loadingSpinner.gif"
                   className="w-5"
                   alt="spinner"
                 />
@@ -123,7 +123,7 @@ const VerifyPhone = () => {
               >
                 {spinner && (
                   <img
-                    src="https://media.tenor.com/wpSo-8CrXqUAAAAj/loading-loading-forever.gif"
+                    src="/img/loadingSpinner.gif"
                     className="w-5"
                   />
                 )}

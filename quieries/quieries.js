@@ -1,4 +1,24 @@
+// for Department
 export const collegeByUnder = (selectedunder, colleges, district) => {
+  let filterCollege = !selectedunder.length
+    ? colleges
+    : colleges.filter((clgDetail) =>
+        selectedunder.includes(clgDetail.CollegeDetails.collegeUnder)
+      );
+
+  if (!filterCollege) {
+    return colleges;
+  }
+  // Sorting by district
+  return district == ""
+    ? filterCollege
+    : filterCollege.filter((filterClg) =>
+        district.includes(filterClg.CollegeDetails.location.district)
+      );
+};
+
+// for Colleges
+export const collegeByUnderCollege = (selectedunder, colleges, district) => {
   let filterCollege = !selectedunder.length
     ? colleges
     : colleges.filter((clgDetail) =>
@@ -6,7 +26,7 @@ export const collegeByUnder = (selectedunder, colleges, district) => {
       );
 
   if (!filterCollege) {
-    return colleges
+    return colleges;
   }
   // Sorting by district
   return district == ""

@@ -12,11 +12,9 @@ import CollegeAddress from "./CollegeAddress";
 import CollegeImages from "./CollegeImages";
 import { useCollegesContext } from "directsecondyearadmission/Context/CollegesContext";
 
-export default function CollegeData({ College }) {
-  const { getCollegeById } = useCollegesContext();
+export default function CollegeData({ College, Departments, category }) {
   const rouuter = useRouter();
   const [count, setCount] = useState(1);
-  const data = "";
   var approvedBy = College.approvedBy.split(",");
   var topRec = College.topRecruiters.split(",");
   const collegeUrl = baseUrl + "/CollegeDa/" + rouuter.query.id;
@@ -203,12 +201,9 @@ export default function CollegeData({ College }) {
                 Artical={College.fullDescription}
               />
             )}
-            {count == 2 && <CollegeCourses courses={College.department} />}
+            {count == 2 && <CollegeCourses courses={Departments} />}
             {count == 3 && (
-              <CollegeCategory
-                category={College.department}
-                name={College.name}
-              />
+              <CollegeCategory category={category} name={College.name} />
             )}
             {count == 4 && <CollegeImages images={College.images} />}
             {count == 5 && (
@@ -228,6 +223,10 @@ export async function getServerSideProps(context) {
   const { id } = context.query;
   const posts = await getSingleCollegeData(id);
   return {
-    props: { College: posts },
+    props: {
+      College: posts.clgDetail,
+      Departments: posts.department,
+      category: posts.category,
+    },
   };
 }

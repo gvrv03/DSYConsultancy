@@ -1,29 +1,21 @@
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
-import { Swiper, SwiperSlide } from "swiper/react";
-import { collegeByUnder } from "directsecondyearadmission/quieries/quieries";
+import {
+  collegeByUnderCollege,
+} from "directsecondyearadmission/quieries/quieries";
 import Head from "next/head";
-import Image from "next/image";
-import collegeContext from "directsecondyearadmission/Context/collegeContext";
-import { useContext } from "react";
-import baseUrl from "directsecondyearadmission/baseUrl";
-// Import Swiper styles
-import "swiper/css";
-import "swiper/css/pagination";
-import "swiper/css/navigation";
+
 
 // import required modules
-import { Autoplay, Pagination, Navigation } from "swiper";
-import { useRouter } from "next/router";
-import Loading from "directsecondyearadmission/Components/Loading";
 import HomeLayout from "directsecondyearadmission/Layout/HomeLayout";
 import CollegeLayout from "directsecondyearadmission/Layout/CollegeLayout";
 import { useUserAuth } from "directsecondyearadmission/Context/UserAuthContext";
+import { useCollegesContext } from "directsecondyearadmission/Context/CollegesContext";
 
 const AllCollege = () => {
-  const [loading, setLoading] = useState(true);
+  const { allColleges } = useCollegesContext();
+  console.log(allColleges);
   const { user } = useUserAuth();
-  const [data, setdata] = useState(null);
   const [selectedCollegeUnder, setSelectedCollegeUnder] = useState([]);
   const [district, setdistrict] = useState("");
   const onChangeCollegeUnderHandler = (under, isChecked) => {
@@ -35,24 +27,11 @@ const AllCollege = () => {
   };
 
   // filter for College Under
-  const undercolleges = collegeByUnder(selectedCollegeUnder, data, district);
-  const router = useRouter();
-  const context = useContext(collegeContext);
-
-  useEffect(() => {
-    const getColleges = async () => {
-      const res = await fetch(baseUrl + "/api/Colleges", {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-      const data = await res.json();
-      setdata(data);
-    };
-    getColleges();
-  }, []);
-
+  const undercolleges = collegeByUnderCollege(
+    selectedCollegeUnder,
+    allColleges,
+    district
+  );
   const Loader = () => {
     return (
       <div className=" bg-white grid place-items-center">
@@ -134,10 +113,11 @@ const AllCollege = () => {
     };
 
     const DistrictFilter = () => {
-      const districtName = data && data.map((item) => item.location.district);
+      const districtName =
+        allColleges && allColleges.map((item) => item.location.district);
       const removeDubDist =
-        data &&
-        data.filter(
+        allColleges &&
+        allColleges.filter(
           (district, index) =>
             !districtName.includes(district.location.district, index + 1)
         );
@@ -318,14 +298,27 @@ const AllCollege = () => {
         <section className=" overflow-y-scroll h-screen ">
           <div className=" space-y-6 ">
             {/* <Loader/> */}
-            {!data ? (
-              <Loader />
+            {allColleges.length === 0 ? (
+              <div className="text-center grid place-items-center h-screen w-full text-sm font-semibold rounded-sm bg-white border-blue-100 border p-5 ">
+                <img
+                  src="/img/loadingSpinner.gif"
+                  className="w-20"
+                  alt="spinner"
+                />
+              </div>
             ) : (
               <>
                 {undercolleges.length == 0 && (
-                  <div className="text-center w-full text-sm font-semibold rounded-sm bg-blue-50 border-blue-100 border p-5 ">
-                    <Image src="/img/NoData.svg" width={100} height={100} />
-                    <p className="mt-5 text-xl">College Not Found</p>
+                  <div className="text-center grid place-items-center h-screen w-full text-sm font-semibold rounded-sm bg-white border-blue-100 border p-5 ">
+                    <div className="w-96 grid place-items-center">
+                      {" "}
+                      {/* <img
+                        src="/img/loadingSpinner.gif"
+                        className="w-20"
+                        alt="spinner"
+                      /> */}
+                      College Not Found
+                    </div>
                   </div>
                 )}
                 <div className="grid  grid-cols-1 gap-x-4 gap-y-4 overflow-y-scroll  md:grid-cols-2 lg:grid-cols-4">

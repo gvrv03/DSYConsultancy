@@ -6,17 +6,10 @@ import { collegeByUnder } from "directsecondyearadmission/quieries/quieries";
 import { allColleges } from "directsecondyearadmission/quieries/CollegeDataQuieries";
 import { useEffect } from "react";
 import Loader2 from "directsecondyearadmission/Components/Loader2";
+import { useAdminContext } from "directsecondyearadmission/Context/AdminContext";
 
 const College = () => {
-  const [data, setdata] = useState(null);
-
-  useEffect(() => {
-    const getAllCourses = async () => {
-      const data = await allColleges();
-      setdata(data);
-    };
-    getAllCourses();
-  }, []);
+  const { allDepartments } = useAdminContext();
 
   // checkbox handler function
   const [selectedCollegeUnder, setSelectedCollegeUnder] = useState([]);
@@ -51,7 +44,11 @@ const College = () => {
   ];
 
   // filter for College Under
-  const undercolleges = collegeByUnder(selectedCollegeUnder, data, district);
+  const undercolleges = collegeByUnder(
+    selectedCollegeUnder,
+    allDepartments,
+    district
+  );
 
   // College Under Components
   const CollegeUnder = () => {
@@ -119,12 +116,17 @@ const College = () => {
   };
 
   const DistrictFilter = () => {
-    const districtName = data && data.map((item) => item.location.district);
+    const districtName =
+      allDepartments &&
+      allDepartments.map((item) => item.CollegeDetails.location.district);
     const removeDubDist =
-      data &&
-      data.filter(
+      allDepartments &&
+      allDepartments.filter(
         (district, index) =>
-          !districtName.includes(district.location.district, index + 1)
+          !districtName.includes(
+            district.CollegeDetails.location.district,
+            index + 1
+          )
       );
 
     return (
@@ -145,10 +147,10 @@ const College = () => {
               return (
                 <option
                   key={index}
-                  value={item.location.district}
+                  value={item.CollegeDetails.location.district}
                   className="text-center text-sm"
                 >
-                  {item.location.district}
+                  {item.CollegeDetails.location.district}
                 </option>
               );
             })}
@@ -240,47 +242,46 @@ const College = () => {
     return (
       <div className=" h-full flex  overflow-y-scroll gap-5 w-full  ">
         <div className=" h-full flex flex-col  overflow-y-scroll md:w-2/3 w-full ">
-          {!data && (
-            <div className="bg-white h-screen grid place-items-center">
-              <Loader2 />
+          {!undercolleges && (
+            <div className="w-full h-screen grid place-items-center bg-white">
+              <img
+                src="/img/loadingSpinner.gif"
+                className="w-20"
+                alt="spinner"
+              />
             </div>
           )}
-          {undercolleges && undercolleges.length == 0 ? (
-            <div className="p-5 bg-white font-semibold">College Not Found</div>
-          ) : (
-            undercolleges &&
-            undercolleges.map((item, index) => {
+          {undercolleges &&
+            undercolleges.map((department, indexDep) => {
+              const {
+                name,
+                instituteCode,
+                collegeUnder,
+                collegeType,
+                location,
+                contacts,
+                approvedBy,
+                image,
+                _id,
+              } = department.CollegeDetails;
               return (
-                <span key={index}>
-                  {item.department.length <= 0 ? (
-                    <div className="p-5 bg-white font-semibold">
-                      College Not Found
-                    </div>
-                  ) : (
-                    item.department.map((department, indexDep) => {
-                      return (
-                        <span key={indexDep}>
-                          <SingleCollege
-                            collegeName={item.name}
-                            approvedBy={item.approvedBy}
-                            collegeType={item.collegeType}
-                            collegeId={item._id}
-                            location={item.location.addressLine}
-                            district={item.location.district}
-                            instituteCode={item.instituteCode}
-                            image={item.image}
-                            contactNo={item.contactNo}
-                            department={department.courseName}
-                            collegeUnder={item.collegeUnder}
-                          />
-                        </span>
-                      );
-                    })
-                  )}
+                <span key={indexDep}>
+                  <SingleCollege
+                    collegeName={name}
+                    approvedBy={approvedBy}
+                    collegeType={collegeType}
+                    collegeId={_id}
+                    location={location.addressLine}
+                    district={location.district}
+                    instituteCode={instituteCode}
+                    image={image}
+                    contactNo={contacts.contactNo}
+                    department={department.courseName}
+                    collegeUnder={collegeUnder}
+                  />
                 </span>
               );
-            })
-          )}
+            })}
         </div>
         <div className=" h-full  flex-col md:flex hidden bg-white  shadow-md overflow-y-scroll w-2/6 ">
           <div className="flex  px-5 pt-5">
@@ -387,12 +388,17 @@ const College = () => {
     };
 
     const DistrictFilter = () => {
-      const districtName = data && data.map((item) => item.location.district);
+      const districtName =
+        allDepartments &&
+        allDepartments.map((item) => item.CollegeDetails.location.district);
       const removeDubDist =
-        data &&
-        data.filter(
+        allDepartments &&
+        allDepartments.filter(
           (district, index) =>
-            !districtName.includes(district.location.district, index + 1)
+            !districtName.includes(
+              district.CollegeDetails.location.district,
+              index + 1
+            )
         );
 
       return (
@@ -413,10 +419,10 @@ const College = () => {
                 return (
                   <option
                     key={index}
-                    value={item.location.district}
+                    value={item.CollegeDetails.location.district}
                     className="text-center text-sm"
                   >
-                    {item.location.district}
+                    {item.CollegeDetails.location.district}
                   </option>
                 );
               })}

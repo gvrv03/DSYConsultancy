@@ -23,7 +23,30 @@ export async function getSingleCollegeData(id) {
       instituteCode: data.instituteCode,
     }),
   });
-  return data;
+
+  const getDep = await fetch(baseUrl + "/api/College/getDepartment", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      id: id,
+    }),
+  });
+  const dep = await getDep.json();
+
+  const getCat = await fetch(baseUrl + "/api/College/getCategory", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      id: id,
+    }),
+  });
+  const Cat = await getCat.json();
+
+  return { clgDetail: data, department: dep, category: Cat };
 }
 
 // for show all Colleges
