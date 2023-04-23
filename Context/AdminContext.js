@@ -175,7 +175,8 @@ export function AdminContexProvider({ children }) {
     Max,
     Seats,
     choiceCode,
-    seatType
+    seatTypeMax,
+    seatTypeMin
   ) => {
     const res = await fetch("/api/addCategory", {
       method: "POST",
@@ -190,7 +191,8 @@ export function AdminContexProvider({ children }) {
         aFees: Annualfees,
         aSeats: Seats,
         choiceCode: choiceCode,
-        seatType: seatType,
+        seatTypeMax: seatTypeMax,
+        seatTypeMin: seatTypeMin,
       }),
     });
 

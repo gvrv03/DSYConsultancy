@@ -18,7 +18,10 @@ const categorySchema = new Schema(
     aSeats: {
       type: Number,
     },
-    seatType: {
+    seatTypeMax: {
+      type: String,
+    },
+    seatTypeMin: {
       type: String,
     },
     CollegeDetails: {

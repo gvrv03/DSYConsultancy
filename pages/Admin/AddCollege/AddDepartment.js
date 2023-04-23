@@ -129,8 +129,16 @@ const AddDepartment = () => {
 
     const addCat = async (e) => {
       e.preventDefault();
-      const { category, Annualfees, Min, Max, Seats, choiceCode, seatType } =
-        catDetails;
+      const {
+        category,
+        Annualfees,
+        Min,
+        Max,
+        Seats,
+        choiceCode,
+        seatTypeMax,
+        seatTypeMin,
+      } = catDetails;
       await addUserCategory(
         category,
         Annualfees,
@@ -138,7 +146,8 @@ const AddDepartment = () => {
         Max,
         Seats,
         choiceCode,
-        seatType
+        seatTypeMax,
+        seatTypeMin
       );
     };
 
@@ -203,8 +212,18 @@ const AddDepartment = () => {
                 placeholder="Seat type"
                 required={requiredState}
                 onChange={onChange}
-                value={catDetails.seatType ? catDetails.seatType : ""}
-                name="seatType"
+                value={catDetails.seatTypeMax ? catDetails.seatTypeMax : ""}
+                name="seatTypeMax"
+                className="text-xs px-2 py-3 bg-white  outline-none border rounded-sm "
+              />
+
+              <input
+                type="text"
+                placeholder="Seat type"
+                required={requiredState}
+                onChange={onChange}
+                value={catDetails.seatTypeMin ? catDetails.seatTypeMin : ""}
+                name="seatTypeMin"
                 className="text-xs px-2 py-3 bg-white  outline-none border rounded-sm "
               />
               <input
