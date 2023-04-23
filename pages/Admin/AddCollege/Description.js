@@ -57,22 +57,12 @@ const SunEditor = dynamic(() => import("suneditor-react"), {
 const TextEditor = () => {
   const { addDescription } = useAdminContext();
   const CollegeTextEditor = () => {
-    const [description, setDescription] = useState({});
-
-    const onChange = (e) => {
-      setDescription({
-        ...description,
-        [e.target.name]: e.target.value,
-      });
-    };
-    function handleChange(content) {
-      setDescription({ collegeDetail: content });
-    }
+    const [description, setDescription] = useState("");
+    const [insCode, setinsCode] = useState("");
 
     const addDetails = async (e) => {
       e.preventDefault();
-      const { collegeDetail, insCode } = description;
-      await addDescription(collegeDetail, insCode);
+      await addDescription(description, insCode);
     };
 
     return (
@@ -93,15 +83,19 @@ const TextEditor = () => {
               <input
                 className=" bg-white border  w-full rounded-sm outline-none  py-2 px-3 text-grey-darker"
                 type="number"
-                onChange={onChange}
-                value={description.insCode ? description.insCode : ""}
+                onChange={(e) => {
+                  setinsCode(e.target.value);
+                }}
+                value={insCode}
                 name="insCode"
                 placeholder="Ex. 1001"
               />
             </div>
             <SunEditor
-              // value={valueText}
-              onChange={handleChange}
+              // value={description}
+              onChange={(content) => {
+                setDescription(content);
+              }}
               placeholder="Write brief information"
               height="100%"
               setOptions={{
