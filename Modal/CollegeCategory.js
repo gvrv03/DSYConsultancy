@@ -18,6 +18,9 @@ const categorySchema = new Schema(
     aSeats: {
       type: Number,
     },
+    seatType: {
+      type: String,
+    },
     CollegeDetails: {
       type: ObjectId,
       ref: "college",

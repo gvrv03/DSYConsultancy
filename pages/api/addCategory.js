@@ -5,10 +5,18 @@ import CollegeDepartment from "directsecondyearadmission/Modal/CollegeDepartment
 initDB();
 
 export default async (req, res) => {
-  const { category, min, max, aFees, aSeats, choiceCode } = req.body;
+  const { category, min, max, aFees, aSeats, choiceCode, seatType } = req.body;
 
   try {
-    if (!category || !min || !max || !aFees || !aSeats || !choiceCode) {
+    if (
+      !category ||
+      !min ||
+      !max ||
+      !aFees ||
+      !aSeats ||
+      !choiceCode ||
+      !seatType
+    ) {
       return res.status(422).json({ error: "please fill all the fields" });
     }
 
@@ -37,6 +45,7 @@ export default async (req, res) => {
       max,
       aFees,
       aSeats,
+      seatType,
       CollegeDetails: CollegeId,
       CollegeDepartment: depId,
     };

@@ -47,7 +47,7 @@ const addDepartment = async (req, res) => {
 
     const addDep = await CollegeDepartment(dep).save();
 
-    res.status(201).json({ msg: "department Added", addDep });
+    res.status(201).json({ msg: "Department Added", addDep });
   } catch (err) {
     res.status(500).json({ error: "Internal Server Error" });
   }
