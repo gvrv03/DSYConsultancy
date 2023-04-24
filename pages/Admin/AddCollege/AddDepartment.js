@@ -209,7 +209,7 @@ const AddDepartment = () => {
 
               <input
                 type="text"
-                placeholder="Seat type"
+                placeholder="Seat Type Max"
                 required={requiredState}
                 onChange={onChange}
                 value={catDetails.seatTypeMax ? catDetails.seatTypeMax : ""}
@@ -219,7 +219,7 @@ const AddDepartment = () => {
 
               <input
                 type="text"
-                placeholder="Seat type"
+                placeholder="Seat Type Min"
                 required={requiredState}
                 onChange={onChange}
                 value={catDetails.seatTypeMin ? catDetails.seatTypeMin : ""}
