@@ -181,15 +181,6 @@ const AddDepartment = () => {
               />
               <input
                 type="text"
-                placeholder="Min"
-                required={requiredState}
-                onChange={onChange}
-                value={catDetails.Min ? catDetails.Min : ""}
-                name="Min"
-                className="text-xs px-2 py-3 bg-white  outline-none border rounded-sm "
-              />
-              <input
-                type="text"
                 placeholder="Max"
                 required={requiredState}
                 onChange={onChange}
@@ -197,6 +188,16 @@ const AddDepartment = () => {
                 name="Max"
                 className="text-xs px-2 py-3 bg-white  outline-none border rounded-sm "
               />
+              <input
+                type="text"
+                placeholder="Min"
+                required={requiredState}
+                onChange={onChange}
+                value={catDetails.Min ? catDetails.Min : ""}
+                name="Min"
+                className="text-xs px-2 py-3 bg-white  outline-none border rounded-sm "
+              />
+
               <input
                 type="text"
                 placeholder="Seats"
