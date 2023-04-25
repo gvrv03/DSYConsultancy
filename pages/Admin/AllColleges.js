@@ -38,6 +38,7 @@ const AllColleges = () => {
                 Institute Code
               </th>
               <th className="border-none py-3  text-center px-3">Added by</th>
+              <th className="border-none py-3  text-center px-3"></th>
             </tr>
           </thead>
           <tbody className="mt-10 text-xs">
@@ -75,6 +76,12 @@ const AllColleges = () => {
                     </td>
                     <td className="px-3 py-2  mt-2 border-none font-bold text-center">
                       {i.addedBy}{" "}
+                    </td>
+                    <td className="px-3 py-2   mt-2 border-none font-bold text-center">
+                      <div className="flex gap-2 justify-center items-center ">
+                        <i className="bi border  cursor-pointer p-1 rounded-md bi-pen-fill" />
+                        <i className="bi border cursor-pointer  p-1 text-red-700 rounded-md bi-trash-fill" />
+                      </div>
                     </td>
                   </tr>
                 );

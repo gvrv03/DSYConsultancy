@@ -35,13 +35,9 @@ export default async (req, res) => {
       return res.status(401).json({ error: "Please fill all the fields" });
     }
     const progress = await User.findOne({ "credentails.firebaseID": id });
-    const process = 90;
     let newProcess = progress.profileCompletion;
-    if (
-      progress.profileCompletion < process &&
-      progress.profileCompletion > 75
-    ) {
-      newProcess = process;
+    if (progress.educationDetails.isFill === false) {
+      newProcess = progress.profileCompletion + 20;
     }
 
     let eduDeatails = {
@@ -59,6 +55,7 @@ export default async (req, res) => {
         markType: cMarkType,
         percentage: cPercentage,
       },
+      isFill: true,
     };
 
     const update = {
@@ -75,7 +72,7 @@ export default async (req, res) => {
       return res.status(404).json({ error: "This User not Exists" });
     }
     res.status(201).json({
-      process: progress.profileCompletion,
+      process: newProcess,
       msg: "User Updated Sucessfll",
       userData,
     });

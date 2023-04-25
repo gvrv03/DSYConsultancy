@@ -13,6 +13,7 @@ const userSchema = new Schema(
       password: String,
       fName: String,
       firebaseID: String,
+      isFill: { type: Boolean, default: false },
     },
     basicDetails: {
       fName: String,
@@ -36,6 +37,7 @@ const userSchema = new Schema(
         type: String,
         default: "N/A",
       },
+      isFill: { type: Boolean, default: false },
     },
     contactDetails: {
       mobileNo: {
@@ -51,6 +53,7 @@ const userSchema = new Schema(
         type: String,
         default: "N/A",
       },
+      isFill: { type: Boolean, default: false },
     },
     educationDetails: {
       ssc: {
@@ -97,6 +100,7 @@ const userSchema = new Schema(
           default: 0,
         },
       },
+      isFill: { type: Boolean, default: false },
     },
     preferences: {
       university: {
@@ -119,6 +123,7 @@ const userSchema = new Schema(
         type: String,
         default: "N/A",
       },
+      isFill: { type: Boolean, default: false },
     },
     coOrdinates: {
       longitude: {
