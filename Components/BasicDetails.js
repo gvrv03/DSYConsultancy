@@ -1,3 +1,4 @@
+import { useCollegesContext } from "directsecondyearadmission/Context/CollegesContext";
 import { useUserAuth } from "directsecondyearadmission/Context/UserAuthContext";
 import { useUserContext } from "directsecondyearadmission/Context/UserContext";
 import { allCategory } from "directsecondyearadmission/quieries/CollegeDataQuieries";
@@ -10,6 +11,7 @@ import ModelHeader from "./ModelHeader";
 const BasicDetails = () => {
   const { updateBasicDetailsUser, setres, allUserDetail } = useUserContext();
   const [modalOpen, setModalOpen] = useState("hidden");
+  const { allCat } = useCollegesContext();
   const { user } = useUserAuth();
   const [loading, setloading] = useState(false);
   const [resMsg, setresMsg] = useState("");
@@ -55,14 +57,12 @@ const BasicDetails = () => {
       setloading(false);
     };
 
-    const [allCat, setallCat] = useState([]);
-    useEffect(() => {
-      const getCat = async () => {
-        const res = await allCategory();
-        setallCat(res);
-      };
-      getCat();
-    }, []);
+    const CategoryName = allCat && allCat.map((item) => item.category);
+    const removeDubCategory =
+      allCat &&
+      allCat.filter(
+        (cat, index) => !CategoryName.includes(cat.category, index + 1)
+      );
 
     return (
       <div className={`fixed top-0 ${modalOpen} left-0 h-full  w-full   `}>
@@ -117,13 +117,14 @@ const BasicDetails = () => {
                   >
                     <option value="">Your Social Category</option>
 
-                    {allCat.map((cat, index) => {
-                      return (
-                        <option key={index} value={cat.Category}>
-                          {cat.Category}
-                        </option>
-                      );
-                    })}
+                    {removeDubCategory &&
+                      removeDubCategory.map((cat, index) => {
+                        return (
+                          <option key={index} value={cat.category}>
+                            {cat.category}
+                          </option>
+                        );
+                      })}
                   </select>
                 </div>
                 <div className="flex flex-col ">
@@ -270,11 +271,7 @@ const BasicDetails = () => {
   if (!basicDetail) {
     return (
       <div className="bg-white shadow-md p-5 mt-5 grid place-items-center rounded-sm h-52">
-        <img
-          src="/img/loadingSpinner.gif"
-          className="w-10"
-          alt="spinner"
-        />
+        <img src="/img/loadingSpinner.gif" className="w-10" alt="spinner" />
       </div>
     );
   }

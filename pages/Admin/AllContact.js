@@ -38,7 +38,7 @@ const AllContact = () => {
       >
         Download XLS
       </button>
-      <div className="mt-5 mx-5 w-full   ">
+      <div className="h-full mt-5 mx-5 overflow-scroll ">
         <table className=" border-none  overflow-x-scroll w-full ">
           <thead className="border-none  w-full text-sm ">
             <tr className="bg-blue-50  border-none w-full">
@@ -79,6 +79,7 @@ const AllContact = () => {
               })}
           </tbody>
         </table>
+        {data && data.length === 0 && <div className="  border mt-5 p-5 text-center w-full font-semibold">No Data Found</div>}
         {!data && <Loader2 />}
       </div>
     </Dashboard>

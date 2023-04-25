@@ -22,9 +22,9 @@ const CollegeCourses = ({ courses }) => {
         <table ref={tableRef} className="w-full border  outline-none">
           <thead className="border-none  outline-none">
             <tr className="border-none   outline-none">
-              <th className="py-3 border-none bg-blue-50">Sr. No.</th>
-              <th className="py-3 border-none bg-blue-50">Choice Code</th>
-              <th className="px-10 border-none bg-blue-50 text-left">
+              <th className="py-5 border-none bg-blue-50">Sr. No.</th>
+              <th className="py-5 border-none bg-blue-50">Choice Code</th>
+              <th className="px-5 border-none bg-blue-50 text-left">
                 Course Name
               </th>
               <th className="py-3 border-none bg-blue-50">Annual Fees</th>
@@ -35,16 +35,16 @@ const CollegeCourses = ({ courses }) => {
             {courses.map((item, index) => {
               return (
                 <tr className="border-none " key={index}>
-                  <td className="border-none border-slate-500 text-center font-bold">
+                  <td className="border-none py-1 mx-5 px-5  border-slate-500 text-center font-bold">
                     {index + 1}
                   </td>
-                  <td className="border-none border-slate-500 text-center">
+                  <td className="border-none py-1 mx-5 px-5  border-slate-500 text-center">
                     {item.choiceCode}
                   </td>
-                  <td className="border-none border-slate-500 px-10">
+                  <td className="border-none py-1 mx-5 px-5  border-slate-500 ">
                     {item.courseName}
                   </td>
-                  <td className="border-none border-slate-500 text-center">
+                  <td className="border-none py-1 mx-5 px-5  border-slate-500 text-center">
                     {item.annalFee}
                   </td>
                 </tr>

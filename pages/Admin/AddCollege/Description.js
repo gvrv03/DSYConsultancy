@@ -55,14 +55,17 @@ const SunEditor = dynamic(() => import("suneditor-react"), {
 });
 
 const TextEditor = () => {
+  const [loader, setloader] = useState(false);
   const { addDescription } = useAdminContext();
   const CollegeTextEditor = () => {
     const [description, setDescription] = useState("");
     const [insCode, setinsCode] = useState("");
 
     const addDetails = async (e) => {
+      setloader(true);
       e.preventDefault();
       await addDescription(description, insCode);
+      setloader(false);
     };
 
     return (
@@ -192,7 +195,18 @@ const TextEditor = () => {
                 "lang(In nodejs)": "en",
               }}
             />
-            <button type="submit" className="pBtn px-10 mt-5 py-3">
+            <button
+              disabled={loader ? true : false}
+              type="submit"
+              className="flex gap-5 pBtn px-10 mt-5 py-3"
+            >
+              {loader && (
+                <img
+                  src="/img/loadingSpinner.gif"
+                  className="w-5"
+                  alt="spinner"
+                />
+              )}
               Submit
             </button>
           </form>

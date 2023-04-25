@@ -8,7 +8,7 @@ const CollegeArtical = ({ Artical, topRec }) => {
             Artical Not Found
           </div>
         )}
-        <div dangerouslySetInnerHTML={{ __html: Artical }} />
+        <div className="py-5" dangerouslySetInnerHTML={{ __html: Artical }} />
         <span className="text-sm m-0  font-semibold justify-start flex-wrap items-center flex  border-t-2 py-5">
           {" "}
           <div className="mr-2  mb-2">

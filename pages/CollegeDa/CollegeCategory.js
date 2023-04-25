@@ -27,39 +27,55 @@ const CollegeCategory = ({ category, name }) => {
                 Course Name
               </th>
               <th className="py-3 border-none bg-blue-50">Category</th>
-              <th className="px-3 border-none bg-blue-50 ">Min %</th>
-              <th className="py-3 border-none bg-blue-50">Max %</th>
+              <th className="px-3 border-none bg-blue-50 ">Max %</th>
+              <th className="py-3 border-none bg-blue-50">Seat Type Max %</th>
+              <th className="py-3 border-none bg-blue-50">Min %</th>
+              <th className="py-3 border-none bg-blue-50">Seat Type Min %</th>
               <th className="py-3 border-none bg-blue-50">Annual Fees</th>
               <th className="py-3 border-none bg-blue-50">Seats</th>
             </tr>
           </thead>
           <tbody className="overflow-x-scroll">
             {category.map((cat, indexCast) => {
-              const { category, min, max, CollegeDepartment, aFees, aSeats } =
-                cat ? cat : {};
+              const {
+                category,
+                min,
+                max,
+                CollegeDepartment,
+                aFees,
+                aSeats,
+                seatTypeMin,
+                seatTypeMax,
+              } = cat ? cat : {};
               const { choiceCode, courseName } = CollegeDepartment;
 
               return (
                 <tr className="border-none " key={indexCast}>
-                  <td className="border-none text-center border-slate-500 ">
+                  <td className="border-none py-1 mx-5 px-5 text-center border-slate-500 ">
                     {choiceCode}
                   </td>
-                  <td className="border-none text-left border-slate-500 px-10">
+                  <td className="border-none py-1 mx-5 px-5 text-left border-slate-500 ">
                     {courseName}
                   </td>
-                  <td className="border-none border-slate-500 text-center">
+                  <td className="border-none py-1 mx-5 px-5 border-slate-500 text-center">
                     {category}
                   </td>
-                  <td className="border-none border-slate-500 text-center">
-                    {min}
-                  </td>
-                  <td className="border-none border-slate-500 text-center">
+                  <td className="border-none py-1 mx-5 px-5 border-slate-500 text-center">
                     {max}
                   </td>
-                  <td className="border-none border-slate-500 text-center">
+                  <td className="border-none py-1 mx-5 px-5 border-slate-500 text-center">
+                    {seatTypeMax}
+                  </td>{" "}
+                  <td className="border-none py-1 mx-5 px-5 border-slate-500 text-center">
+                    {min}
+                  </td>
+                  <td className="border-none py-1 mx-5 px-5 border-slate-500 text-center">
+                    {seatTypeMin}
+                  </td>
+                  <td className="border-none py-1 mx-5 px-5 border-slate-500 text-center">
                     {aFees}
                   </td>
-                  <td className="border-none border-slate-500 text-center">
+                  <td className="border-none py-1 mx-5 px-5 border-slate-500 text-center">
                     {aSeats}
                   </td>
                 </tr>

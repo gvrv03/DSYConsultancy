@@ -30,6 +30,8 @@ const PreferenceDetails = () => {
   const districtName =
     allDepartments &&
     allDepartments.map((item) => item.CollegeDetails.location.district);
+
+    
   const removeDubDist =
     allDepartments &&
     allDepartments.filter(

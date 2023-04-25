@@ -9,6 +9,16 @@ const collegesContext = createContext();
 export function CollegeContexProvider({ children }) {
   // to get All Colleges
   const [allColleges, setallColleges] = useState([]);
+  const [allCat, setallCat] = useState([]);
+
+  useEffect(() => {
+    const getCat = async () => {
+      const res = await allCategory();
+      setallCat(res);
+    };
+    getCat();
+  }, []);
+
   async function getAllColleges() {
     // for show all Colleges
     const res = await axios.get(baseUrl + "/api/Colleges", {
@@ -40,7 +50,7 @@ export function CollegeContexProvider({ children }) {
 
   return (
     <collegesContext.Provider
-      value={{ getAllColleges, allCategory, allColleges }}
+      value={{ getAllColleges, allCategory, allCat, allColleges }}
     >
       {children}
     </collegesContext.Provider>
