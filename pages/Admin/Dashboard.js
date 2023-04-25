@@ -48,6 +48,11 @@ const HeaderFilter = () => {
     },
     {
       icon: "bi-buildings-fill",
+      Name: "All Schedule",
+      Location: "/Admin/AllSchedule",
+    },
+    {
+      icon: "bi-buildings-fill",
       Name: "Add College",
       Location: "/Admin/AddCollege/CollegeDetail",
     },

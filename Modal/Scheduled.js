@@ -8,12 +8,10 @@ const scheduleSchema = new Schema(
     scheduleTime: String,
     scheduleFor: String,
     scheduleDate: Date,
-    user: [
-      {
-        type: ObjectId,
-        ref: "User",
-      },
-    ],
+    UserData: {
+      type: ObjectId,
+      ref: "user",
+    },
   },
   { timestamps: true }
 );

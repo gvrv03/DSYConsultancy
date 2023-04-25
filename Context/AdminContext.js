@@ -12,6 +12,7 @@ export function AdminContexProvider({ children }) {
   const { userUID } = useUserContext();
   const { user } = useUserAuth();
   const [allDepartments, setallDepartments] = useState("");
+  const [allSchedule, setallSchedule] = useState([]);
   // console.log(allDepartments);
   const [toastMsg, settoastMsg] = useState({
     state: "hidden",
@@ -32,6 +33,17 @@ export function AdminContexProvider({ children }) {
       icon: icon,
       msg: msg,
     });
+  };
+
+  const getAllSchedule = async () => {
+    const res = await fetch("/api/schedule", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    const data = await res.json();
+    setallSchedule(data);
   };
 
   const getAllDepartment = async () => {
@@ -206,6 +218,7 @@ export function AdminContexProvider({ children }) {
 
   useEffect(() => {
     getAllDepartment();
+    getAllSchedule();
   }, []);
 
   return (
@@ -214,6 +227,7 @@ export function AdminContexProvider({ children }) {
         getAllDepartment,
         addCollegeData,
         addImagesData,
+        allSchedule,
         addDescription,
         allDepartments,
         addUserCategory,

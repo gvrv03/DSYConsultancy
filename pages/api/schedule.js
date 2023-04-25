@@ -25,7 +25,7 @@ const addSchedule = async (req, res) => {
       scheduleTime,
       scheduleFor,
       scheduleDate,
-      user: objectID,
+      UserData: objectID,
     }).save();
 
     const date = new Date(scheduleDate);
@@ -43,10 +43,9 @@ const addSchedule = async (req, res) => {
 
 async function getSchedule(req, res) {
   try {
-    const reports = await Scheduled.find();
-
-    res.status(201).json(reports);
+    const reports = await Scheduled.find().populate("UserData");
+    return res.status(200).json(reports);
   } catch (error) {
-    res.status(500).json({ error: "Internal Server Error" });
+    return res.status(500).json({ error: "Internal Server Error" });
   }
 }
