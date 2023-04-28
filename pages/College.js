@@ -6,7 +6,13 @@ import { collegeByUnder } from "directsecondyearadmission/quieries/quieries";
 import { allColleges } from "directsecondyearadmission/quieries/CollegeDataQuieries";
 import { useEffect } from "react";
 import Loader2 from "directsecondyearadmission/Components/Loader2";
+import Slider from "@mui/material/Slider";
+
 import { useAdminContext } from "directsecondyearadmission/Context/AdminContext";
+
+function valuetext(value) {
+  return `${value}°C`;
+}
 
 const College = () => {
   const { allDepartments } = useAdminContext();
@@ -91,29 +97,6 @@ const College = () => {
       </div>
     );
   };
-  // College Name filter Components
-  const CollegeNameFilter = () => {
-    return (
-      <div className="  px-5  ">
-        <input
-          type="text"
-          list="collegeList"
-          className="w-full py-2 px-2 outline-none  border "
-          placeholder="Search College..."
-        />
-        <datalist id="collegeList">
-          {undercolleges &&
-            undercolleges.map((item, index) => {
-              return (
-                <option key={index} value={item.name}>
-                  {item.name}
-                </option>
-              );
-            })}
-        </datalist>
-      </div>
-    );
-  };
 
   const DistrictFilter = () => {
     const districtName =
@@ -158,6 +141,7 @@ const College = () => {
       </div>
     );
   };
+
   const AllCollegesData = () => {
     const SingleCollege = (props) => {
       return (
@@ -239,6 +223,12 @@ const College = () => {
       );
     };
 
+    // for slider
+    const [value, setValue] = React.useState([20, 37]);
+    const handleChange = (event, newValue) => {
+      setValue(newValue);
+    };
+
     return (
       <div className=" h-full flex  overflow-y-scroll gap-5 w-full  ">
         <div className=" h-full flex flex-col  overflow-y-scroll md:w-2/3 w-full ">
@@ -303,7 +293,16 @@ const College = () => {
 
           <DistrictFilter />
           <div className="h-1 mx-5 my-5 bg-slate-50" />
-          <CollegeNameFilter />
+
+          <div className="p-5">
+            <Slider
+              getAriaLabel={() => "Temperature range"}
+              value={value}
+              onChange={handleChange}
+              valueLabelDisplay="auto"
+              getAriaValueText={valuetext}
+            />
+          </div>
         </div>
       </div>
     );
@@ -431,6 +430,10 @@ const College = () => {
       );
     };
 
+    const [value, setValue] = React.useState([20, 37]);
+    const handleChange = (event, newValue) => {
+      setValue(newValue);
+    };
     return (
       <>
         <div className="relative mb-5 rounded-sm    shadow-md items-center p-5 flex justify-between h-14  bg-white w-full">
@@ -502,7 +505,15 @@ const College = () => {
                 <div className="h-1 mx-5 my-5 bg-slate-50" />
                 <DistrictFilter />
                 <div className="h-1  mx-5 my-5 bg-slate-50" />
-                <CollegeNameFilter />
+                <div className="p-5">
+                  <Slider
+                    getAriaLabel={() => "Temperature range"}
+                    value={value}
+                    onChange={handleChange}
+                    valueLabelDisplay="auto"
+                    getAriaValueText={valuetext}
+                  />
+                </div>
               </div>
             </div>
           </div>
@@ -526,13 +537,5 @@ const College = () => {
     </HomeLayout>
   );
 };
-
-// export async function getServerSideProps() {
-//   // for show all Colleges
-//   const data = await allColleges()
-//   return {
-//     props: { data },
-//   };
-// }
 
 export default College;

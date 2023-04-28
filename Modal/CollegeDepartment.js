@@ -12,6 +12,7 @@ const departmentSchema = new Schema(
     annalFee: Number,
     choiceCode: Number,
     cName: String,
+    DepCategory: [{ type: ObjectId, ref: "CollegeCategory" }],
   },
   { timestamps: true }
 );

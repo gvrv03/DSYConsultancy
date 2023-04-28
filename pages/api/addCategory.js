@@ -62,6 +62,11 @@ export default async (req, res) => {
     };
 
     const addCat = await CollegeCategory(studentCategory).save();
+
+    await CollegeDepartment.findByIdAndUpdate(depId, {
+      $push: { DepCategory: addCat._id },
+    });
+
     res.status(201).json({ msg: "Category Added", addCat });
   } catch (err) {
     res.status(500).json({ error: "Internal Server Error", err });
