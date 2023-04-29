@@ -9,6 +9,8 @@ import Loader2 from "directsecondyearadmission/Components/Loader2";
 import Slider from "@mui/material/Slider";
 
 import { useAdminContext } from "directsecondyearadmission/Context/AdminContext";
+import { useUserAuth } from "directsecondyearadmission/Context/UserAuthContext";
+import { useUserContext } from "directsecondyearadmission/Context/UserContext";
 
 function valuetext(value) {
   return `${value}°C`;
@@ -16,6 +18,10 @@ function valuetext(value) {
 
 const College = () => {
   const { allDepartments } = useAdminContext();
+  const { allUserDetail } = useUserContext();
+  const { basicDetails } = allUserDetail;
+
+  let Category = basicDetails && basicDetails.socialCategory;
 
   // checkbox handler function
   const [selectedCollegeUnder, setSelectedCollegeUnder] = useState([]);
@@ -28,6 +34,8 @@ const College = () => {
         );
   };
 
+  const [finalFilterColeges, setfinalFilterColeges] = useState({});
+  // console.log(allDepartments);
   // Sorting lists
 
   const items = [
@@ -53,7 +61,8 @@ const College = () => {
   const undercolleges = collegeByUnder(
     selectedCollegeUnder,
     allDepartments,
-    district
+    district,
+    Category
   );
 
   // College Under Components
@@ -143,85 +152,140 @@ const College = () => {
   };
 
   const AllCollegesData = () => {
+    const [search, setsearch] = useState("");
+    const [depCol, setdepCol] = useState("");
     const SingleCollege = (props) => {
+      console.log();
+      const userCat = props.DepCategory.filter((cat) => {
+        return cat.category === props.category;
+      });
       return (
-        <div className=" flex   shadow-md mb-5 gap-10 justify-between md:flex-row flex-col sm:gap-5 bg-white  rounded-sm p-5 ">
-          <div className=" grid px-10 bg-slate-50 md:py-0 py-10  rounded-sm place-items-center ">
-            <img
-              className="rounded-full border-blue-900 border-2 h-20 w-20 "
-              src={props.image}
-              alt={props.collegeName}
-            />
-          </div>
-          <div className="">
-            <div className="font-bold  text-lg">
-              {props.collegeName} ({props.instituteCode}){" "}
+        <div className="shadow-md mb-5 bg-white  rounded-sm p-5 ">
+          <div className=" flex   gap-10 justify-between md:flex-row flex-col sm:gap-5 ">
+            <div className=" grid px-10 bg-slate-50 md:py-0 py-10  rounded-sm place-items-center ">
+              <img
+                className="rounded-full border-blue-900 border-2 h-20 w-20 "
+                src={props.image}
+                alt={props.collegeName}
+              />
             </div>
-            <div className="font-bold text-blue-900  text-xs py-2">
-              {props.approvedBy}
-            </div>
-            <div className="font-medium mt-2 flex items-center text-xs ">
-              <i className="bi text-slate-400 mr-2 text-xs bi-pin-map-fill"></i>
-              <span className="text-slate-400 font-normal text-justify">
-                {props.location},{" "}
-                <span className="font-semibold text-sm"></span>
-              </span>
-            </div>
-            <div className="font-medium mt-2 flex items-center text-xs ">
-              <i className="bi text-slate-400 mr-2 text-xs bi-building-fill"></i>
-              <span className="text-slate-800 font-bold text-xs">
-                {props.department}
-              </span>
-            </div>
+            <div className="">
+              <div className="font-bold  text-lg">
+                {props.collegeName} ({props.instituteCode}){" "}
+              </div>
+              <div className="font-bold text-blue-900  text-xs py-2">
+                {props.approvedBy}
+              </div>
+              <div className="font-medium mt-2 flex items-center text-xs ">
+                <i className="bi text-slate-400 mr-2 text-xs bi-pin-map-fill"></i>
+                <span className="text-slate-400 font-normal text-justify">
+                  {props.location},{" "}
+                  <span className="font-semibold text-sm"></span>
+                </span>
+              </div>
+              <div className="font-medium mt-2 flex items-center text-xs ">
+                <i className="bi text-slate-400 mr-2 text-xs bi-building-fill"></i>
+                <span className="text-slate-800 font-bold text-xs">
+                  {props.department}
+                </span>
+              </div>
 
-            <div className="font-medium mt-2 flex justify-between items-center pColor text-xs ">
-              <div className="font-medium mt-2 flex items-center pColor text-xs ">
-                <i className="bi text-slate-400 mr-2   bi-send-fill"></i>
-                <div>{props.collegeType}</div>
-              </div>
-              <div className="font-medium mt-2 flex items-center pColor text-xs ">
-                {/* <i className="bi text-slate-400 mr-2   bi-send-fill"></i> */}
-                <div>{props.district}</div>
-              </div>
-              <div className="font-medium mt-2 flex items-center pColor text-xs ">
-                <div>{props.collegeUnder}</div>
-                <i className="bi text-slate-400 ml-2   bi-flag-fill"></i>
+              <div className="font-medium mt-2 flex justify-between items-center pColor text-xs ">
+                <div className="font-medium mt-2 flex items-center pColor text-xs ">
+                  <i className="bi text-slate-400 mr-2   bi-send-fill"></i>
+                  <div>{props.collegeType}</div>
+                </div>
+                <div className="font-medium mt-2 flex items-center pColor text-xs ">
+                  {/* <i className="bi text-slate-400 mr-2   bi-send-fill"></i> */}
+                  <div>{props.district}</div>
+                </div>
+                <div className="font-medium mt-2 flex items-center pColor text-xs ">
+                  <div>{props.collegeUnder}</div>
+                  <i className="bi text-slate-400 ml-2   bi-flag-fill"></i>
+                </div>
               </div>
             </div>
-          </div>
-          <div className=" md:mt-5 -mt-5 flex justify-between items-center md:flex-col flex-row gap-5 ">
-            <Link
-              href={{
-                pathname: `/CollegeDa/[id]`,
-                query: {
-                  id: props.collegeId,
-                },
-              }}
-              type="button"
-              target="_blank"
-              className="pBtn  text-center px-3 w-full text-xs py-2"
-            >
-              Read More
-            </Link>
+            <div className=" md:mt-5 -mt-5 flex justify-between items-center md:flex-col flex-row gap-5 ">
+              <Link
+                href={{
+                  pathname: `/CollegeDa/[id]`,
+                  query: {
+                    id: props.collegeId,
+                  },
+                }}
+                type="button"
+                target="_blank"
+                className="pBtn  text-center px-3 w-full text-xs py-2"
+              >
+                Read More
+              </Link>
 
-            <Link
-              href={`tel:+91${props.contactNo}`}
-              type="button"
-              className="border  text-center px-3 w-full text-xs py-2"
-            >
-              Make a call
-            </Link>
-            <Link
-              href={`tel:+91${props.contactNo}`}
-              type="button"
-              className="border  text-center px-3 w-full text-xs py-2"
-            >
-              Save
-            </Link>
+              <Link
+                href={`tel:+91${props.contactNo}`}
+                type="button"
+                className="border  text-center px-3 w-full text-xs py-2"
+              >
+                Make a call
+              </Link>
+              <Link
+                href={`tel:+91${props.contactNo}`}
+                type="button"
+                className="border  text-center px-3 w-full text-xs py-2"
+              >
+                Save
+              </Link>
+            </div>
+          </div>
+          <div className="mt-5 text-sm font-bold text-center bg-blue-50 border border-blue-100 py-2">
+            <span>{userCat[0] ? userCat[0].category : "N/A"}</span>{" "}
+            <span className="mr-2 pColor">
+              Min :
+              {userCat[0]
+                ? userCat[0].min + "%" + "  (" + userCat[0].seatTypeMin + ") "
+                : "N/A"}
+            </span>{" "}
+            <span className="pColor mr-1">
+              {" "}
+              Max :{" "}
+              {userCat[0]
+                ? userCat[0].max + "%" + "  (" + userCat[0].seatTypeMax + ") "
+                : "N/A"}
+            </span>
+            <span className="pColor mr-1">
+              ({userCat[0] ? userCat[0].aSeats : "N/A"})
+            </span>
           </div>
         </div>
       );
     };
+
+    const afterSearch =
+      undercolleges &&
+      undercolleges.filter((college) => {
+        if (search === "") {
+          return college;
+        }
+        return college.cName.toLowerCase().includes(search.toLowerCase());
+      });
+
+    let depName = [];
+    afterSearch &&
+      afterSearch.map((item) => {
+        depName.push(item.courseName);
+      });
+
+    const removeDubBranch = depName.filter(
+      (course, index) => !depName.includes(course, index + 1)
+    );
+
+    const depFilter =
+      afterSearch &&
+      afterSearch.filter((college) => {
+        if (depCol === "") {
+          return college;
+        }
+        return college.courseName.toLowerCase() === depCol.toLowerCase();
+      });
 
     // for slider
     const [value, setValue] = React.useState([20, 37]);
@@ -241,26 +305,31 @@ const College = () => {
               />
             </div>
           )}
-          {undercolleges &&
-            undercolleges.map((department, indexDep) => {
+          {depFilter &&
+            depFilter.map((department, indexDep) => {
               const {
                 name,
                 instituteCode,
                 collegeUnder,
                 collegeType,
                 location,
+
                 contacts,
                 approvedBy,
                 image,
                 _id,
               } = department.CollegeDetails;
+
+              const { DepCategory } = department;
               return (
                 <span key={indexDep}>
                   <SingleCollege
                     collegeName={name}
                     approvedBy={approvedBy}
+                    DepCategory={DepCategory}
                     collegeType={collegeType}
                     collegeId={_id}
+                    category={Category}
                     location={location.addressLine}
                     district={location.district}
                     instituteCode={instituteCode}
@@ -274,13 +343,6 @@ const College = () => {
             })}
         </div>
         <div className=" h-full  flex-col md:flex hidden bg-white  shadow-md overflow-y-scroll w-2/6 ">
-          <div className="flex  px-5 pt-5">
-            <i className="bi bi-funnel-fill mr-4" onClick={toggleUser}></i>
-            <span onClick={toggleUser} className="text-slate-400">
-              Sort
-            </span>
-          </div>
-          <SortCollege />
           <div className="flex  p-5">
             <i className="bi bi-funnel-fill mr-4" onClick={toggleUser}></i>
             <span onClick={toggleUser} className="text-slate-400">
@@ -292,33 +354,53 @@ const College = () => {
           <div className="h-1 mx-5 my-5 bg-slate-50" />
 
           <DistrictFilter />
-          <div className="h-1 mx-5 my-5 bg-slate-50" />
+          <div className="h-1 mx-5 mt-5 bg-slate-50" />
 
-          <div className="p-5">
-            <Slider
-              getAriaLabel={() => "Temperature range"}
-              value={value}
-              onChange={handleChange}
-              valueLabelDisplay="auto"
-              getAriaValueText={valuetext}
+          <div className="flex  p-5">
+            <i className="bi bi-search font-bold mr-4" onClick={toggleUser}></i>
+            <span className="text-slate-400">Search</span>
+          </div>
+
+          <div className="w-full px-5 bg-white">
+            <input
+              type="text"
+              onChange={(e) => {
+                setsearch(e.target.value);
+              }}
+              className="border w-full outline-none text-sm px-2 py-2"
+              placeholder="Search College"
             />
+          </div>
+
+          <div className="flex  p-5 mt-5">
+            <i
+              className="bi bi-buildings-fill font-bold mr-4"
+              onClick={toggleUser}
+            ></i>
+            <span className="text-slate-400">Department</span>
+          </div>
+          <div className="w-full px-5 bg-white">
+            <select
+              onChange={(e) => {
+                setdepCol(e.target.value);
+              }}
+              className="border w-full outline-none text-sm px-2 py-2"
+              placeholder="Search College"
+            >
+              <option value="" className="text-center">
+                All
+              </option>
+              {removeDubBranch.map((item, index) => {
+                return (
+                  <option key={index} value={item}>
+                    {item}
+                  </option>
+                );
+              })}
+            </select>
           </div>
         </div>
       </div>
-    );
-  };
-
-  const NavItem = (props) => {
-    return (
-      <Link
-        href={props.location}
-        className="text-gray-700 hover:bg-sky-100 pl-5  block  mx-5 py-2 text-sm"
-        role="menuitem"
-        tabIndex="-1"
-        id="menu-item-0"
-      >
-        {props.name}
-      </Link>
     );
   };
 
@@ -332,13 +414,6 @@ const College = () => {
   };
 
   const HeaderFilter = () => {
-    const [search, setSearch] = useState("");
-
-    const inputChangedHandler = (e) => {
-      e.preventDefault();
-      setSearch(e.target.value);
-    };
-
     const items = [
       {
         Name: "Category",
@@ -430,10 +505,6 @@ const College = () => {
       );
     };
 
-    const [value, setValue] = React.useState([20, 37]);
-    const handleChange = (event, newValue) => {
-      setValue(newValue);
-    };
     return (
       <>
         <div className="relative mb-5 rounded-sm    shadow-md items-center p-5 flex justify-between h-14  bg-white w-full">
@@ -491,29 +562,10 @@ const College = () => {
               tabIndex="-1"
             >
               <div className="py-5" role="none">
-                {items.map((item, index) => {
-                  return (
-                    <NavItem
-                      location={item.Location}
-                      name={item.Name}
-                      key={index}
-                    />
-                  );
-                })}
-                <div className="h-1 mx-5 my-5 bg-slate-50" />
                 <CollegeUnder />
                 <div className="h-1 mx-5 my-5 bg-slate-50" />
                 <DistrictFilter />
                 <div className="h-1  mx-5 my-5 bg-slate-50" />
-                <div className="p-5">
-                  <Slider
-                    getAriaLabel={() => "Temperature range"}
-                    value={value}
-                    onChange={handleChange}
-                    valueLabelDisplay="auto"
-                    getAriaValueText={valuetext}
-                  />
-                </div>
               </div>
             </div>
           </div>

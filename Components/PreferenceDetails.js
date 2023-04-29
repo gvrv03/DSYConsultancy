@@ -14,7 +14,7 @@ const PreferenceDetails = () => {
   const [requiredState, setRequired] = useState(false);
   const { user } = useUserAuth();
   const { preferenceDetailsUser, setres, allUserDetail } = useUserContext();
-  const { allColleges } = useCollegesContext();
+  const { allColleges, allCat } = useCollegesContext();
   const { allDepartments } = useAdminContext();
 
   const [resMsg, setresMsg] = useState("");
@@ -31,7 +31,6 @@ const PreferenceDetails = () => {
     allDepartments &&
     allDepartments.map((item) => item.CollegeDetails.location.district);
 
-    
   const removeDubDist =
     allDepartments &&
     allDepartments.filter(
@@ -47,6 +46,13 @@ const PreferenceDetails = () => {
     (university, index) =>
       !univercityName.includes(university.university, index + 1)
   );
+
+  const CategorySeatType = allCat && allCat.map((item) => item.seatTypeMax);
+  const removeDubCategory =
+    allCat &&
+    allCat.filter(
+      (cat, index) => !CategorySeatType.includes(cat.seatTypeMax, index + 1)
+    );
 
   let depName = [];
   allDepartments.map((item) => {
@@ -72,18 +78,24 @@ const PreferenceDetails = () => {
         [e.target.name]: e.target.value,
       });
     };
-    console.log(preferenceDetails);
     const updatePreftDetails = async (e) => {
       e.preventDefault();
-      const { university, branch, location, collegeType, needLoan } =
-        preferenceDetails;
+      const {
+        university,
+        branch,
+        location,
+        collegeType,
+        needLoan,
+        CatSeatType,
+      } = preferenceDetails;
       const res = await preferenceDetailsUser(
         university,
         branch,
         location,
         collegeType,
         needLoan,
-        user.uid
+        user.uid,
+        CatSeatType
       );
       setresMsg(res);
       setres(Math.random());
@@ -125,7 +137,7 @@ const PreferenceDetails = () => {
                     }
                     name="university"
                   >
-                    <option value="Select"> ----SELECT----</option>
+                    <option value="Select"> ----Select----</option>
                     {removeDubUniversity.sort().map((item, index) => {
                       return (
                         <option
@@ -167,6 +179,38 @@ const PreferenceDetails = () => {
                     })}
                   </select>
                 </div>
+
+                <div className="flex flex-col ">
+                  <label
+                    htmlFor="CatSeatType"
+                    className="leading-7 text-sm text-gray-600"
+                  >
+                    Seat type
+                  </label>
+                  <select
+                    id="CatSeatType"
+                    required={requiredState}
+                    onChange={onChange}
+                    value={
+                      preferenceDetails.CatSeatType
+                        ? preferenceDetails.CatSeatType
+                        : ""
+                    }
+                    name="CatSeatType"
+                    className="w-full bg-white rounded-sm  border border-gray-300 text-base outline-none text-gray-700 py-1 px-3 "
+                  >
+                    <option value="---Select---">---Select---</option>
+
+                    {removeDubCategory.sort().map((item, index) => {
+                      return (
+                        <option value={item.seatTypeMax} key={index}>
+                          {item.seatTypeMax}
+                        </option>
+                      );
+                    })}
+                  </select>
+                </div>
+
                 <div className="flex flex-col ">
                   <label
                     htmlFor="CType"
@@ -199,10 +243,8 @@ const PreferenceDetails = () => {
                   >
                     District
                   </label>
-                  <input
+                  <select
                     placeholder="Enter District"
-                    type="text"
-                    list="District"
                     required={requiredState}
                     onChange={onChange}
                     value={
@@ -212,8 +254,8 @@ const PreferenceDetails = () => {
                     }
                     name="location"
                     className="w-full bg-white rounded-sm  border border-gray-300 text-base outline-none text-gray-700 py-1 px-3 "
-                  />
-                  <datalist id="District" name="district">
+                  >
+                    <option value="---Select---">---Select---</option>
                     {removeDubDist &&
                       removeDubDist.map((item, index) => {
                         return (
@@ -226,7 +268,7 @@ const PreferenceDetails = () => {
                           </option>
                         );
                       })}
-                  </datalist>
+                  </select>
                 </div>
 
                 <div className="flex flex-col ">
@@ -317,6 +359,10 @@ const PreferenceDetails = () => {
         <div className="md:w-2/6 w-full pb-5">
           <div className="text-slate-400 text-sm">College Type</div>
           <div className="text-sm">{preferenceDetail.collegeType}</div>
+        </div>
+        <div className="md:w-2/6 w-full pb-5">
+          <div className="text-slate-400 text-sm">Seat Type</div>
+          <div className="text-sm">{preferenceDetail.CatSeatType}</div>
         </div>
         <div className="md:w-2/6 w-full pb-5">
           <div className="text-slate-400 text-sm">Need a loan?</div>

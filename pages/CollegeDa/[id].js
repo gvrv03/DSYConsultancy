@@ -37,6 +37,7 @@ export default function CollegeData({ College, Departments, category }) {
             {" "}
             Overview
           </button>
+
           <button
             onClick={function () {
               setCount(2);
@@ -91,7 +92,7 @@ export default function CollegeData({ College, Departments, category }) {
             type="button"
           >
             {" "}
-            Address
+            Contacts
           </button>
         </div>
         <div className="mt-5 text-sm">{children}</div>
@@ -130,68 +131,76 @@ export default function CollegeData({ College, Departments, category }) {
 
       <div className="container bg-white rounded-sm mt-14  sm:mt-20 p-5 mx-auto space-y-12">
         <article className=" ">
-          <div className="space-y-6 border-b-2 pb-5">
-            <h1 className="text-2xl font-bold sm:text-3xl md:tracking-tight ">
-              {College.name} ({College.instituteCode})
-            </h1>
-            <p className="text-sm font-bold ">
-              University :{" "}
-              <span className="font-normal text-sm">
-                {" "}
-                {College.university}{" "}
-              </span>
-            </p>
+          <div className=" flex border-b-2 justify-between items-center">
+            <div className="space-y-6  w-full  pb-5">
+              <h1 className="text-2xl font-bold sm:text-3xl md:tracking-tight ">
+                {College.name} ({College.instituteCode})
+              </h1>
+              <p className="text-sm font-bold ">
+                University :{" "}
+                <span className="font-normal text-sm">
+                  {" "}
+                  {College.university}{" "}
+                </span>
+              </p>
 
-            <div className="grid sm:flex grid-cols-2  gap-5  ">
-              <div>
-                <Rating
-                  name="half-rating-read"
-                  defaultValue={College.rating}
-                  size="small"
-                  readOnly
-                />
+              <div className="grid sm:flex grid-cols-2  gap-5  ">
+                <div>
+                  <Rating
+                    name="half-rating-read"
+                    defaultValue={College.rating}
+                    size="small"
+                    readOnly
+                  />
+                </div>
+                <span className="text-sm  m-0  font-semibold">
+                  <i className="bi text-slate-400 mr-2 bi-pin-map-fill"></i>
+                  Location :{" "}
+                  <span className="font-normal"> {College.location.city}</span>
+                </span>
+                <span className="text-sm  m-0  font-semibold">
+                  <i className="bi text-slate-400 mr-2   bi-flag-fill"></i>
+                  <span className="font-normal"> {College.collegeUnder}</span>
+                </span>
+                <span className="text-sm  m-0  font-semibold">
+                  <i className="bi text-slate-400 mr-2   bi-send-fill"></i>
+                  <span className="font-normal"> {College.collegeType}</span>
+                </span>
               </div>
-              <span className="text-sm  m-0  font-semibold">
-                <i className="bi text-slate-400 mr-2 bi-pin-map-fill"></i>
-                Location :{" "}
-                <span className="font-normal"> {College.location.city}</span>
+              <span className="text-sm m-0  font-semibold  flex ">
+                {" "}
+                <i className="bi text-slate-400 bi-award-fill mr-2"></i>{" "}
+                <span className="mr-2 ">Approved By : </span>
+                {approvedBy.map((item, index) => {
+                  return (
+                    <div
+                      key={index}
+                      className="mr-2 text-xs h-auto px-3 border"
+                    >
+                      {item}
+                    </div>
+                  );
+                })}
               </span>
-              <span className="text-sm  m-0  font-semibold">
-                <i className="bi text-slate-400 mr-2   bi-flag-fill"></i>
-                <span className="font-normal"> {College.collegeUnder}</span>
-              </span>
-              <span className="text-sm  m-0  font-semibold">
-                <i className="bi text-slate-400 mr-2   bi-send-fill"></i>
-                <span className="font-normal"> {College.collegeType}</span>
-              </span>
+
+              <div className="mt-5 flex justify-between items-center text-sm font-semibold">
+                <span>
+                  <i className="bi text-slate-400 mr-2   bi-pen-fill"></i>
+                  Written By :{" "}
+                  <span className=" font-normal">{College.addedBy}</span>{" "}
+                </span>
+
+                <span>
+                  <i className="bi text-slate-400 mr-2   bi-eye-fill"></i>
+                  <span className=" font-normal"> {College.views}</span>{" "}
+                </span>
+              </div>
             </div>
-            <span className="text-sm m-0  font-semibold  flex ">
-              {" "}
-              <i className="bi text-slate-400 bi-award-fill mr-2"></i>{" "}
-              <span className="mr-2 ">Approved By : </span>
-              {approvedBy.map((item, index) => {
-                return (
-                  <div key={index} className="mr-2 text-xs h-auto px-3 border">
-                    {item}
-                  </div>
-                );
-              })}
-            </span>
 
-            <div className="mt-5 flex justify-between items-center text-sm font-semibold">
-              <span>
-                <i className="bi text-slate-400 mr-2   bi-pen-fill"></i>
-                Written By :{" "}
-                <span className=" font-normal">{College.addedBy}</span>{" "}
-              </span>
-
-              <span>
-                <i className="bi text-slate-400 mr-2   bi-eye-fill"></i>
-                <span className=" font-normal"> {College.views}</span>{" "}
-              </span>
+            <div className="hidden md:grid  mr-20 place-items-center">
+              <img src={College.image} alt="" />
             </div>
           </div>
-
           <div></div>
 
           <CInfoData>
@@ -208,6 +217,7 @@ export default function CollegeData({ College, Departments, category }) {
             {count == 4 && <CollegeImages images={College.images} />}
             {count == 5 && (
               <CollegeAddress
+                contacts={College.contacts}
                 maps={College.iframe}
                 locationCollege={College.location}
               />

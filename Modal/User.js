@@ -119,6 +119,10 @@ const userSchema = new Schema(
         type: String,
         default: "N/A",
       },
+      CatSeatType: {
+        type: String,
+        default: "N/A",
+      },
       needLoan: {
         type: String,
         default: "N/A",

@@ -16,5 +16,6 @@ const departmentSchema = new Schema(
   },
   { timestamps: true }
 );
+
 export default mongoose.models.collegedepartment ||
   mongoose.model("collegedepartment", departmentSchema);

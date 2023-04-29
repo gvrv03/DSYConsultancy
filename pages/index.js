@@ -11,25 +11,36 @@ import Loading from "directsecondyearadmission/Components/Loading";
 import { useUserAuth } from "directsecondyearadmission/Context/UserAuthContext";
 import NewsLetter from "directsecondyearadmission/Components/NewsLetter";
 import MarquHome from "directsecondyearadmission/Components/MarquHome";
+import { useCollegesContext } from "directsecondyearadmission/Context/CollegesContext";
 const CollegeCard = () => {
-  const Card = () => {
+  const { allColleges } = useCollegesContext();
+  const { image, collegeType, collegeUnder, name, contacts } = allColleges;
+  console.log(allColleges);
+  const Card = (props) => {
+    const { image, collegeType, collegeUnder, name, contacts } = props;
+
     return (
       <div className="flex  shadow-md flex-col hover:bg-blue-900 hover:text-white bg-white  flex-1 p-6">
-        <p
-          rel="noopener noreferrer"
-          aria-label="Te nulla oportere reprimique his dolorum"
-        ></p>
-        <a
-          rel="noopener noreferrer"
-          className="text-xs tracking-wider uppercase hover:underline "
-        >
-          Convenire
-        </a>
-        <h3 className="flex-1 cursor-pointer py-2 text-lg font-semibold leading-snug">
-          Te nulla oportere reprimique his dolorum
-        </h3>
-        <div className="flex flex-wrap justify-between pt-3 space-x-2 text-xs ">
-          <span>June 1, 2020</span>
+        <div className="bg-sky-50 mb-5 grid place-items-center p-5 ">
+          <img className="w-32 h-32 rounded-full" src={image} alt="" />
+        </div>
+        <div>
+          <p
+            rel="noopener noreferrer"
+            aria-label="Te nulla oportere reprimique his dolorum"
+          ></p>
+          <a
+            rel="noopener noreferrer"
+            className="text-xs tracking-wider uppercase hover:underline "
+          >
+            {collegeType}, {collegeUnder}
+          </a>
+          <h3 className="flex-1 cursor-pointer py-2 text-lg font-semibold leading-snug">
+            {name}
+          </h3>
+          <div className="flex flex-wrap justify-between pt-3 space-x-2 text-xs ">
+            <span>{contacts.website}</span>
+          </div>
         </div>
       </div>
     );
@@ -38,11 +49,20 @@ const CollegeCard = () => {
     <>
       <Link href="/" legacyBehavior>
         <article className="flex w-96 p-4 flex-row gap-5 cursor-pointer ">
-          <Card />
-          <Card />
-          <Card />
-          <Card />
-          <Card />
+          {allColleges &&
+            allColleges.map((item, index) => {
+              const { image, collegeType, collegeUnder, name, contacts } = item;
+              return (
+                <Card
+                  key={index}
+                  image={image}
+                  collegeType={collegeType}
+                  collegeUnder={collegeUnder}
+                  name={name}
+                  contacts={contacts}
+                />
+              );
+            })}
         </article>
       </Link>
     </>
@@ -201,14 +221,14 @@ const Home = () => {
                     </Link>
                   )}
                 </div>
-                <AppDown />
+                {/* <AppDown /> */}
               </div>
 
-              <div className="lg:max-w-lg lg:w-full md:w-1/2 w-5/6">
+              <div className="mt-10 md:mt-0">
                 <img
                   className="object-cover object-center w-full rounded-sm"
                   alt="hero"
-                  src="/img/hero2.gif"
+                  src="/hero.svg"
                 />
               </div>
             </div>

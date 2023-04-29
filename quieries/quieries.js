@@ -1,5 +1,5 @@
 // for Department
-export const collegeByUnder = (selectedunder, colleges, district) => {
+export const collegeByUnder = (selectedunder, colleges, district,Category) => {
   let filterCollege = !selectedunder.length
     ? colleges
     : colleges.filter((clgDetail) =>

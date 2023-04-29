@@ -55,7 +55,9 @@ const addDepartment = async (req, res) => {
 
 const getDepartment = async (req, res) => {
   try {
-    const getAllDep = await CollegeDepartment.find().populate("CollegeDetails");
+    const getAllDep = await CollegeDepartment.find()
+      .populate("CollegeDetails")
+      .populate("DepCategory");
     return res.status(200).json(getAllDep);
   } catch (error) {
     res.status(500).json({ error: "Internal Server Error" });

@@ -191,7 +191,8 @@ export function UserContexProvider({ children }) {
     location,
     collegeType,
     needLoan,
-    id
+    id,
+    CatSeatType
   ) => {
     const res = await fetch("/api/updatePrefD", {
       method: "POST",
@@ -205,6 +206,7 @@ export function UserContexProvider({ children }) {
         collegeType,
         needLoan,
         id,
+        CatSeatType,
       }),
     });
 

@@ -4,7 +4,15 @@ import Authenticated from "directsecondyearadmission/Helpers/Authenticated";
 initDB();
 
 export default async (req, res) => {
-  const { university, branch, location, collegeType, needLoan, id } = req.body;
+  const {
+    university,
+    branch,
+    location,
+    collegeType,
+    needLoan,
+    id,
+    CatSeatType,
+  } = req.body;
   try {
     if (
       !university ||
@@ -12,7 +20,8 @@ export default async (req, res) => {
       !location ||
       !collegeType ||
       !needLoan ||
-      !id
+      !id ||
+      !CatSeatType
     ) {
       return res.status(401).json({ error: "Please fill all the fields" });
     }
@@ -31,6 +40,7 @@ export default async (req, res) => {
       collegeType: collegeType,
       university: university,
       isFill: true,
+      CatSeatType: CatSeatType,
     };
 
     const update = {
@@ -41,7 +51,7 @@ export default async (req, res) => {
       { "credentails.firebaseID": id },
       update
     );
-
+    console.log(pDeatails);
     if (!userData) {
       return res.status(404).json({ error: "This User not Exists" });
     }
