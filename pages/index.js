@@ -1,11 +1,8 @@
 import Pricing from "directsecondyearadmission/Components/Pricing";
 import Link from "next/link";
-import Steps from "directsecondyearadmission/Components/Steps";
 import Typewriter from "typewriter-effect";
-import Background from "../public/img/heroBG.svg";
-import { useContext, useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import Head from "next/head";
-import collegeContext from "directsecondyearadmission/Context/collegeContext";
 import { useRouter } from "next/router";
 import Loading from "directsecondyearadmission/Components/Loading";
 import { useUserAuth } from "directsecondyearadmission/Context/UserAuthContext";
