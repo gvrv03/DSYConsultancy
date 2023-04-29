@@ -49,10 +49,6 @@ const College = () => {
         );
   };
 
-  const [finalFilterColeges, setfinalFilterColeges] = useState({});
-  // console.log(allDepartments);
-  // Sorting lists
-
   const items = [
     {
       Name: "Category",
@@ -104,24 +100,6 @@ const College = () => {
     );
   };
 
-  // sorting items components
-  const SortCollege = () => {
-    return (
-      <div className="p-5">
-        {items.map((item, index) => {
-          return (
-            <div
-              key={index}
-              className="py-2 cursor-pointer  hover:bg-sky-100 hover:pl-10 hover:font-semibold"
-            >
-              {item.Name}
-            </div>
-          );
-        })}
-      </div>
-    );
-  };
-
   const DistrictFilter = () => {
     const districtName =
       allDepartments &&
@@ -164,6 +142,15 @@ const College = () => {
         </select>
       </div>
     );
+  };
+
+  const [userOpen, setUserOpen] = useState("-right-full");
+  const toggleUser = () => {
+    if (userOpen == "-right-full") {
+      setUserOpen("right-0");
+    } else {
+      setUserOpen("-right-full");
+    }
   };
 
   const AllCollegesData = () => {
@@ -302,12 +289,6 @@ const College = () => {
         return college.courseName.toLowerCase() === depCol.toLowerCase();
       });
 
-    // for slider
-    const [value, setValue] = React.useState([20, 37]);
-    const handleChange = (event, newValue) => {
-      setValue(newValue);
-    };
-
     return (
       <div className=" h-full flex  overflow-y-scroll gap-5 w-full  ">
         <div className=" h-full flex flex-col  overflow-y-scroll md:w-2/3 w-full ">
@@ -357,12 +338,18 @@ const College = () => {
               );
             })}
         </div>
-        <div className=" h-full  flex-col md:flex hidden bg-white  shadow-md overflow-y-scroll w-2/6 ">
+        <div
+          className={`h-full transition-transform md:top-0 flex-col md:flex md:relative fixed w-4/5 ${userOpen} md:right-0 top-16 bg-white  shadow-md overflow-y-scroll md:w-2/6`}
+        >
+          <div className="md:hidden block bg-gray-50 p-5">
+            <button onClick={toggleUser}>
+              <i className="bi bi-x-lg border rounded-md p-2" />
+            </button>{" "}
+          </div>
+
           <div className="flex  p-5">
-            <i className="bi bi-funnel-fill mr-4" onClick={toggleUser}></i>
-            <span onClick={toggleUser} className="text-slate-400">
-              Filter
-            </span>
+            <i className="bi bi-funnel-fill mr-4"></i>
+            <span className="text-slate-400">Filter</span>
           </div>
 
           <CollegeUnder />
@@ -372,26 +359,29 @@ const College = () => {
           <div className="h-1 mx-5 mt-5 bg-slate-50" />
 
           <div className="flex  p-5">
-            <i className="bi bi-search font-bold mr-4" onClick={toggleUser}></i>
+            <i className="bi bi-search font-bold mr-4"></i>
             <span className="text-slate-400">Search</span>
           </div>
 
           <div className="w-full px-5 bg-white">
-            <input
-              type="text"
+            <select
               onChange={(e) => {
                 setsearch(e.target.value);
               }}
               className="border w-full outline-none text-sm px-2 py-2"
               placeholder="Search College"
-            />
+            >
+              <option value="">Select College</option>
+              {depFilter && depFilter.map((item,index)=>{
+                return(
+                  <option value={item.cName}>{item.cName}</option>
+                )
+              })}
+            </select>
           </div>
 
           <div className="flex  p-5 mt-5">
-            <i
-              className="bi bi-buildings-fill font-bold mr-4"
-              onClick={toggleUser}
-            ></i>
+            <i className="bi bi-buildings-fill font-bold mr-4"></i>
             <span className="text-slate-400">Department</span>
           </div>
           <div className="w-full px-5 bg-white">
@@ -419,15 +409,6 @@ const College = () => {
     );
   };
 
-  const [userOpen, setUserOpen] = useState("hidden");
-  const toggleUser = () => {
-    if (userOpen == "hidden") {
-      setUserOpen("block");
-    } else {
-      setUserOpen("hidden");
-    }
-  };
-
   const HeaderFilter = () => {
     const items = [
       {
@@ -451,74 +432,6 @@ const College = () => {
         Location: "/",
       },
     ];
-
-    // College Under Components
-    const CollegeUnder = () => {
-      const checkBoxItem = ["Government", "Private"];
-
-      return (
-        <div className="  px-5  grid grid-cols-2 gap-5">
-          {checkBoxItem.map((item, index) => {
-            return (
-              <div className="flex gap-2    items-center" key={index}>
-                <input
-                  type="checkbox"
-                  checked={selectedCollegeUnder.includes(item)}
-                  onChange={(e) =>
-                    onChangeCollegeUnderHandler(item, e.target.checked)
-                  }
-                />
-                <label className="text-xs">{item}</label>
-              </div>
-            );
-          })}
-        </div>
-      );
-    };
-
-    const DistrictFilter = () => {
-      const districtName =
-        allDepartments &&
-        allDepartments.map((item) => item.CollegeDetails.location.district);
-      const removeDubDist =
-        allDepartments &&
-        allDepartments.filter(
-          (district, index) =>
-            !districtName.includes(
-              district.CollegeDetails.location.district,
-              index + 1
-            )
-        );
-
-      return (
-        <div className="px-5">
-          <select
-            value={district}
-            onChange={function (e) {
-              setdistrict(e.target.value);
-            }}
-            className=" outline-none w-full py-2 rounded-sm border"
-          >
-            <option value="" className="text-center font-bold py-2">
-              {" "}
-              All District
-            </option>
-            {removeDubDist &&
-              removeDubDist.map((item, index) => {
-                return (
-                  <option
-                    key={index}
-                    value={item.CollegeDetails.location.district}
-                    className="text-center text-sm"
-                  >
-                    {item.CollegeDetails.location.district}
-                  </option>
-                );
-              })}
-          </select>
-        </div>
-      );
-    };
 
     return (
       <>
@@ -565,24 +478,10 @@ const College = () => {
           </div>
 
           <div className="cursor-pointer relative block md:hidden">
-            <i className="bi bi-funnel-fill mr-4" onClick={toggleUser}></i>
+            <i onClick={toggleUser} className="bi bi-funnel-fill mr-4"></i>
             <span onClick={toggleUser} className="text-slate-400">
               Filter
             </span>
-            <div
-              className={`absolute ${userOpen} right-0 z-10 mt-2 w-80 origin-top-right rounded-sm bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none`}
-              role="menu"
-              aria-orientation="vertical"
-              aria-labelledby="menu-button"
-              tabIndex="-1"
-            >
-              <div className="py-5" role="none">
-                <CollegeUnder />
-                <div className="h-1 mx-5 my-5 bg-slate-50" />
-                <DistrictFilter />
-                <div className="h-1  mx-5 my-5 bg-slate-50" />
-              </div>
-            </div>
           </div>
         </div>
       </>
