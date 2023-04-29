@@ -230,13 +230,20 @@ export default function CollegeData({ College, Departments, category }) {
 }
 
 export async function getServerSideProps(context) {
-  const { id } = context.query;
-  const posts = await getSingleCollegeData(id);
-  return {
-    props: {
-      College: posts.clgDetail,
-      Departments: posts.department,
-      category: posts.category,
-    },
-  };
+  try {
+    const { id } = context.query;
+    const posts = await getSingleCollegeData(id);
+    return {
+      props: {
+        College: posts.clgDetail,
+        Departments: posts.department,
+        category: posts.category,
+      },
+    };
+  } catch (error) {
+    return {
+      notFound: true,
+    
+    };
+  }
 }

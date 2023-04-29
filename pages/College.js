@@ -195,7 +195,6 @@ const College = () => {
 
   const AllCollegesData = () => {
     const SingleCollege = (props) => {
-      console.log();
       const userCat = props.DepCategory.filter((cat) => {
         return cat.category === props.category;
       });
@@ -385,7 +384,7 @@ const College = () => {
               <option value="">Select College</option>
               {removeDubCollege &&
                 removeDubCollege.map((item, index) => {
-                  return <option value={item}>{item}</option>;
+                  return <option key={index} value={item}>{item}</option>;
                 })}
             </select>
           </div>

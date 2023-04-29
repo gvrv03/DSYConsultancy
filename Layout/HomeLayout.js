@@ -36,6 +36,7 @@ export const SideUserData = () => {
           ) : (
             <Link
               href="/Profile"
+              target="_blank"
               className=" text-center  font-semibold  text-xs"
             >
               Mange your profile
@@ -85,6 +86,7 @@ export default function HomeLayout({ children }) {
                   <li>
                     <Link
                       href="/Profile"
+                      target="_blank"
                       className={`flex items-center ${
                         router.pathname == "/Profile" &&
                         "bg-sky-100 font-semibold"
@@ -175,7 +177,7 @@ export default function HomeLayout({ children }) {
                   Sorry! You are not a DSY user
                 </p>
                 <p className="text-sm mt-3  text-slate-400">
-                  Login Now for Become a User
+                  Login Now for Become a + User
                 </p>
               </div>
 

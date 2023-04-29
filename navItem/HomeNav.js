@@ -7,7 +7,7 @@ const HomeNav = [
   {
     icon: "  bi-calendar2-minus-fill",
     name: "Feed",
-    location: "/",
+    location: "/Feed",
   },
 
   {

@@ -12,10 +12,14 @@ import { useUserAuth } from "directsecondyearadmission/Context/UserAuthContext";
 import NewsLetter from "directsecondyearadmission/Components/NewsLetter";
 import MarquHome from "directsecondyearadmission/Components/MarquHome";
 import { useCollegesContext } from "directsecondyearadmission/Context/CollegesContext";
+import SectionTitle from "directsecondyearadmission/Components/sectionTitle";
+import Benefits from "directsecondyearadmission/Components/benefits";
+import {
+  benefitOne,
+  benefitTwo,
+} from "directsecondyearadmission/Components/data";
 const CollegeCard = () => {
   const { allColleges } = useCollegesContext();
-  const { image, collegeType, collegeUnder, name, contacts } = allColleges;
-  console.log(allColleges);
   const Card = (props) => {
     const { image, collegeType, collegeUnder, name, contacts } = props;
 
@@ -189,9 +193,9 @@ const Home = () => {
                 </h1>
                 <p className="   opacity-70 text-justify leading-relaxed mt-5">
                   Get help from our Direct Second Year Admission Consultancy to
-                  secure admission to second year engineering courses in India.
-                  Contact us today to start your journey towards a successful
-                  engineering career.
+                  secure admission to second year engineering courses in
+                  Maharashtra. Contact us today to start your journey towards a
+                  successful engineering career.
                 </p>
 
                 <div className="py-5 flex text-left w-full sm:text-left font-bold text-xl ">
@@ -199,7 +203,7 @@ const Home = () => {
                   <span className="pColor ntext-left">
                     <Typewriter
                       options={{
-                        strings: ["to find right College", "to get Admission"],
+                        strings: ["to find Best College", "to get Admission"],
                         autoStart: true,
                         loop: true,
                       }}
@@ -208,7 +212,7 @@ const Home = () => {
                 </div>
 
                 <div className="flex w-full  justify-start ">
-                  <Link href="/AllCollege" legacyBehavior>
+                  <Link href="/College" legacyBehavior>
                     <button className="inline-flex font-semibold pBtn border-0 py-2  px-6 focus:outline-none  rounded-sm text-lg">
                       Find College
                     </button>
@@ -260,29 +264,28 @@ const Home = () => {
             <div className="absolute bg-black-600 opacity-5 w-11/12 roudned-lg h-64 sm:h-48 top-0 mt-8 mx-auto left-0 right-0"></div>
           </div>
 
-          <section data-aos="fade-up" className="text-gray-600 mt-20 body-font">
+          <SectionTitle pretitle="Top Institutes" title="Our Top Colleges ?" />
+          <section data-aos="fade-up" className="text-gray-600 body-font">
             <div className="container px-5 py-5 mx-auto">
               <div className="text-center mb-20">
-                <h1
-                  data-aos="fade-up"
-                  className="sm:text-3xl text-2xl font-medium title-font text-gray-900 mb-4"
-                >
-                  University
-                </h1>
-                <p data-aos="fade-up">
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit. Omnis
-                  commodi molestiae veniam, fuga laborum nam.
-                </p>
-                <div className="flex mt-6 justify-center">
-                  <div className="w-16 h-1 rounded-full bg-indigo-500 inline-flex"></div>
-                </div>
                 <marquee width="100%" direction="left" scrollamount="12">
                   <CollegeCard />
                 </marquee>
               </div>
             </div>
           </section>
-          <Steps />
+
+          <SectionTitle pretitle="DSY" title=" Why to choose DSY?" />
+
+          <Benefits data={benefitOne} />
+          <SectionTitle pretitle="Steps" title="Gateway to  go through DSY" />
+
+          <Benefits imgPos="right" data={benefitTwo} />
+          <SectionTitle
+            pretitle="Pricing"
+            title="Enable subscription for upgrading Services"
+          />
+
           <Pricing />
           {/* <Teams /> */}
 
