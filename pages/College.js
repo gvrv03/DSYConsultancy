@@ -153,9 +153,47 @@ const College = () => {
     }
   };
 
+  const [search, setsearch] = useState("");
+  const [depCol, setdepCol] = useState("");
+  const afterSearch =
+    undercolleges &&
+    undercolleges.filter((college) => {
+      if (search === "") {
+        return college;
+      }
+      return college.cName.toLowerCase().includes(search.toLowerCase());
+    });
+
+  let depName = [];
+  afterSearch &&
+    afterSearch.map((item) => {
+      depName.push(item.courseName);
+    });
+
+  const removeDubBranch = depName.filter(
+    (course, index) => !depName.includes(course, index + 1)
+  );
+
+  const depFilter =
+    afterSearch &&
+    afterSearch.filter((college) => {
+      if (depCol === "") {
+        return college;
+      }
+      return college.courseName.toLowerCase() === depCol.toLowerCase();
+    });
+
+  let colName = [];
+  depFilter &&
+    depFilter.map((item) => {
+      colName.push(item.cName);
+    });
+
+  const removeDubCollege = colName.filter((course, index) => {
+    return !colName.includes(course, index + 1);
+  });
+
   const AllCollegesData = () => {
-    const [search, setsearch] = useState("");
-    const [depCol, setdepCol] = useState("");
     const SingleCollege = (props) => {
       console.log();
       const userCat = props.DepCategory.filter((cat) => {
@@ -261,34 +299,6 @@ const College = () => {
       );
     };
 
-    const afterSearch =
-      undercolleges &&
-      undercolleges.filter((college) => {
-        if (search === "") {
-          return college;
-        }
-        return college.cName.toLowerCase().includes(search.toLowerCase());
-      });
-
-    let depName = [];
-    afterSearch &&
-      afterSearch.map((item) => {
-        depName.push(item.courseName);
-      });
-
-    const removeDubBranch = depName.filter(
-      (course, index) => !depName.includes(course, index + 1)
-    );
-
-    const depFilter =
-      afterSearch &&
-      afterSearch.filter((college) => {
-        if (depCol === "") {
-          return college;
-        }
-        return college.courseName.toLowerCase() === depCol.toLowerCase();
-      });
-
     return (
       <div className=" h-full flex  overflow-y-scroll gap-5 w-full  ">
         <div className=" h-full flex flex-col  overflow-y-scroll md:w-2/3 w-full ">
@@ -368,15 +378,15 @@ const College = () => {
               onChange={(e) => {
                 setsearch(e.target.value);
               }}
+              value={search}
               className="border w-full outline-none text-sm px-2 py-2"
               placeholder="Search College"
             >
               <option value="">Select College</option>
-              {depFilter && depFilter.map((item,index)=>{
-                return(
-                  <option value={item.cName}>{item.cName}</option>
-                )
-              })}
+              {removeDubCollege &&
+                removeDubCollege.map((item, index) => {
+                  return <option value={item}>{item}</option>;
+                })}
             </select>
           </div>
 
@@ -386,6 +396,7 @@ const College = () => {
           </div>
           <div className="w-full px-5 bg-white">
             <select
+              value={depCol}
               onChange={(e) => {
                 setdepCol(e.target.value);
               }}
