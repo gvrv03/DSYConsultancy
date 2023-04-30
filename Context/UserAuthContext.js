@@ -143,7 +143,6 @@ export function UserAuthContexProvider({ children }) {
       localStorage.setItem("token", await res.user.getIdToken());
       localStorage.setItem("firebaseuid", res.user.uid);
       setresponse(Math.random());
-
       return { msg: "Account Created" };
     } catch (error) {
       return { error: error.code.slice(5, error.code.length) };
@@ -199,7 +198,6 @@ export function UserAuthContexProvider({ children }) {
     localStorage.setItem("token", await res.user.getIdToken());
     localStorage.setItem("firebaseuid", res.user.uid);
     setresponse(Math.random());
-
     return res;
   }
 

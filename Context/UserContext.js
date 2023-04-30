@@ -10,7 +10,7 @@ const userContext = createContext();
 export function UserContexProvider({ children }) {
   const [userUID, setuserUID] = useState("");
   const [res, setres] = useState(null);
-  const { response } = useUserAuth();
+  const { response, signWithGoogle } = useUserAuth();
   const [allUserDetail, setallUserDetail] = useState({});
   const [coOrdinates, setcoOrdinates] = useState();
 
@@ -112,7 +112,7 @@ export function UserContexProvider({ children }) {
     getFirebaseID();
     getCurrentLocation();
     getSingleUserData();
-  }, [res, response]);
+  }, [res, response, signWithGoogle]);
 
   const updateBasicDetailsUser = async (
     fullName,

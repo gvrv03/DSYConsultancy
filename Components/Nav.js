@@ -165,7 +165,11 @@ const Nav = () => {
           <Link href={`/SearchCollege/${search}`} onClick={toggleUser}>
             <i className="bi font-bold text-xl bi-search cursor-pointer "></i>
           </Link>
+        {/* <div className="absolute container m-auto bg-white z-50">
+          shgfsjhjk
+        </div> */}
         </form>
+
       </div>
 
       <div
