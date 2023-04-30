@@ -10,17 +10,30 @@ import { LoginStatus } from "directsecondyearadmission/Layout/CollegeLayout";
 import { useRouter } from "next/router";
 import { useUserAuth } from "directsecondyearadmission/Context/UserAuthContext";
 import { useUserContext } from "directsecondyearadmission/Context/UserContext";
+import { useCollegesContext } from "directsecondyearadmission/Context/CollegesContext";
 const Nav = () => {
   const [nav, setnav] = useState("hidden");
   const router = useRouter;
   const [overlay, setOverlay] = useState("");
   const { allUserDetail } = useUserContext();
-  const { token, user } = useUserAuth();
+  const [search, setsearch] = useState("");
+
+  const { user } = useUserAuth();
+  const { allColleges } = useCollegesContext();
   const { photoURL, displayName } = user ? user : {};
   const closeNav = () => {
     if (nav == "block") {
     }
   };
+
+  const afterFilter =
+    allColleges &&
+    allColleges.filter((item) => {
+      if (search === "") {
+        return allColleges;
+      }
+      return item.name.toLowerCase().includes(search.toLowerCase());
+    });
 
   const ListItem = (props) => {
     return (
@@ -40,7 +53,6 @@ const Nav = () => {
   };
 
   const [userOpen, setUserOpen] = useState("hidden");
-  const [search, setsearch] = useState("");
   const toggleUser = () => {
     if (userOpen == "hidden") {
       setUserOpen("block");
@@ -150,26 +162,44 @@ const Nav = () => {
           className="bg-black cursor-pointer bg-opacity-40  top-0 fixed left-0 right-0 h-full"
         />
         <form
-          className=" container relative flex justify-between z-50 items-center gap-5 bg-white px-5 py-3 m-auto shadow-sm"
+          className=" container relative flex flex-col justify-between z-50 items-center gap-5 bg-white px-5 py-3 m-auto shadow-sm"
           role="none"
         >
-          <input
-            type="text"
-            onChange={(e) => {
-              setsearch(e.target.value);
-            }}
-            placeholder="Search College..."
-            className=" outline-none w-full  rounded-sm   text-sm bg-white rounded-r-none"
-          />
+          <div className="flex w-full justify-between items-center gap-5">
+            <input
+              type="search"
+              onChange={(e) => {
+                setsearch(e.target.value);
+              }}
+              placeholder="Search College..."
+              className=" outline-none w-full  border p-2 rounded-sm   text-sm bg-white rounded-r-none"
+            />
+            <button
+              onClick={toggleUser}
+              className="border py-1 px-2 rounded-sm"
+            >
+              <i className="bi bi-x-lg " />
+            </button>{" "}
+          </div>
 
-          <Link href={`/SearchCollege/${search}`} onClick={toggleUser}>
-            <i className="bi font-bold text-xl bi-search cursor-pointer "></i>
-          </Link>
-        {/* <div className="absolute container m-auto bg-white z-50">
-          shgfsjhjk
-        </div> */}
+          <div className=" grid grid-cols-1 md:grid-cols-2 gap-5 w-full">
+            {afterFilter.length === 0 && "Waiting..."}
+            {afterFilter &&
+              afterFilter.map((item, index) => {
+                return (
+                  <Link
+                    key={index}
+                    target="_blank"
+                    href={`CollegeDa/${item._id}`}
+                    className="flex rounded-sm  items-center justify-start gap-5 bg-gray-100 p-2 "
+                  >
+                    <i className="bi bi-clock-history font-bold" />
+                    <div>{item.name}</div>
+                  </Link>
+                );
+              })}
+          </div>
         </form>
-
       </div>
 
       <div
@@ -200,7 +230,6 @@ const Nav = () => {
                   setnav("hidden");
                 }}
                 href="/Profile"
-                
                 className=" text-slate-400 text-sm"
               >
                 Manage Your Profile
@@ -246,7 +275,7 @@ const Nav = () => {
                   <i
                     className={`bi-person-fill p-1 px-2 bg-blue-50 rounded-sm  text-sm text-slate-800 bi mr-5`}
                   ></i>
-                  <Link  href="/Profile" legacyBehavior>
+                  <Link href="/Profile" legacyBehavior>
                     <button
                       onClick={function () {
                         setnav("hidden");

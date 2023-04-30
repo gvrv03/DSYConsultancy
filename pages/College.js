@@ -9,7 +9,8 @@ import { useUserContext } from "directsecondyearadmission/Context/UserContext";
 const College = () => {
   const { allDepartments } = useAdminContext();
   const { allUserDetail } = useUserContext();
-  const { basicDetails } = allUserDetail;
+  const { preferences, basicDetails } = allUserDetail;
+  let branch = preferences && preferences.branch;
   let Category = basicDetails && basicDetails.socialCategory;
 
   if (allUserDetail.profileCompletion != 100) {
@@ -123,8 +124,9 @@ const College = () => {
   };
 
   const [search, setsearch] = useState("");
-  const [depCol, setdepCol] = useState("");
-  const afterSearch = undercolleges &&
+  const [depCol, setdepCol] = useState(branch);
+  const afterSearch =
+    undercolleges &&
     undercolleges.filter((college) => {
       if (search === "") {
         return college;
@@ -152,8 +154,8 @@ const College = () => {
     });
 
   let colName = [];
-  depFilter &&
-    depFilter.map((item) => {
+  undercolleges &&
+    undercolleges.map((item) => {
       colName.push(item.cName);
     });
 
@@ -351,7 +353,11 @@ const College = () => {
               <option value="">Select College</option>
               {removeDubCollege &&
                 removeDubCollege.map((item, index) => {
-                  return <option key={index} value={item}>{item}</option>;
+                  return (
+                    <option key={index} value={item}>
+                      {item}
+                    </option>
+                  );
                 })}
             </select>
           </div>

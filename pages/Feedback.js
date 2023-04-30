@@ -26,14 +26,16 @@ const Feedback = () => {
   };
   return (
     <HomeLayout>
-      <section class="bg-white h-full shadow-lg ">
-        <div class="py-8 lg:py-16 px-4 mx-auto max-w-screen-md">
-          <h2 class="mb-4 text-4xl tracking-tight font-extrabold text-center text-gray-900 ">
-            Leave us a Feedback
-          </h2>
-          <p class="mb-8 lg:mb-16 font-light text-center text-gray-500  sm:text-xl">
-            Please provide your valuable feedback and something something ...
-          </p>
+      <section class="bg-white h-full  p-5 shadow-lg  grid place-items-center ">
+        <div class="  bg-gray-50 rounded-md p-5 mx-auto ">
+          <div class="flex flex-col text-center w-full ">
+            <h1 class="text-2xl font-semibold title-font mb-4 text-gray-900 tracking-widest">
+              Leave us a Feedback
+            </h1>
+            <p class="mb-8 lg:mb-16 font-light text-center text-gray-500  sm:text-xl">
+              Please provide your valuable feedback and something something ...
+            </p>
+          </div>
           <form onSubmit={addFeed} class="space-y-8">
             <div className="relative mb-4">
               <label htmlFor="Name" className="leading-7 text-sm text-gray-600">
