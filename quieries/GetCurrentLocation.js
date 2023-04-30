@@ -10,6 +10,4 @@ export const GetCurrentLocation = async (longitude, latitude, token) => {
       longitude: longitude,
     }),
   });
-
-  console.log(await res.json());
 };

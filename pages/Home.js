@@ -13,7 +13,6 @@ const Home = () => {
   const { openCalender } = useUserContext();
   const [token, setToken] = useState("");
   const { allUserDetail, coOrdinates } = useUserContext();
-  console.log(coOrdinates);
   const { user } = useUserAuth();
   useEffect(() => {
     if (localStorage.getItem("token")) {

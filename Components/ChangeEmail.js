@@ -13,7 +13,7 @@ const ChangeEmail = () => {
       setresMsg("");
     }, 2000);
   }
-  console.log(useremail);
+  (useremail);
 
   const handleEmail = async (e) => {
     e.preventDefault();

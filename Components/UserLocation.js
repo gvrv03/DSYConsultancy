@@ -12,8 +12,6 @@ const UserLocation = ({ userDetails, modalstate }) => {
     return <div>Waiting...</div>;
   }
 
-  console.log(userDetails);
-
   const {
     id,
     user,
@@ -29,6 +27,7 @@ const UserLocation = ({ userDetails, modalstate }) => {
   } = userDetails ? userDetails : {};
   const { fName, dob, socialCategory, maritialStatus, phyChanged, gender } =
     bDetails;
+    
   const { mobileNo } = cDetails;
   const { userPhoto, email, password, firebaseID } = cred;
   const { latitude, longitude } = coOrdinatesDetails;

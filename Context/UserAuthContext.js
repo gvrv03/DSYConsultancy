@@ -43,7 +43,7 @@ export function UserAuthContexProvider({ children }) {
   const newEmailUpdate = async (newEmail) => {
     try {
       const res = await updateEmail(user, newEmail);
-      console.log(res);
+      
       return { msg: "Email has been changes" };
     } catch (error) {
       return { error: error.code.slice(5, error.code.length) };
@@ -77,7 +77,7 @@ export function UserAuthContexProvider({ children }) {
         otp
       );
       const res = await updatePhoneNumber(user, phoneCredential);
-      console.log(res);
+  
       return { msg: "Phone Nmber Updated" };
     } catch (error) {
       return { error: error.code.slice(5, error.code.length) };
@@ -138,7 +138,6 @@ export function UserAuthContexProvider({ children }) {
 
       return { msg: "Account Created" };
     } catch (error) {
-      console.log(error);
       return { error: error.code.slice(5, error.code.length) };
     }
   }
@@ -155,7 +154,6 @@ export function UserAuthContexProvider({ children }) {
         console.log(error);
       });
 
-    console.log(auth.currentUser);
     return res;
   }
 
@@ -166,6 +164,8 @@ export function UserAuthContexProvider({ children }) {
     return res;
   }
   function logOut() {
+    localStorage.removeItem("token")
+    localStorage.removeItem("firebaseuid")
     return signOut(auth);
   }
 
@@ -189,7 +189,6 @@ export function UserAuthContexProvider({ children }) {
     localStorage.setItem("token", await res.user.getIdToken());
     localStorage.setItem("firebaseuid", res.user.uid);
 
-    // console.log(res.user.getIdToken());
     return res;
   }
 

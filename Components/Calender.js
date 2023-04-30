@@ -29,7 +29,6 @@ const Calender = (props) => {
       allUserDetail._id
     );
 
-    console.log(res);
     if (res.msg) {
       setresMsg(res.msg);
     } else {

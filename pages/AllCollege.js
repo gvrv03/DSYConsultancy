@@ -14,7 +14,6 @@ import { useCollegesContext } from "directsecondyearadmission/Context/CollegesCo
 
 const AllCollege = () => {
   const { allColleges } = useCollegesContext();
-  console.log(allColleges);
   const { user } = useUserAuth();
   const [selectedCollegeUnder, setSelectedCollegeUnder] = useState([]);
   const [district, setdistrict] = useState("");

@@ -95,7 +95,6 @@ const ReportIssue = () => {
     e.preventDefault();
     const res = await reportIssue(issue.issueName, allUserDetail._id);
     setresMsg(res);
-    // console.log(res);
   };
   return (
     <div className="bg-white p-5  shadow-md mt-5 rounded-sm ">

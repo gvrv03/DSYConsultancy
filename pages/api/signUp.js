@@ -26,14 +26,17 @@ const signUpUser = async (req, res) => {
     };
 
     const user = await User.findOne({ "credentails.firebaseID": firebaseID });
-    if (!user) {
-      const userStatus = await new User({
-        credentails: credentail,
-        "basicDetails.fName": fName,
-      }).save();
-      return res.status(201).json({ msg: "Account Created", userStatus });
+
+    if (user) {
+      return res.status(200).json({ error: "Already Exists" });
     }
-    res.status(500).json({ error: "Already Exists" });
+
+    const userStatus = await new User({
+      credentails: credentail,
+      "basicDetails.fName": fName,
+    }).save();
+    return res.status(201).json({ msg: "Account Created", userStatus });
+
 
   } catch (err) {
     res.status(500).json({ error: "Internal Server Error" });

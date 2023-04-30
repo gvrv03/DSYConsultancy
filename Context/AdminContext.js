@@ -13,7 +13,6 @@ export function AdminContexProvider({ children }) {
   const { user } = useUserAuth();
   const [allDepartments, setallDepartments] = useState("");
   const [allSchedule, setallSchedule] = useState([]);
-  // console.log(allDepartments);
   const [toastMsg, settoastMsg] = useState({
     state: "hidden",
     icon: "success",

@@ -6,7 +6,7 @@ import ContactDetails from "directsecondyearadmission/Components/ContactDetails"
 import EducationDetails from "directsecondyearadmission/Components/EducationDetails";
 import PreferenceDetails from "directsecondyearadmission/Components/PreferenceDetails";
 
-const Profile = ({ CollegeData }) => {
+const Profile = () => {
   return (
     <HomeLayout>
       <Head>

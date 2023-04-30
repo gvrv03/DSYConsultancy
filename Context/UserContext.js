@@ -57,7 +57,6 @@ export function UserContexProvider({ children }) {
     });
   };
 
-  // console.log(userUID);
   const getSingleUserData = async () => {
     const res = await fetch(
       baseUrl + "/api/User/" + localStorage.getItem("firebaseuid"),

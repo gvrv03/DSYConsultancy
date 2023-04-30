@@ -4,7 +4,6 @@ import { useState } from "react";
 
 const CollegeAddress = ({ maps, locationCollege, contacts }) => {
   try {
-    console.log(contacts);
     const { addressLine, taluka, district, city, longitude, latitude } =
       locationCollege;
     return (

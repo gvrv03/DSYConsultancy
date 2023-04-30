@@ -51,7 +51,6 @@ export default async (req, res) => {
       { "credentails.firebaseID": id },
       update
     );
-    console.log(pDeatails);
     if (!userData) {
       return res.status(404).json({ error: "This User not Exists" });
     }

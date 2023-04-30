@@ -6,7 +6,6 @@ import { useState } from "react";
 import { useEffect } from "react";
 import Loader2 from "../../Components/Loader2";
 const AllColleges = () => {
-  // console.log(props);
 
   const [data, setdata] = useState(null);
   useEffect(() => {

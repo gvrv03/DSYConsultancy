@@ -27,7 +27,6 @@ const AllUsers = () => {
   const exportType = "xls";
 
   const jsonData = data;
-  console.log(jsonData);
   const ExportToExcel = () => {
     exportFromJSON({ jsonData, fileName, exportType });
   };

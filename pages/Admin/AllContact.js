@@ -24,7 +24,6 @@ const AllContact = () => {
     getContactData();
   }, []);
 
-  console.log(data);
 
   return (
     <Dashboard>

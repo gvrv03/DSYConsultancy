@@ -52,7 +52,6 @@ export default function HomeLayout({ children }) {
   const router = useRouter();
   const { user } = useUserAuth();
   const { emailVerified, phoneNumber } = user ? user : {};
-  // console.log(user);
   const { allUserDetail } = useUserContext();
 
   const ListItem = (props) => {
@@ -177,7 +176,7 @@ export default function HomeLayout({ children }) {
                   Sorry! You are not a DSY user
                 </p>
                 <p className="text-sm mt-3  text-slate-400">
-                  Login Now for Become a + User
+                  Login Now for Become a User
                 </p>
               </div>
 
