@@ -119,7 +119,7 @@ const Pricing = () => {
                       </svg>
                     </div>
                     <p className="ml-3 text-base leading-6 text-gray-700 ">
-                      Shorlist College by their Category
+                      Shortlist College by their Category
                     </p>
                   </li>
                   <li className="flex items-start mt-4">

@@ -56,7 +56,7 @@ export default async (req, res) => {
     }
     res.status(201).json({
       process: newProcess,
-      msg: "User Updated Sucessfll",
+      msg: "User Updated Successfull",
       userData,
     });
   } catch (err) {
