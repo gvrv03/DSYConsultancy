@@ -59,7 +59,7 @@ const HeaderFilter = () => {
     {
       icon: "bi-person-fill",
       Name: "Feedback",
-      Location: "/Admin/AllFeedback",
+      Location: "/Admin/AllFeedBack",
     },
   ];
 

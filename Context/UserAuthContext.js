@@ -21,6 +21,7 @@ import {
   RecaptchaVerifier,
   PhoneAuthProvider,
   updateEmail,
+  
 } from "firebase/auth";
 
 import { auth } from "directsecondyearadmission/firebase";
@@ -31,6 +32,7 @@ const userAuthContext = createContext();
 export function UserAuthContexProvider({ children }) {
   const [user, setuser] = useState("");
   const [token, settoken] = useState("");
+  const [response, setresponse] = useState("");
   const [verificatioIDPhone, setverificatioIDPhone] = useState("");
 
   useEffect(() => {
@@ -38,12 +40,12 @@ export function UserAuthContexProvider({ children }) {
       settoken(localStorage.getItem("token"));
     };
     getToken();
-  }, []);
+  }, [response]);
 
   const newEmailUpdate = async (newEmail) => {
     try {
       const res = await updateEmail(user, newEmail);
-      
+
       return { msg: "Email has been changes" };
     } catch (error) {
       return { error: error.code.slice(5, error.code.length) };
@@ -64,6 +66,7 @@ export function UserAuthContexProvider({ children }) {
         applicationVerifier
       );
       setverificatioIDPhone(verificationId);
+      setresponse(Math.random());
       return { msg: "Send OTP to " + phoneNo };
     } catch (error) {
       return { error: error.code.slice(5, error.code.length) };
@@ -77,7 +80,7 @@ export function UserAuthContexProvider({ children }) {
         otp
       );
       const res = await updatePhoneNumber(user, phoneCredential);
-  
+      setresponse(Math.random());
       return { msg: "Phone Nmber Updated" };
     } catch (error) {
       return { error: error.code.slice(5, error.code.length) };
@@ -136,6 +139,10 @@ export function UserAuthContexProvider({ children }) {
         theme: "light",
       });
 
+      localStorage.setItem("token", await res.user.getIdToken());
+      localStorage.setItem("firebaseuid", res.user.uid);
+      setresponse(Math.random());
+
       return { msg: "Account Created" };
     } catch (error) {
       return { error: error.code.slice(5, error.code.length) };
@@ -161,11 +168,13 @@ export function UserAuthContexProvider({ children }) {
     const res = await signInWithEmailAndPassword(auth, email, password);
     localStorage.setItem("token", await res.user.getIdToken());
     localStorage.setItem("firebaseuid", res.user.uid);
+    setresponse(Math.random());
+
     return res;
   }
   function logOut() {
-    localStorage.removeItem("token")
-    localStorage.removeItem("firebaseuid")
+    localStorage.removeItem("token");
+    localStorage.removeItem("firebaseuid");
     return signOut(auth);
   }
 
@@ -188,6 +197,7 @@ export function UserAuthContexProvider({ children }) {
     });
     localStorage.setItem("token", await res.user.getIdToken());
     localStorage.setItem("firebaseuid", res.user.uid);
+    setresponse(Math.random());
 
     return res;
   }
@@ -195,7 +205,6 @@ export function UserAuthContexProvider({ children }) {
   function resetPassword(email) {
     const actionCodeSettings = {
       url: baseUrl + "?email=" + email,
-
       handleCodeInApp: true,
     };
     return sendPasswordResetEmail(auth, email, actionCodeSettings);
@@ -224,6 +233,7 @@ export function UserAuthContexProvider({ children }) {
         sendOTP,
         verifyOTPServer,
         resetPassword,
+        setresponse,
 
         newEmailUpdate,
       }}

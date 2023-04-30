@@ -6,6 +6,7 @@ import { useUserContext } from "directsecondyearadmission/Context/UserContext";
 import { useState } from "react";
 import VerifyPhone from "directsecondyearadmission/Components/VerifyPhone";
 import ChangeEmail from "directsecondyearadmission/Components/ChangeEmail";
+import { useUserAuth } from "directsecondyearadmission/Context/UserAuthContext";
 
 const NotiRemind = () => {
   return (
@@ -132,26 +133,42 @@ const ReportIssue = () => {
 };
 
 const PasswordChange = () => {
+  const { resetPassword, user } = useUserAuth();
+  const [msg, setmsg] = useState("");
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      await resetPassword(user.email);
+      return setmsg("Check your email");
+    } catch (error) {
+      setmsg(error.code.slice(5, error.code.length));
+    }
+  };
+
+  if (msg != "") {
+    setTimeout(() => {
+      setmsg("");
+    }, 3000);
+  }
+
   return (
-    <div className=" bg-white p-5  flex flex-col justify-between gap-2 w-full">
+    <form
+      onSubmit={handleSubmit}
+      className=" bg-white p-5  h-fit flex flex-col justify-between gap-2 w-full"
+    >
       {" "}
       <h4 className="font-semibold mb-5">Change Password</h4>
-      <input
-        type="text"
-        placeholder="Enter the password"
-        className="border outline-none rounded-sm w-full px-2 py-2"
-      />
-      <Link href="/Forgot" className="text-xs text-right w-full ">
-        Forgot Password ?
-      </Link>
-      <button className="pBtn py-2">Update Password</button>
-    </div>
+      {msg && <div className="p-2 text-center bg-red-100">{msg}</div>}
+      <button type="submit" className="pBtn py-2">
+        Change Password
+      </button>
+    </form>
   );
 };
 
 const EmailChange = () => {
   return (
-    <div className=" bg-white p-5  flex flex-col gap-2 w-full">
+    <div className=" bg-white p-5  h-fit flex flex-col gap-2 w-full">
       {" "}
       <h4 className="font-semibold mb-5">Change E-mail</h4>
       <ChangeEmail />

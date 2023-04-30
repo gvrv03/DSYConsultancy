@@ -1,6 +1,31 @@
 import React from "react";
 import Head from "next/head";
+import { useUserContext } from "directsecondyearadmission/Context/UserContext";
+import { useAdminContext } from "directsecondyearadmission/Context/AdminContext";
+import { useState } from "react";
 const ContactUs = () => {
+  const [Contact, setContact] = useState({});
+  const { openModal } = useAdminContext();
+
+  const { addContact } = useUserContext();
+  const onChange = (e) => {
+    setContact({
+      ...Contact,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  const addCont = async (e) => {
+    e.preventDefault();
+    const { uName, phoneNo, email, message } = Contact;
+    const res = await addContact(uName, phoneNo, email, message);
+    if (res.msg) {
+      return openModal("success", res.msg);
+    } else {
+      return openModal("fail", res.error);
+    }
+  };
+
   return (
     <div className="mt-20 px-5 sm:px-0  container m-auto">
       <Head>
@@ -25,9 +50,7 @@ const ContactUs = () => {
         </div>
         <div className="container px-5 py-24 mx-auto flex">
           <form
-            action="/api/contacts"
-            method="GET"
-            re
+            onSubmit={addCont}
             className="lg:w-1/3 md:w-1/2 bg-white rounded-sm p-8 flex flex-col md:ml-auto w-full mt-10 md:mt-0 relative z-10 shadow-md"
           >
             <h2 className="text-gray-900 text-lg mb-1 font-medium text-center title-font">
@@ -42,6 +65,8 @@ const ContactUs = () => {
                 type="text"
                 id="Name"
                 required={true}
+                onChange={onChange}
+                value={Contact.uName ? Contact.uName : ""}
                 name="uName"
                 className="w-full bg-white rounded-sm border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
               />
@@ -57,6 +82,8 @@ const ContactUs = () => {
                 type="number"
                 id="phone"
                 required={true}
+                onChange={onChange}
+                value={Contact.phoneNo ? Contact.phoneNo : ""}
                 name="phoneNo"
                 className="w-full bg-white rounded-sm border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
               />
@@ -72,6 +99,8 @@ const ContactUs = () => {
                 type="email"
                 id="email"
                 required={true}
+                onChange={onChange}
+                value={Contact.email ? Contact.email : ""}
                 name="email"
                 className="w-full bg-white rounded-sm border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
               />
@@ -85,6 +114,8 @@ const ContactUs = () => {
               </label>
               <textarea
                 id="message"
+                onChange={onChange}
+                value={Contact.message ? Contact.message : ""}
                 name="message"
                 className="w-full bg-white rounded-sm border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 h-32 text-base outline-none text-gray-700 py-1 px-3 resize-none leading-6 transition-colors duration-200 ease-in-out"
                 data-gramm="false"

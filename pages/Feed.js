@@ -82,7 +82,6 @@ const Feed = ({ newsData }) => {
 };
 export async function getServerSideProps() {
   const newsData = await getNews();
-
   return {
     props: { newsData },
   };

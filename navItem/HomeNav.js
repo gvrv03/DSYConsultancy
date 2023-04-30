@@ -33,8 +33,8 @@ const HomeNav = [
   },
   {
     icon: "bi-info-circle-fill",
-    name: "Help",
-    location: "/",
+    name: "Feedback",
+    location: "/Feedback",
   },
 ];
 export default HomeNav;

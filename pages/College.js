@@ -3,18 +3,8 @@ import React, { useState } from "react";
 import Head from "next/head";
 import Link from "next/link";
 import { collegeByUnder } from "directsecondyearadmission/quieries/quieries";
-import { allColleges } from "directsecondyearadmission/quieries/CollegeDataQuieries";
-import { useEffect } from "react";
-import Loader2 from "directsecondyearadmission/Components/Loader2";
-import Slider from "@mui/material/Slider";
-
 import { useAdminContext } from "directsecondyearadmission/Context/AdminContext";
-import { useUserAuth } from "directsecondyearadmission/Context/UserAuthContext";
 import { useUserContext } from "directsecondyearadmission/Context/UserContext";
-
-function valuetext(value) {
-  return `${value}°C`;
-}
 
 const College = () => {
   const { allDepartments } = useAdminContext();
@@ -48,26 +38,6 @@ const College = () => {
           selectedCollegeUnder.filter((und) => und !== under)
         );
   };
-
-  const items = [
-    {
-      Name: "Category",
-      Location: "/",
-    },
-    {
-      Name: "Rating",
-      Location: "/",
-    },
-    {
-      Name: "Near Me",
-      Location: "/",
-    },
-    {
-      Name: "Rating",
-      Location: "/",
-    },
-  ];
-
   // filter for College Under
   const undercolleges = collegeByUnder(
     selectedCollegeUnder,
@@ -75,7 +45,6 @@ const College = () => {
     district,
     Category
   );
-
   // College Under Components
   const CollegeUnder = () => {
     const checkBoxItem = ["Government", "Private"];
@@ -155,8 +124,7 @@ const College = () => {
 
   const [search, setsearch] = useState("");
   const [depCol, setdepCol] = useState("");
-  const afterSearch =
-    undercolleges &&
+  const afterSearch = undercolleges &&
     undercolleges.filter((college) => {
       if (search === "") {
         return college;
@@ -192,7 +160,6 @@ const College = () => {
   const removeDubCollege = colName.filter((course, index) => {
     return !colName.includes(course, index + 1);
   });
-
   const AllCollegesData = () => {
     const SingleCollege = (props) => {
       const userCat = props.DepCategory.filter((cat) => {

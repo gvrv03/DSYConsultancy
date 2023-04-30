@@ -23,6 +23,37 @@ export function UserContexProvider({ children }) {
       forWhich: "",
     });
   };
+  const addFeedback = async (uName, message, objID) => {
+    const res = await fetch("/api/feedback", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        uName,
+        message,
+        objID,
+      }),
+    });
+
+    return res.json();
+  };
+  const addContact = async (uName, phoneNo, email, message) => {
+    const res = await fetch("/api/contacts", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        uName,
+        phoneNo,
+        email,
+        message,
+      }),
+    });
+
+    return res.json();
+  };
 
   const openCalender = (forWhat) => {
     setCalState({
@@ -73,6 +104,7 @@ export function UserContexProvider({ children }) {
         notFound: true,
       };
     }
+    
     setallUserDetail(userData);
     return userData;
   };
@@ -272,9 +304,10 @@ export function UserContexProvider({ children }) {
         allUserDetail,
         userUID,
         setres,
-
+        addContact,
         // Calender
         closeCalender,
+        addFeedback,
         schedule,
         openCalender,
         getCityByLongLat,

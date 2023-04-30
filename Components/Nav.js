@@ -40,6 +40,7 @@ const Nav = () => {
   };
 
   const [userOpen, setUserOpen] = useState("hidden");
+  const [search, setsearch] = useState("");
   const toggleUser = () => {
     if (userOpen == "hidden") {
       setUserOpen("block");
@@ -47,6 +48,7 @@ const Nav = () => {
       setUserOpen("hidden");
     }
   };
+
   const SearchDropdown = () => {
     return (
       <>
@@ -55,7 +57,6 @@ const Nav = () => {
             onClick={toggleUser}
             type="button"
             className="h-8 mr-0 w-8 rounded-full flex items-center justify-center font-semibold  sm:h-10 sm:w-10 cursor-pointer "
-            // src="/img"
             alt="User dropdown"
           >
             <i className="bi font-bold text-xl bi-search"></i>
@@ -142,19 +143,28 @@ const Nav = () => {
 
       {/* Scroll Dropdown */}
       <div
-        className={`fixed bg-black bg-opacity-40  filter   ${userOpen} px-2    h-screen mt-0   z-10  py-5 w-full transition-all  rounded-sm shadow-lg focus:outline-none`}
+        className={`fixed  filter   ${userOpen} px-2    h-screen mt-0   top-0 z-40  py-5 w-full transition-all  rounded-sm shadow-lg focus:outline-none`}
       >
+        <div
+          onClick={toggleUser}
+          className="bg-black cursor-pointer bg-opacity-40  top-0 fixed left-0 right-0 h-full"
+        />
         <form
-          className=" container relative flex justify-between items-center gap-5 bg-white px-5 py-3 m-auto shadow-sm"
+          className=" container relative flex justify-between z-50 items-center gap-5 bg-white px-5 py-3 m-auto shadow-sm"
           role="none"
         >
           <input
-            type="search"
+            type="text"
+            onChange={(e) => {
+              setsearch(e.target.value);
+            }}
             placeholder="Search College..."
             className=" outline-none w-full  rounded-sm   text-sm bg-white rounded-r-none"
           />
 
-          <i className="bi font-bold text-xl bi-search cursor-pointer "></i>
+          <Link href={`/SearchCollege/${search}`} onClick={toggleUser}>
+            <i className="bi font-bold text-xl bi-search cursor-pointer "></i>
+          </Link>
         </form>
       </div>
 
