@@ -279,6 +279,15 @@ const College = () => {
               />
             </div>
           )}
+
+          {depFilter.length === 0 && (
+            <div className="bg-white p-5 h-screen shadow-lg grid place-items-center  font-semibold">
+              <div>
+                <img src="/img/Nodata.svg" alt="Not found" className="w-32 " />
+                <div className="text-center mt-5">College Not Available</div>
+              </div>
+            </div>
+          )}
           {depFilter &&
             depFilter.map((department, indexDep) => {
               const {
@@ -317,7 +326,11 @@ const College = () => {
             })}
         </div>
         <div
-          className={`h-full transition-transform md:top-0 flex-col md:flex md:relative fixed w-4/5 ${userOpen} md:right-0 top-16 bg-white  shadow-md overflow-y-scroll md:w-2/6`}
+          onClick={toggleUser}
+          className={`h-full fixed ${userOpen}  opacity-50 cursor-pointer  top-16 bg-black  block md:hidden w-full`}
+        />
+        <div
+          className={`h-full md:top-0 flex-col md:flex md:relative fixed w-4/5 ${userOpen} md:right-0 top-16 bg-white  shadow-md overflow-y-scroll md:w-2/6`}
         >
           <div className="md:hidden block bg-gray-50 p-5">
             <button onClick={toggleUser}>
@@ -350,7 +363,7 @@ const College = () => {
               className="border w-full outline-none text-sm px-2 py-2"
               placeholder="Search College"
             >
-              <option value="">Select College</option>
+              <option value="">All College</option>
               {removeDubCollege &&
                 removeDubCollege.map((item, index) => {
                   return (
