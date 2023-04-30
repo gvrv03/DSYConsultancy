@@ -21,7 +21,6 @@ import {
   RecaptchaVerifier,
   PhoneAuthProvider,
   updateEmail,
-  
 } from "firebase/auth";
 
 import { auth } from "directsecondyearadmission/firebase";
@@ -33,11 +32,13 @@ export function UserAuthContexProvider({ children }) {
   const [user, setuser] = useState("");
   const [token, settoken] = useState("");
   const [response, setresponse] = useState("");
+  const [Uid, setUid] = useState("");
   const [verificatioIDPhone, setverificatioIDPhone] = useState("");
 
   useEffect(() => {
     const getToken = () => {
       settoken(localStorage.getItem("token"));
+      setUid(localStorage.getItem("firebaseuid"));
     };
     getToken();
   }, [response]);
@@ -232,6 +233,7 @@ export function UserAuthContexProvider({ children }) {
         verifyEmail,
         sendOTP,
         verifyOTPServer,
+        Uid,
         resetPassword,
         setresponse,
 

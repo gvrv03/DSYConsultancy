@@ -10,6 +10,7 @@ const userContext = createContext();
 export function UserContexProvider({ children }) {
   const [userUID, setuserUID] = useState("");
   const [res, setres] = useState(null);
+  const { response } = useUserAuth();
   const [allUserDetail, setallUserDetail] = useState({});
   const [coOrdinates, setcoOrdinates] = useState();
 
@@ -99,12 +100,6 @@ export function UserContexProvider({ children }) {
       }
     );
     const userData = await res.json();
-    if (userData.error) {
-      return {
-        notFound: true,
-      };
-    }
-    
     setallUserDetail(userData);
     return userData;
   };
@@ -117,7 +112,7 @@ export function UserContexProvider({ children }) {
     getFirebaseID();
     getCurrentLocation();
     getSingleUserData();
-  }, [res]);
+  }, [res, response]);
 
   const updateBasicDetailsUser = async (
     fullName,

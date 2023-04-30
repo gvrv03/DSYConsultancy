@@ -9,8 +9,7 @@ import { useUserContext } from "./UserContext";
 
 const AdminContext = createContext();
 export function AdminContexProvider({ children }) {
-  const { userUID } = useUserContext();
-  const { user } = useUserAuth();
+  const { user ,Uid} = useUserAuth();
   const [allDepartments, setallDepartments] = useState("");
   const [allSchedule, setallSchedule] = useState([]);
   const [allfeedbacks, setallfeedbacks] = useState([]);
@@ -73,7 +72,7 @@ export function AdminContexProvider({ children }) {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        Authorization: userUID,
+        Authorization: Uid,
       },
       body: JSON.stringify({
         courseName: courseName,
@@ -116,7 +115,7 @@ export function AdminContexProvider({ children }) {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        Authorization: userUID,
+        Authorization: Uid,
       },
       body: JSON.stringify({
         name: cName,
@@ -155,7 +154,7 @@ export function AdminContexProvider({ children }) {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        Authorization: userUID,
+        Authorization: Uid,
       },
       body: JSON.stringify({
         collegeDetail: collegeDetail,
@@ -175,7 +174,7 @@ export function AdminContexProvider({ children }) {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        Authorization: userUID,
+        Authorization: Uid,
       },
       body: JSON.stringify({
         instituteCode: insCode,
@@ -205,7 +204,7 @@ export function AdminContexProvider({ children }) {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        Authorization: userUID,
+        Authorization: Uid,
       },
       body: JSON.stringify({
         category: category,

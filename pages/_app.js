@@ -28,8 +28,8 @@ export default function App({ Component, pageProps }) {
   return (
     <CollegeState>
       <UserAuthContexProvider>
-        <UserContexProvider>
-          <AdminContexProvider>
+        <AdminContexProvider>
+          <UserContexProvider>
             <CollegeContexProvider>
               <Nav />
               <Component {...pageProps} />
@@ -38,8 +38,8 @@ export default function App({ Component, pageProps }) {
                 <i className="bi text-3xl pColor bi-arrow-up-square-fill"></i>
               </ScrollToTop>
             </CollegeContexProvider>
-          </AdminContexProvider>
-        </UserContexProvider>
+          </UserContexProvider>
+        </AdminContexProvider>
       </UserAuthContexProvider>
     </CollegeState>
   );

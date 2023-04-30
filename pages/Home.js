@@ -13,11 +13,12 @@ const Home = () => {
   const { openCalender } = useUserContext();
   const [token, setToken] = useState("");
   const { allUserDetail, coOrdinates } = useUserContext();
-  const { user } = useUserAuth();
+  const { user, setresponse } = useUserAuth();
   useEffect(() => {
     if (localStorage.getItem("token")) {
       setToken(localStorage.getItem("token"));
     }
+    setresponse(Math.random());
   }, []);
 
   const CounsellorCard = () => {
