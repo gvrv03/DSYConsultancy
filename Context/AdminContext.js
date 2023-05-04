@@ -9,7 +9,7 @@ import { useUserContext } from "./UserContext";
 
 const AdminContext = createContext();
 export function AdminContexProvider({ children }) {
-  const { user ,Uid} = useUserAuth();
+  const { user, Uid } = useUserAuth();
   const [allDepartments, setallDepartments] = useState("");
   const [allSchedule, setallSchedule] = useState([]);
   const [allfeedbacks, setallfeedbacks] = useState([]);
@@ -33,6 +33,9 @@ export function AdminContexProvider({ children }) {
       msg: msg,
     });
   };
+
+
+  
 
   const getAllSchedule = async () => {
     const res = await fetch("/api/schedule", {

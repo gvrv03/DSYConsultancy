@@ -4,11 +4,7 @@ const HomeNav = [
     name: "Courses",
     location: "/College",
   },
-  {
-    icon: "  bi-calendar2-minus-fill",
-    name: "Feed",
-    location: "/Feed",
-  },
+
 
   {
     icon: "bi-file-earmark-fill",

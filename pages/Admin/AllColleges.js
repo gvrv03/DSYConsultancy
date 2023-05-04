@@ -1,20 +1,12 @@
 import React from "react";
 import Dashboard from "./Dashboard";
 import baseUrl from "../../baseUrl";
-import { getColleges } from "directsecondyearadmission/quieries/adminQuieries";
 import { useState } from "react";
 import { useEffect } from "react";
 import Loader2 from "../../Components/Loader2";
+import { useCollegesContext } from "directsecondyearadmission/Context/CollegesContext";
 const AllColleges = () => {
-
-  const [data, setdata] = useState(null);
-  useEffect(() => {
-    const getAllColleges = async () => {
-      const data = await getColleges();
-      setdata(data);
-    };
-    getAllColleges();
-  }, []);
+  const { allColleges } = useCollegesContext();
 
   return (
     <Dashboard>
@@ -41,8 +33,8 @@ const AllColleges = () => {
             </tr>
           </thead>
           <tbody className="mt-10 text-xs">
-            {data &&
-              data.map((i, index) => {
+            {allColleges &&
+              allColleges.map((i, index) => {
                 return (
                   <tr className="border-none  mt-10" key={index}>
                     <td className="px-3 py-2   mt-2 border-none font-bold text-lg text-center">
@@ -87,7 +79,7 @@ const AllColleges = () => {
               })}
           </tbody>
         </table>
-        {!data && <Loader2 />}
+        {!allColleges && <Loader2 />}
       </div>
     </Dashboard>
   );

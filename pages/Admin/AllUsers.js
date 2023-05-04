@@ -1,4 +1,4 @@
-import { getallUsers } from "directsecondyearadmission/quieries/adminQuieries";
+
 import React, { Component } from "react";
 import { useState, useEffect } from "react";
 import Dashboard from "./Dashboard";
@@ -21,7 +21,7 @@ const AllUsers = () => {
   const [modalstate, setmodalstate] = useState("hidden");
   const [data, setdata] = useState(null);
   const [userDetails, setuserDetails] = useState("");
-  const { userUID } = useUserContext();
+  const { userUID ,allUsers} = useUserContext();
 
   const fileName = "UsersData";
   const exportType = "xls";
@@ -31,12 +31,6 @@ const AllUsers = () => {
     exportFromJSON({ jsonData, fileName, exportType });
   };
 
-  useEffect(() => {
-    const getUsers = async () => {
-      setdata(await getallUsers());
-    };
-    getUsers();
-  }, [openModal]);
 
   const handleRole = async (userRole, id) => {
     const res = await fetch("/api/updateRole", {
@@ -89,8 +83,8 @@ const AllUsers = () => {
             </tr>
           </thead>
           <tbody className="mt-10 text-xs">
-            {data &&
-              data.map((i, index) => {
+            {allUsers &&
+              allUsers.map((i, index) => {
                 return (
                   <tr className="border-none  mt-10" key={index}>
                     <td className="px-3 py-2   mt-2 border-none font-bold text-lg text-left">
@@ -186,7 +180,7 @@ const AllUsers = () => {
             <UserLocation userDetails={userDetails} modalstate={modalstate} />
           </div>
         </div>
-        {!data && <Loader2 />}
+        {!allUsers && <Loader2 />}
       </div>
     </Dashboard>
   );

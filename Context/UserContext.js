@@ -12,6 +12,7 @@ export function UserContexProvider({ children }) {
   const [res, setres] = useState(null);
   const { response, signWithGoogle } = useUserAuth();
   const [allUserDetail, setallUserDetail] = useState({});
+  const [allUsers, setallUsers] = useState([]);
   const [coOrdinates, setcoOrdinates] = useState();
 
   const [calState, setCalState] = useState({
@@ -39,6 +40,19 @@ export function UserContexProvider({ children }) {
 
     return res.json();
   };
+
+  async function getallUsers() {
+    const res = await fetch(baseUrl + "/api/signUp", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    const data = await res.json();
+    setallUsers(data);
+    return data;
+  }
+
   const addContact = async (uName, phoneNo, email, message) => {
     const res = await fetch("/api/contacts", {
       method: "POST",
@@ -112,6 +126,7 @@ export function UserContexProvider({ children }) {
     getFirebaseID();
     getCurrentLocation();
     getSingleUserData();
+    getallUsers();
   }, [res, response, signWithGoogle]);
 
   const updateBasicDetailsUser = async (
@@ -302,6 +317,7 @@ export function UserContexProvider({ children }) {
         addContact,
         // Calender
         closeCalender,
+        allUsers,
         addFeedback,
         schedule,
         openCalender,

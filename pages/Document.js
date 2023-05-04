@@ -67,7 +67,7 @@ const BasicDoc = () => {
             </label>
           </div>
           <div>
-            <h2 className="text-sm mt-5 font-semibold">10th Marksheet</h2>
+            <h2 className="text-sm mt-5 font-semibold">12th Marksheet</h2>
             <p className="text-xs text-slate-400">
               File should be max 2mb and jpg, jpeg, png, pdf
             </p>
@@ -99,7 +99,7 @@ const BasicDoc = () => {
             </label>
           </div>
           <div>
-            <h2 className="text-sm mt-5 font-semibold">10th Marksheet</h2>
+            <h2 className="text-sm mt-5 font-semibold">Diploma</h2>
             <p className="text-xs text-slate-400">
               File should be max 2mb and jpg, jpeg, png, pdf
             </p>
@@ -173,7 +173,7 @@ const AddmissionDoc = () => {
             </label>
           </div>
           <div>
-            <h2 className="text-sm mt-5 font-semibold">12th Marksheet</h2>
+            <h2 className="text-sm mt-5 font-semibold">10th Marksheet</h2>
             <p className="text-xs text-slate-400">
               File should be max 2mb and jpg, jpeg, png, pdf
             </p>
@@ -251,7 +251,7 @@ const Document = () => {
 
   return (
     <HomeLayout>
-       <Head>
+      <Head>
         <title>DSY consultancy | Documents</title>
         <meta
           name="keywords"

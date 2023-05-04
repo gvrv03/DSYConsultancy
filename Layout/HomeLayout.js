@@ -76,53 +76,59 @@ export default function HomeLayout({ children }) {
           {/* <UserData /> */}
           <div className="container  gap-5  flex m-auto  ">
             <aside
-              className={` bg-white w-full hidden md:block p-5 md:w-1/5  shadow-md rounded-sm `}
+              className={` w-full h-fit hidden md:block  md:w-1/5  shadow-md rounded-sm `}
             >
-              <div className="rounded-sm ">
-                {/* <SideUserData /> */}
-                <ul className="mb-2">
-                  <li>
-                    <Link
-                      href="/Profile"
-                      className={`flex items-center ${
-                        router.pathname == "/Profile" &&
-                        "bg-sky-100 font-semibold"
-                      }  mb-2 px-4 p-2 my-1 navItem hover:bg-sky-100 hover:font-semibold  rounded-sm`}
-                    >
-                      <i className={`bi bi-person-fill mr-2`}></i>
-                      <span className="text-sm">Profile</span>
-                    </Link>
-                  </li>
-                  {HomeNav.map((item, index) => {
-                    return (
-                      <ListItem
-                        key={index}
-                        location={item.location}
-                        name={item.name}
-                        icon={item.icon}
-                      />
-                    );
-                  })}
-
-                  {(allUserDetail.role === process.env.NEXT_PUBLIC_ADMINKEY ||
-                    allUserDetail.role === process.env.NEXT_PUBLIC_ROOTKEY) && (
+              <div  className="rounded-sm bg-white p-5">
+                <div >
+                  {/* <SideUserData /> */}
+                  <ul className="mb-2">
                     <li>
                       <Link
-                        href="/Admin/AllContact"
+                        href="/Profile"
                         className={`flex items-center ${
-                          router.pathname == "/Admin/AllContact" &&
+                          router.pathname == "/Profile" &&
                           "bg-sky-100 font-semibold"
                         }  mb-2 px-4 p-2 my-1 navItem hover:bg-sky-100 hover:font-semibold  rounded-sm`}
                       >
-                        <i className={`bi bi-bar-chart-line-fill mr-2`}></i>
-                        <span className="text-sm">Dashboard</span>
+                        <i className={`bi bi-person-fill mr-2`}></i>
+                        <span className="text-sm">Profile</span>
                       </Link>
                     </li>
-                  )}
-                </ul>
+                    {HomeNav.map((item, index) => {
+                      return (
+                        <ListItem
+                          key={index}
+                          location={item.location}
+                          name={item.name}
+                          icon={item.icon}
+                        />
+                      );
+                    })}
+
+                    {(allUserDetail.role === process.env.NEXT_PUBLIC_ADMINKEY ||
+                      allUserDetail.role ===
+                        process.env.NEXT_PUBLIC_ROOTKEY) && (
+                      <li>
+                        <Link
+                          href="/Admin/AllContact"
+                          className={`flex items-center ${
+                            router.pathname == "/Admin/AllContact" &&
+                            "bg-sky-100 font-semibold"
+                          }  mb-2 px-4 p-2 my-1 navItem hover:bg-sky-100 hover:font-semibold  rounded-sm`}
+                        >
+                          <i className={`bi bi-bar-chart-line-fill mr-2`}></i>
+                          <span className="text-sm">Dashboard</span>
+                        </Link>
+                      </li>
+                    )}
+                  </ul>
+                </div>
               </div>
 
-              {/* <div className="sideAds">Space for ads</div> */}
+
+              <div>
+                <img src="https://tpc.googlesyndication.com/simgad/1956423996343570871" className="mt-5" alt="Ads" />
+              </div>
             </aside>
 
             {emailVerified === false || phoneNumber === null ? (
@@ -174,7 +180,7 @@ export default function HomeLayout({ children }) {
                   Sorry! You are not a DSY user
                 </p>
                 <p className="text-sm mt-3  text-slate-400">
-                  Login Now for Become a User
+                  Login Now to become a User
                 </p>
               </div>
 

@@ -19,6 +19,7 @@ export function CollegeContexProvider({ children }) {
     getCat();
   }, []);
 
+
   async function getAllColleges() {
     // for show all Colleges
     const res = await axios.get(baseUrl + "/api/Colleges", {

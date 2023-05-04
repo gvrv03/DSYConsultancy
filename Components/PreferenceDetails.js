@@ -20,7 +20,13 @@ const PreferenceDetails = () => {
   const [resMsg, setresMsg] = useState("");
 
   if (!allDepartments) {
-    return <div>Waiting...</div>;
+    return (
+      <div>
+        <div className="bg-white shadow-md p-5 mt-5 grid place-items-center rounded-sm h-52">
+          <img src="/img/loadingSpinner.gif" className="w-10" alt="spinner" />
+        </div>
+      </div>
+    );
   }
   if (resMsg) {
     setTimeout(() => {
@@ -97,7 +103,6 @@ const PreferenceDetails = () => {
         user.uid,
         CatSeatType
       );
-      setresMsg(res);
       setres(Math.random());
     };
 
@@ -137,7 +142,7 @@ const PreferenceDetails = () => {
                     }
                     name="university"
                   >
-                    <option value="Select"> ----Select----</option>
+                    <option value=""> ----Select----</option>
                     {removeDubUniversity.sort().map((item, index) => {
                       return (
                         <option
@@ -201,7 +206,7 @@ const PreferenceDetails = () => {
                   >
                     <option value="---Select---">---Select---</option>
 
-                    {removeDubCategory.sort().map((item, index) => {
+                    {removeDubCategory.map((item, index) => {
                       return (
                         <option value={item.seatTypeMax} key={index}>
                           {item.seatTypeMax}
@@ -255,7 +260,7 @@ const PreferenceDetails = () => {
                     name="location"
                     className="w-full bg-white rounded-sm  border border-gray-300 text-base outline-none text-gray-700 py-1 px-3 "
                   >
-                    <option value="---Select---">---Select---</option>
+                    <option value="">---Select---</option>
                     {removeDubDist &&
                       removeDubDist.map((item, index) => {
                         return (

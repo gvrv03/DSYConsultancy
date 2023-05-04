@@ -1,13 +1,12 @@
 import Dash from "directsecondyearadmission/Layout/Dash";
 import HomeLayout from "directsecondyearadmission/Layout/HomeLayout";
 import React, { useEffect } from "react";
-import baseUrl from "../../baseUrl";
-import { useContext } from "react";
-import collegeContext from "directsecondyearadmission/Context/collegeContext";
 import Link from "next/link";
 import { useState } from "react";
 import { useRouter } from "next/router";
 import { useUserContext } from "directsecondyearadmission/Context/UserContext";
+import { useAdminContext } from "directsecondyearadmission/Context/AdminContext";
+import { useCollegesContext } from "directsecondyearadmission/Context/CollegesContext";
 
 const HeaderFilter = () => {
   const [userOpen, setUserOpen] = useState("hidden");
@@ -109,68 +108,38 @@ const HeaderFilter = () => {
 };
 
 const Dashboard = ({ children }) => {
-  const { allUserDetail } = useUserContext();
+  const { allUserDetail, allUsers } = useUserContext();
+  const { allColleges } = useCollegesContext();
+  const { allSchedule, allfeedbacks } = useAdminContext();
 
   const HeaderAdmin = () => {
-    const [data, setData] = useState({});
-    useEffect(() => {
-      const status = async () => {
-        const res = await fetch(baseUrl + "/api/Colleges", {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-          },
-        });
-        const data = await res.json();
-
-        const res2 = await fetch(baseUrl + "/api/getAllContacts", {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-          },
-        });
-        const data2 = await res2.json();
-
-        const res3 = await fetch(baseUrl + "/api/signUp", {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-          },
-        });
-        const data3 = await res3.json();
-
-        setData({ colleges: data, contacts: data2, users: data3 });
-      };
-      status();
-    }, []);
-
     return (
       <section className="text-gray-600 rounded-sm bg-white body-font">
         <div className="container px-5 py-5 mx-auto">
           <div className="flex flex-wrap -m-4 text-center">
             <div className="p-4 sm:w-1/4 w-1/2">
               <h2 className="title-font font-medium sm:text-4xl text-3xl text-gray-900">
-                {data.users ? data.users.length : "..."}
+                {allUsers.length}
               </h2>
               <p className="leading-relaxed">Users</p>
             </div>
             <div className="p-4 sm:w-1/4 w-1/2">
               <h2 className="title-font font-medium sm:text-4xl text-3xl text-gray-900">
-                {data.colleges ? data.colleges.length : "..."}
+                {allColleges.length}
               </h2>
               <p className="leading-relaxed">Colleges</p>
             </div>
             <div className="p-4 sm:w-1/4 w-1/2">
               <h2 className="title-font font-medium sm:text-4xl text-3xl text-gray-900">
-                {data.contacts ? data.contacts.length : "..."}
+                {allfeedbacks.length}
               </h2>
-              <p className="leading-relaxed">Contacts</p>
+              <p className="leading-relaxed">Feedback</p>
             </div>
             <div className="p-4 sm:w-1/4 w-1/2">
               <h2 className="title-font font-medium sm:text-4xl text-3xl text-gray-900">
-                4
+                {allSchedule.length}
               </h2>
-              <p className="leading-relaxed">Blog</p>
+              <p className="leading-relaxed">Schedule</p>
             </div>
           </div>
         </div>
