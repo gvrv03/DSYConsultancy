@@ -76,9 +76,9 @@ export default function HomeLayout({ children }) {
           {/* <UserData /> */}
           <div className="container  gap-5  flex m-auto  ">
             <aside
-              className={` w-full h-fit hidden md:block  md:w-1/5  shadow-md rounded-sm `}
+              className={` w-full p-5 bg-white hidden md:block  md:w-1/5  shadow-md rounded-sm `}
             >
-              <div  className="rounded-sm bg-white p-5">
+              <div  className="rounded-sm ">
                 <div >
                   {/* <SideUserData /> */}
                   <ul className="mb-2">
@@ -126,9 +126,12 @@ export default function HomeLayout({ children }) {
               </div>
 
 
-              <div>
-                <img src="https://tpc.googlesyndication.com/simgad/1956423996343570871" className="mt-5" alt="Ads" />
-              </div>
+              <Link href="/" className="  shadow-md" target="_blank">
+                <img src="https://tpc.googlesyndication.com/simgad/1956423996343570871" className="mt-5 border-2" alt="Ads" />
+              </Link>
+              <Link href="/" className="  shadow-md" target="_blank">
+                <img src="https://tpc.googlesyndication.com/simgad/1956423996343570871" className="mt-5 border-2" alt="Ads" />
+              </Link>
             </aside>
 
             {emailVerified === false || phoneNumber === null ? (
