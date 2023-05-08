@@ -30,11 +30,6 @@ const AllCollegesData = ({ toggleUser, userOpen }) => {
           selectedCollegeUnder.filter((und) => und !== under)
         );
   };
-  //   const undercolleges = collegeByUnder(
-  //     selectedCollegeUnder,
-  //     allDepartments,
-  //     district,
-  //   );
 
   // College Under Filter
   const CollegeUnder = () => {
@@ -231,7 +226,7 @@ const AllCollegesData = ({ toggleUser, userOpen }) => {
 
         <div className="flex  p-5">
           <i className="bi bi-search font-bold mr-4"></i>
-          <span className="text-slate-400">Search</span>
+          <span className="text-slate-400">College</span>
         </div>
 
         <div className="w-full px-5 bg-white">

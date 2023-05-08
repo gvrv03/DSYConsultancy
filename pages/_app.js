@@ -33,9 +33,7 @@ export default function App({ Component, pageProps }) {
           <UserContexProvider>
             <CollegeContexProvider>
               <Nav />
-              <ErrorBoundary>
-                <Component {...pageProps} />
-              </ErrorBoundary>
+              <Component {...pageProps} />
               <Footer />
               <ScrollToTop showUnder={160}>
                 <i className="bi text-3xl pColor bi-arrow-up-square-fill"></i>
