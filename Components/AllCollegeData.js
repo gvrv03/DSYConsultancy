@@ -177,7 +177,6 @@ const AllCollegesData = ({ toggleUser, userOpen }) => {
               collegeUnder,
               collegeType,
               location,
-
               contacts,
               approvedBy,
               image,
