@@ -123,15 +123,17 @@ export function UserContexProvider({ children }) {
     );
     const userData = await res.json();
     setallUserDetail(userData);
-    const { preferences, basicDetails } = userData;
-    setuserPref({
-      category: basicDetails.socialCategory,
-      college: preferences.university,
-      branch: preferences.branch,
-      district: preferences.location,
-      collegeType: preferences.collegeType,
-      university: preferences.university,
-    });
+    const { preferences, basicDetails } = userData && userData;
+
+    preferences &&
+      setuserPref({
+        category: basicDetails.socialCategory,
+        college: preferences.university,
+        branch: preferences.branch,
+        district: preferences.location,
+        collegeType: preferences.collegeType,
+        university: preferences.university,
+      });
 
     return userData;
   };

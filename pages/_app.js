@@ -27,23 +27,23 @@ export default function App({ Component, pageProps }) {
     AOS.refresh();
   }, []);
   return (
-    <ErrorBoundary>
-      <CollegeState>
-        <UserAuthContexProvider>
-          <AdminContexProvider>
-            <UserContexProvider>
-              <CollegeContexProvider>
-                <Nav />
+    <CollegeState>
+      <UserAuthContexProvider>
+        <AdminContexProvider>
+          <UserContexProvider>
+            <CollegeContexProvider>
+              <Nav />
+              <ErrorBoundary>
                 <Component {...pageProps} />
-                <Footer />
-                <ScrollToTop showUnder={160}>
-                  <i className="bi text-3xl pColor bi-arrow-up-square-fill"></i>
-                </ScrollToTop>
-              </CollegeContexProvider>
-            </UserContexProvider>
-          </AdminContexProvider>
-        </UserAuthContexProvider>
-      </CollegeState>
-    </ErrorBoundary>
+              </ErrorBoundary>
+              <Footer />
+              <ScrollToTop showUnder={160}>
+                <i className="bi text-3xl pColor bi-arrow-up-square-fill"></i>
+              </ScrollToTop>
+            </CollegeContexProvider>
+          </UserContexProvider>
+        </AdminContexProvider>
+      </UserAuthContexProvider>
+    </CollegeState>
   );
 }
