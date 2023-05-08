@@ -30,6 +30,7 @@ export function CollegeContexProvider({ children }) {
     const allDepName = data.map((item) => {
       return item.courseName;
     });
+    
     const removeDubBranch =
       allDepName &&
       allDepName.filter(

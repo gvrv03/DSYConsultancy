@@ -64,7 +64,7 @@ const AllCollegesData = ({ toggleUser, userOpen }) => {
           }}
           className=" outline-none w-full py-2 rounded-sm border"
         >
-          <option value="" className="text-center font-bold py-2">
+          <option value="all" className="text-center font-bold py-2">
             {" "}
             All District
           </option>
@@ -94,7 +94,7 @@ const AllCollegesData = ({ toggleUser, userOpen }) => {
         }}
         className=" outline-none w-full py-2 rounded-sm border"
       >
-        <option value="" className="text-center font-bold py-2">
+        <option value="all" className="text-center font-bold py-2">
           {" "}
           All University
         </option>
@@ -119,7 +119,7 @@ const AllCollegesData = ({ toggleUser, userOpen }) => {
         className="border w-full outline-none text-sm px-2 py-2"
         placeholder="Search College"
       >
-        <option value="">All College</option>
+        <option value="all">All College</option>
         {allColleges &&
           allColleges.map((item, index) => {
             return (
@@ -142,7 +142,7 @@ const AllCollegesData = ({ toggleUser, userOpen }) => {
         className="border w-full outline-none text-sm px-2 py-2"
         placeholder="Search College"
       >
-        <option value="" className="text-center">
+        <option value="all" className="text-center">
           All
         </option>
         {allRemDubDepartments.map((item, index) => {
