@@ -15,6 +15,7 @@ import { CollegeContexProvider } from "directsecondyearadmission/Context/College
 import { UserContexProvider } from "directsecondyearadmission/Context/UserContext";
 import { useEffect } from "react";
 import { AdminContexProvider } from "directsecondyearadmission/Context/AdminContext";
+import ErrorBoundary from "directsecondyearadmission/Components/ErrorBoundary";
 Router.events.on("routeChangeStart", () => NProgress.start());
 Router.events.on("routeChangeComplete", () => NProgress.done());
 Router.events.on("routeChangeError", () => NProgress.done());
@@ -26,21 +27,23 @@ export default function App({ Component, pageProps }) {
     AOS.refresh();
   }, []);
   return (
-    <CollegeState>
-      <UserAuthContexProvider>
-        <AdminContexProvider>
-          <UserContexProvider>
-            <CollegeContexProvider>
-              <Nav />
-              <Component {...pageProps} />
-              <Footer />
-              <ScrollToTop showUnder={160}>
-                <i className="bi text-3xl pColor bi-arrow-up-square-fill"></i>
-              </ScrollToTop>
-            </CollegeContexProvider>
-          </UserContexProvider>
-        </AdminContexProvider>
-      </UserAuthContexProvider>
-    </CollegeState>
+    <ErrorBoundary>
+      <CollegeState>
+        <UserAuthContexProvider>
+          <AdminContexProvider>
+            <UserContexProvider>
+              <CollegeContexProvider>
+                <Nav />
+                <Component {...pageProps} />
+                <Footer />
+                <ScrollToTop showUnder={160}>
+                  <i className="bi text-3xl pColor bi-arrow-up-square-fill"></i>
+                </ScrollToTop>
+              </CollegeContexProvider>
+            </UserContexProvider>
+          </AdminContexProvider>
+        </UserAuthContexProvider>
+      </CollegeState>
+    </ErrorBoundary>
   );
 }
