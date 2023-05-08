@@ -15,7 +15,6 @@ import { CollegeContexProvider } from "directsecondyearadmission/Context/College
 import { UserContexProvider } from "directsecondyearadmission/Context/UserContext";
 import { useEffect } from "react";
 import { AdminContexProvider } from "directsecondyearadmission/Context/AdminContext";
-import ErrorBoundary from "directsecondyearadmission/Components/ErrorBoundary";
 Router.events.on("routeChangeStart", () => NProgress.start());
 Router.events.on("routeChangeComplete", () => NProgress.done());
 Router.events.on("routeChangeError", () => NProgress.done());
