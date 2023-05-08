@@ -15,6 +15,14 @@ export function UserContexProvider({ children }) {
   const [allUsers, setallUsers] = useState([]);
   const [coOrdinates, setcoOrdinates] = useState();
 
+  const [userPref, setuserPref] = useState({
+    category: "",
+    college: "",
+    branch: "",
+    district: "",
+    collegeType: "",
+    university: "",
+  });
   const [calState, setCalState] = useState({
     state: "hidden",
     forWhich: "",
@@ -115,6 +123,16 @@ export function UserContexProvider({ children }) {
     );
     const userData = await res.json();
     setallUserDetail(userData);
+    const { preferences, basicDetails } = userData;
+    setuserPref({
+      category: basicDetails.socialCategory,
+      college: preferences.university,
+      branch: preferences.branch,
+      district: preferences.location,
+      collegeType: preferences.collegeType,
+      university: preferences.university,
+    });
+
     return userData;
   };
 
@@ -323,6 +341,7 @@ export function UserContexProvider({ children }) {
         openCalender,
         getCityByLongLat,
         coOrdinates,
+        userPref,
       }}
     >
       <Calender state={calState.state} forWhich={calState.forWhich} />

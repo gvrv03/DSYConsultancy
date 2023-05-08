@@ -14,8 +14,14 @@ const PreferenceDetails = () => {
   const [requiredState, setRequired] = useState(false);
   const { user } = useUserAuth();
   const { preferenceDetailsUser, setres, allUserDetail } = useUserContext();
-  const { allColleges, allCat } = useCollegesContext();
-  const { allDepartments } = useAdminContext();
+  const {
+    allDepartments,
+    allColleges,
+    allRemDubDistrict,
+    allRemDubDepartments,
+    allCatSeatType,
+    allRemDubUniversity,
+  } = useCollegesContext();
 
   const [resMsg, setresMsg] = useState("");
 
@@ -33,41 +39,6 @@ const PreferenceDetails = () => {
       setresMsg("");
     }, 2000);
   }
-  const districtName =
-    allDepartments &&
-    allDepartments.map((item) => item.CollegeDetails.location.district);
-
-  const removeDubDist =
-    allDepartments &&
-    allDepartments.filter(
-      (district, index) =>
-        !districtName.includes(
-          district.CollegeDetails.location.district,
-          index + 1
-        )
-    );
-
-  const univercityName = allColleges.map((item) => item.university);
-  const removeDubUniversity = allColleges.filter(
-    (university, index) =>
-      !univercityName.includes(university.university, index + 1)
-  );
-
-  const CategorySeatType = allCat && allCat.map((item) => item.seatTypeMax);
-  const removeDubCategory =
-    allCat &&
-    allCat.filter(
-      (cat, index) => !CategorySeatType.includes(cat.seatTypeMax, index + 1)
-    );
-
-  let depName = [];
-  allDepartments.map((item) => {
-    depName.push(item.courseName);
-  });
-
-  const removeDubBranch = depName.filter(
-    (course, index) => !depName.includes(course, index + 1)
-  );
 
   const toggleUser = () => {
     if (modalOpen == "hidden") {
@@ -103,6 +74,7 @@ const PreferenceDetails = () => {
         user.uid,
         CatSeatType
       );
+      setresMsg(res)
       setres(Math.random());
     };
 
@@ -143,14 +115,14 @@ const PreferenceDetails = () => {
                     name="university"
                   >
                     <option value=""> ----Select----</option>
-                    {removeDubUniversity.sort().map((item, index) => {
+                    {allRemDubUniversity.map((item, index) => {
                       return (
                         <option
                           key={index}
-                          value={item.university}
+                          value={item}
                           className="text-left text-sm"
                         >
-                          {item.university}
+                          {item}
                         </option>
                       );
                     })}
@@ -175,7 +147,7 @@ const PreferenceDetails = () => {
                   >
                     <option value="">---Select---</option>
 
-                    {removeDubBranch.sort().map((item, index) => {
+                    {allRemDubDepartments.sort().map((item, index) => {
                       return (
                         <option value={item} key={index}>
                           {item}
@@ -206,10 +178,10 @@ const PreferenceDetails = () => {
                   >
                     <option value="---Select---">---Select---</option>
 
-                    {removeDubCategory.map((item, index) => {
+                    {allCatSeatType.map((item, index) => {
                       return (
-                        <option value={item.seatTypeMax} key={index}>
-                          {item.seatTypeMax}
+                        <option value={item} key={index}>
+                          {item}
                         </option>
                       );
                     })}
@@ -261,15 +233,15 @@ const PreferenceDetails = () => {
                     className="w-full bg-white rounded-sm  border border-gray-300 text-base outline-none text-gray-700 py-1 px-3 "
                   >
                     <option value="">---Select---</option>
-                    {removeDubDist &&
-                      removeDubDist.map((item, index) => {
+                    {allRemDubDistrict &&
+                      allRemDubDistrict.map((item, index) => {
                         return (
                           <option
                             key={index}
-                            value={item.CollegeDetails.location.district}
+                            value={item}
                             className="text-left text-sm"
                           >
-                            {item.CollegeDetails.location.district}
+                            {item}
                           </option>
                         );
                       })}
