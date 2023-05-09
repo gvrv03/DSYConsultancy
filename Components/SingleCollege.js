@@ -1,9 +1,12 @@
+import { useUserContext } from "directsecondyearadmission/Context/UserContext";
 import Link from "next/link";
 import React from "react";
 
 const SingleCollege = (props) => {
+  const { userPref } = useUserContext();
+  const { category } = userPref;
   const userCat = props.DepCategory.filter((cat) => {
-    return cat.category === props.category;
+    return cat.category === category;
   });
   return (
     <div className="shadow-md mb-5 bg-white  rounded-sm p-5 ">

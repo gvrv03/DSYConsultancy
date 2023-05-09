@@ -1,5 +1,24 @@
-// for Department
-export const collegeByUnder = (selectedunder, colleges, district,Category) => {
+export const CollegeFilterAfter = (
+  selectedunder,
+  colleges,
+  defdistrict,
+  district,
+  collegeName,
+  defbranch,
+  branch,
+  defuniversity,
+  university
+) => {
+  if (!district && !branch && !university) {
+    let DistrictFilter = colleges.filter(
+      (filterClg) =>
+        defdistrict.includes(filterClg.CollegeDetails.location.district),
+      // defbranch.includes(filterClg.courseName)
+    );
+
+    return DistrictFilter;
+  }
+
   let filterCollege = !selectedunder.length
     ? colleges
     : colleges.filter((clgDetail) =>
@@ -9,12 +28,46 @@ export const collegeByUnder = (selectedunder, colleges, district,Category) => {
   if (!filterCollege) {
     return colleges;
   }
-  // Sorting by district
-  return district == ""
+
+  // After District Filter
+  let DistrictFilter = !district
+    ? filterCollege.filter((filterClg) =>
+        defdistrict.includes(filterClg.CollegeDetails.location.district)
+      )
+    : district === "all"
     ? filterCollege
     : filterCollege.filter((filterClg) =>
         district.includes(filterClg.CollegeDetails.location.district)
       );
+
+  let CollegeFilter =
+    !collegeName || collegeName === "all"
+      ? DistrictFilter
+      : DistrictFilter.filter((filterClg) =>
+          collegeName.includes(filterClg.CollegeDetails.name)
+        );
+
+  let BranchFilter = !branch
+    ? CollegeFilter.filter((filterClg) =>
+        defbranch.includes(filterClg.courseName)
+      )
+    : branch === "all"
+    ? CollegeFilter
+    : CollegeFilter.filter((filterClg) =>
+        branch.includes(filterClg.courseName)
+      );
+
+  let UniversityFilter = !university
+    ? BranchFilter.filter((filterClg) =>
+        defuniversity.includes(filterClg.CollegeDetails.university)
+      )
+    : university === "all"
+    ? BranchFilter
+    : BranchFilter.filter((filterClg) =>
+        university.includes(filterClg.CollegeDetails.university)
+      );
+
+  return UniversityFilter;
 };
 
 // for Colleges

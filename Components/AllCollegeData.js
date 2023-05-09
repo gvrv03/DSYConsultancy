@@ -1,6 +1,9 @@
 import { useCollegesContext } from "directsecondyearadmission/Context/CollegesContext";
 import { useUserContext } from "directsecondyearadmission/Context/UserContext";
-import { collegeByUnder } from "directsecondyearadmission/quieries/quieries";
+import {
+  collegeByUnder,
+  CollegeFilterAfter,
+} from "directsecondyearadmission/quieries/quieries";
 import React from "react";
 import { useState } from "react";
 import SingleCollege from "./SingleCollege";
@@ -21,7 +24,6 @@ const AllCollegesData = ({ toggleUser, userOpen }) => {
   const [UniversityClg, setUniversityClg] = useState("");
   const [clgName, setclgName] = useState("");
   const [depCol, setdepCol] = useState("");
-
   //   checkbox Handler
   const onChangeCollegeUnderHandler = (under, isChecked) => {
     isChecked
@@ -30,6 +32,26 @@ const AllCollegesData = ({ toggleUser, userOpen }) => {
           selectedCollegeUnder.filter((und) => und !== under)
         );
   };
+
+  const aftreFilterCourses = CollegeFilterAfter(
+    selectedCollegeUnder,
+
+    allDepartments,
+    // district
+    district,
+    districtClg,
+
+    // college
+    clgName,
+
+    // Department
+    branch,
+    depCol,
+
+    // UniversityClg
+    university,
+    UniversityClg
+  );
 
   // College Under Filter
   const CollegeUnder = () => {
@@ -164,8 +186,17 @@ const AllCollegesData = ({ toggleUser, userOpen }) => {
           </div>
         )}
 
-        {allDepartments &&
-          allDepartments.map((department, indexDep) => {
+        {allDepartments.length != 0 && aftreFilterCourses.length === 0 && (
+          <div className="w-full h-screen grid place-items-center bg-white">
+            <div className="text-center ">
+              <img src="/img/NoData.svg" className="w-20" alt="No Data" />
+              <h1 className="mt-10 font-semibold">Not Found</h1>
+            </div>
+          </div>
+        )}
+
+        {aftreFilterCourses &&
+          aftreFilterCourses.map((department, indexDep) => {
             const {
               name,
               instituteCode,
