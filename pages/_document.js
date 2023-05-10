@@ -4,6 +4,12 @@ export default function Document() {
   return (
     <Html lang="en">
       <Head>
+        <script
+          async
+          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2851870497948845"
+          crossorigin="anonymous"
+        ></script>
+      
         <meta
           name="google-site-verification"
           content="s8FoQiGue_nCxwS6Vv5lkDzFYIl4sX2F6zb_A5g4Oyw"

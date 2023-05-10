@@ -4,7 +4,25 @@ import Image from "next/image";
 import Head from "next/head";
 import { useUserContext } from "directsecondyearadmission/Context/UserContext";
 const Insurance = () => {
-  const { openCalender } = useUserContext();
+  const { allUserDetail, openCalender } = useUserContext();
+  if (allUserDetail.profileCompletion < 100) {
+    return (
+      <HomeLayout>
+        <div className="mt-20 container grid place-items-center m-auto bg-white p-5">
+          <div className="w-96 bg-gray-100 p-5 grid place-items-center">
+            <div className="font-semibold">
+              Please Complete Your Profile First !
+            </div>{" "}
+            <div className=" mt-5">
+              <Link href="/Profile" className="pBtn  px-5 py-2  w-full">
+                Complete Profile
+              </Link>
+            </div>
+          </div>
+        </div>
+      </HomeLayout>
+    );
+  }
   return (
     <HomeLayout>
       <Head>

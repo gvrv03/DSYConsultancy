@@ -13,6 +13,8 @@ const AllSchedule = () => {
     exportFromJSON({ allSchedule, fileName, exportType });
   };
 
+  console.log(allSchedule);
+
   return (
     <Dashboard>
       <div className="px-5 font-semibold text-slate-400 bg-white">
@@ -41,37 +43,42 @@ const AllSchedule = () => {
           <tbody className="mt-10 text-xs">
             {allSchedule &&
               allSchedule.map((i, index) => {
+                const {
+                  name,
+                  scheduleFor,
+                  scheduleDate,
+                  scheduleTime,
+                  UserData,
+                } = i;
+
+                const { contactDetails } = UserData ? UserData : {};
                 return (
                   <tr className="border-none  mt-10" key={index}>
                     <td className="px-3 py-2   mt-2 border-none font-bold text-lg text-left">
                       <span className="text-black">{index + 1}</span>
                     </td>
                     <td className="px-3 py-2  mt-2 border-none text-left ">
-                      {i.name}
+                      {name}
                     </td>
                     <td className="px-3 py-2  mt-2 border-none">
-                      {i.scheduleFor}
+                      {scheduleFor}
                     </td>
                     <td className="px-3 py-2  mt-2 border-none">
-                      {i.scheduleDate}
+                      {scheduleDate}
                     </td>
                     <td className="px-3 py-2  mt-2 border-none">
-                      {i.scheduleTime}
+                      {scheduleTime}
                     </td>
                     <td className="px-3 py-2  mt-2 border-none">
-                      {i.UserData.contactDetails.mobileNo}
+                      {contactDetails && contactDetails.mobileNo}
                     </td>
                     <td className="px-3 py-2 grid place-items-center  mt-2 border-none">
                       <div className=" flex gap-2 justify-center items-center">
                         <i className="bi  font-bold text-md cursor-pointer text-red-600 border p-1 rounded-md  bi-trash3-fill"></i>
-                        <Link
-                          href={`tel:${i.UserData.contactDetails.mobileNo}`}
-                        >
+                        <Link href={`tel:${contactDetails && contactDetails.mobileNo}`}>
                           <i className="bi bi-telephone-fill text-md p-1 border  rounded-md pColor" />
                         </Link>
-                        <Link
-                          href={`mailto:${i.UserData.contactDetails.email}`}
-                        >
+                        <Link href={`mailto:${contactDetails && contactDetails.email}`}>
                           <i className="bi  font-bold text-md  border p-1 rounded-md text-red-600  bi-envelope-fill"></i>
                         </Link>
                       </div>

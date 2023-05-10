@@ -1,4 +1,5 @@
 import AllCollegesData from "directsecondyearadmission/Components/AllCollegeData";
+import { useUserContext } from "directsecondyearadmission/Context/UserContext";
 import HomeLayout from "directsecondyearadmission/Layout/HomeLayout";
 import Head from "next/head";
 import Link from "next/link";
@@ -8,6 +9,7 @@ import { useState } from "react";
 
 const College = () => {
   const [userOpen, setUserOpen] = useState("-right-full");
+  const { allUserDetail } = useUserContext();
   const toggleUser = () => {
     if (userOpen == "-right-full") {
       setUserOpen("right-0");
@@ -15,8 +17,28 @@ const College = () => {
       setUserOpen("-right-full");
     }
   };
+
   const router = useRouter();
   try {
+    if (allUserDetail.profileCompletion < 100) {
+      return (
+        <HomeLayout>
+          <div className="mt-20 container grid place-items-center m-auto bg-white p-5">
+            <div className="w-96 bg-gray-100 p-5 grid place-items-center">
+              <div className="font-semibold">
+                Please Complete Your Profile First !
+              </div>{" "}
+              <div className=" mt-5">
+                <Link href="/Profile" className="pBtn  px-5 py-2  w-full">
+                  Complete Profile
+                </Link>
+              </div>
+            </div>
+          </div>
+        </HomeLayout>
+      );
+    }
+
     return (
       <HomeLayout>
         <Head>

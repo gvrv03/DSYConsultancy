@@ -9,15 +9,7 @@ export const CollegeFilterAfter = (
   defuniversity,
   university
 ) => {
-  if (!district && !branch && !university) {
-    let DistrictFilter = colleges.filter(
-      (filterClg) =>
-        defdistrict.includes(filterClg.CollegeDetails.location.district),
-      // defbranch.includes(filterClg.courseName)
-    );
 
-    return DistrictFilter;
-  }
 
   let filterCollege = !selectedunder.length
     ? colleges
@@ -28,6 +20,17 @@ export const CollegeFilterAfter = (
   if (!filterCollege) {
     return colleges;
   }
+
+
+  if (!district && !branch && !university) {
+    let DistrictFilter = filterCollege.filter(
+      (filterClg) =>
+      defbranch.includes(filterClg.courseName)
+    );
+
+    return DistrictFilter;
+  }
+
 
   // After District Filter
   let DistrictFilter = !district
