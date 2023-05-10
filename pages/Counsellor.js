@@ -10,19 +10,20 @@ const Counsellor = () => {
   if (allUserDetail.profileCompletion < 100) {
     return (
       <HomeLayout>
-        <div className="mt-20 container grid place-items-center m-auto bg-white p-5">
-          <div className="w-96 bg-gray-100 p-5 grid place-items-center">
-            <div className="font-semibold">
-              Please Complete Your Profile First !
-            </div>{" "}
-            <div className=" mt-5">
-              <Link href="/Profile" className="pBtn  px-5 py-2  w-full">
-                Complete Profile
-              </Link>
-            </div>
+      <div className=" h-full container grid place-items-center m-auto bg-white p-5">
+        <div className="w-96 bg-gray-100 p-5 grid place-items-center">
+          <img src="/img/incomplete.svg" className="h-32 mb-10" alt=""  />
+          <div className="font-semibold">
+            Please Complete Your Profile First !
+          </div>{" "}
+          <div className=" mt-5">
+            <Link href="/Profile" className="pBtn  px-5 py-2  w-full">
+              Complete Profile
+            </Link>
           </div>
         </div>
-      </HomeLayout>
+      </div>
+    </HomeLayout>
     );
   }
   return (

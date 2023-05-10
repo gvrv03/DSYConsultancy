@@ -65,27 +65,19 @@ const AboutUs = () => {
               <Teams
                 img="/img/maleUser.svg"
                 name="Gaurav Narnaware"
-                role="Full stack Developer"
-                desc="Create an interactive Websites"
-              />
+                />
               <Teams
                 img="/img/maleUser.svg"
                 name="Om Raut"
-                role="Software Tester"
-                desc="Create an interactive Websites"
-              />{" "}
+                />{" "}
               <Teams
                 img="/img/maleUser.svg"
                 name="Pranav Ambadkar"
-                role="Business Analyst"
-                desc="Create an interactive Websites"
-              />
+                />
               <Teams
                 img="/img/femaleUser.svg"
                 name="Sakshi More"
-                role="Data Analyst"
-                desc="Create an interactive Websites"
-              />
+                />
             </div>
           </div>
         </section>

@@ -80,8 +80,8 @@ const AllCollegesData = ({ toggleUser, userOpen }) => {
     return (
       <div className="px-5">
         <select
-          value={districtClg === "" ? district : districtClg}
-          onChange={function (e) {
+          value={districtClg}
+          onChange={(e) => {
             setdistrictClg(e.target.value);
           }}
           className=" outline-none w-full py-2 rounded-sm border"
@@ -110,8 +110,8 @@ const AllCollegesData = ({ toggleUser, userOpen }) => {
   const UniversityFilter = () => {
     return (
       <select
-        value={UniversityClg === "" ? university : UniversityClg}
-        onChange={function (e) {
+        value={UniversityClg}
+        onChange={(e) => {
           setUniversityClg(e.target.value);
         }}
         className=" outline-none w-full py-2 rounded-sm border"
@@ -255,6 +255,15 @@ const AllCollegesData = ({ toggleUser, userOpen }) => {
         <DistrictFilter />
         <div className="h-1 mx-5 mt-5 bg-slate-50" />
 
+        <div className="flex  p-5 ">
+          <i className="bi bi-buildings font-bold mr-4"></i>
+          <span className="text-slate-400">University</span>
+        </div>
+
+        <div className="w-full px-5 bg-white">
+          <UniversityFilter />
+        </div>
+
         <div className="flex  p-5">
           <i className="bi bi-search font-bold mr-4"></i>
           <span className="text-slate-400">College</span>
@@ -271,15 +280,6 @@ const AllCollegesData = ({ toggleUser, userOpen }) => {
 
         <div className="w-full px-5 bg-white">
           <DepartmentFilter />
-        </div>
-
-        <div className="flex  p-5 mt-5">
-          <i className="bi bi-buildings font-bold mr-4"></i>
-          <span className="text-slate-400">University</span>
-        </div>
-
-        <div className="w-full px-5 bg-white">
-          <UniversityFilter />
         </div>
       </div>
     </div>

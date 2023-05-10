@@ -32,6 +32,24 @@ const VerifyPhone = () => {
     }
   };
 
+  const resendOTP= async (e) => {
+    e.preventDefault();
+    setspinner(true);
+    if (phoneNo) {
+      const res = await sendOTP(phoneNo);
+      if (res.msg) {
+        setresMsg(res.msg);
+        setsendCode(true);
+      } else {
+        setresMsg(res.error);
+      }
+      setspinner(false);
+    } else {
+      setresMsg("Enter Phone Number");
+      setspinner(false);
+    }
+  };
+
   if (resMsg) {
     setTimeout(() => {
       setresMsg("");
@@ -108,7 +126,7 @@ const VerifyPhone = () => {
               />
               <div>
                 <button
-                  onClick={sendOTPClient}
+                  onClick={resendOTP}
                   type="button"
                   className=" pColor float-right font-semibold my-2 "
                 >

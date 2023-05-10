@@ -9,8 +9,6 @@ export const CollegeFilterAfter = (
   defuniversity,
   university
 ) => {
-
-
   let filterCollege = !selectedunder.length
     ? colleges
     : colleges.filter((clgDetail) =>
@@ -21,16 +19,12 @@ export const CollegeFilterAfter = (
     return colleges;
   }
 
-
-  if (!district && !branch && !university) {
-    let DistrictFilter = filterCollege.filter(
-      (filterClg) =>
+  if (!branch) {
+    let DistrictFilter = filterCollege.filter((filterClg) =>
       defbranch.includes(filterClg.courseName)
     );
-
     return DistrictFilter;
   }
-
 
   // After District Filter
   let DistrictFilter = !district
