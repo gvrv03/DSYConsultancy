@@ -6,7 +6,7 @@ import { useState } from "react";
 
 const Forgot = () => {
   const [userData, setuserData] = useState({});
-  const [requiredState, setRequired] = useState(false);
+  const [requiredState, setRequired] = useState(true);
   const [msg, setmsg] = useState("");
   const { resetPassword, user } = useUserAuth();
 
@@ -41,6 +41,7 @@ const Forgot = () => {
               {msg}
             </h3>
           )}
+
           <form onSubmit={handleSubmit} className=" flex flex-col gap-4">
             <div>
               <div className="block mb-2 text-sm font-medium text-gray-900 ">
@@ -51,7 +52,7 @@ const Forgot = () => {
                 required={requiredState}
                 onChange={onChange}
                 id="email"
-                // value={setuserData.email ? setuserData.email : ""}
+                value={userData ? userData.email : ""}
                 name="email"
                 className=" text-gray-900 sm:text-sm rounded-sm focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5  outline-none bg-gray-100 "
                 placeholder="name@company.com"
@@ -64,6 +65,7 @@ const Forgot = () => {
             >
               Forgot Password
             </button>
+            
             <p className="text-sm font-light text-center text-gray-500  dark:text-gray-400">
               Don&apos;t have an account yet ?{" "}
               <Link
@@ -73,6 +75,7 @@ const Forgot = () => {
                 Sign up
               </Link>
             </p>
+
           </form>
         </div>
       </div>
