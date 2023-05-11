@@ -5,12 +5,10 @@ const { Schema } = mongoose;
 const reportSchema = new Schema(
   {
     issueName: String,
-    user: [
-      {
-        type: ObjectId,
-        ref: "User",
-      },
-    ],
+    user: {
+      type: ObjectId,
+      ref: "User",
+    },
   },
   { timestamps: true }
 );

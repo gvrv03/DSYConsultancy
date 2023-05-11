@@ -1,21 +1,22 @@
-import { useAdminContext } from "directsecondyearadmission/Context/AdminContext";
 import React from "react";
 import Dashboard from "./Dashboard";
+import Loader2 from "../../Components/Loader2";
+
 import exportFromJSON from "export-from-json";
-
-const AllFeedBack = () => {
-  const { allfeedbacks } = useAdminContext();
-  console.log(allfeedbacks);
-  const fileName = "Feedback";
+import { useAdminContext } from "directsecondyearadmission/Context/AdminContext";
+import Link from "next/link";
+const AllSchedule = () => {
+  const { allSchedule, allReportIssue } = useAdminContext();
+  const fileName = "All Reports";
   const exportType = "xls";
-
   const ExportToExcel = () => {
-    exportFromJSON({ allfeedbacks, fileName, exportType });
+    exportFromJSON({ allSchedule, fileName, exportType });
   };
+  console.log(allReportIssue);
   return (
     <Dashboard>
       <div className="px-5 font-semibold text-slate-400 bg-white">
-        All Feedbacks
+        All Schedule
       </div>
       <button
         type="button"
@@ -29,51 +30,48 @@ const AllFeedBack = () => {
           <thead className="border-none  w-full text-sm ">
             <tr className="bg-blue-50  border-none w-full">
               <th className="border-none py-3  text-left px-3">Sr. No.</th>
-              <th className="border-none py-3  text-left px-3">User Name</th>
-              <th className="border-none py-3 text-left px-3">Phone No</th>
-              <th className="border-none py-3 text-left px-3">Email</th>
-              <th className="border-none py-3 text-left px-3">Message</th>
+              <th className="border-none py-3  text-left px-3">Report ID</th>
+              <th className="border-none py-3  text-left px-3">Issue</th>
+              <th className="border-none py-3 text-left px-3">User ID</th>
               <th className="border-none py-3 text-center px-3">Delete</th>
             </tr>
           </thead>
           <tbody className="mt-10 text-xs">
-            {allfeedbacks &&
-              allfeedbacks.map((i, index) => {
+            {allReportIssue &&
+              allReportIssue.map((i, index) => {
+                const { issueName, user,_id } = i;
+                const { contactDetails } = user ? user : {};
                 return (
                   <tr className="border-none  mt-10" key={index}>
                     <td className="px-3 py-2   mt-2 border-none font-bold text-lg text-left">
-                      <span className="text-black">{index + 1}</span>
+                      <span className="text-center text-black">{index + 1}</span>
                     </td>
+                    <td className="px-3 py-2  mt-2 border-none text-left ">{_id}</td>
                     <td className="px-3 py-2  mt-2 border-none text-left ">
-                      {i.uName}
+                      {issueName}
                     </td>
                     <td className="px-3 py-2  mt-2 border-none">
-                      {" "}
-                      {i.User && i.User.contactDetails.mobileNo}
+                      {user}
                     </td>
-                    <td className="px-3 py-2  mt-2 border-none">
-                      {i.User && i.User.contactDetails.email}
-                    </td>
-                    <td className="px-3 py-2  mt-2 border-none">{i.message}</td>
                     <td className="px-3 py-2 grid place-items-center  mt-2 border-none">
-                      <button className="">
-                        <i className="bi  font-bold text-2xl text-red-600 bi-trash3-fill"></i>
-                      </button>
+                      <div className=" flex gap-2 justify-center items-center">
+                        <i className="bi  font-bold text-md cursor-pointer text-red-600 border p-1 rounded-md  bi-trash3-fill"></i>
+                      </div>
                     </td>
                   </tr>
                 );
               })}
           </tbody>
         </table>
-        {allfeedbacks && allfeedbacks.length === 0 && (
+        {allReportIssue && allReportIssue.length === 0 && (
           <div className="  border mt-5 p-5 text-center w-full font-semibold">
             No Data Found
           </div>
         )}
-        {!allfeedbacks && <Loader2 />}
+        {!allReportIssue && <Loader2 />}
       </div>
     </Dashboard>
   );
 };
 
-export default AllFeedBack;
+export default AllSchedule;

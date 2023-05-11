@@ -31,7 +31,7 @@ const sendReport = async (req, res) => {
 
 async function getReports(req, res) {
   try {
-    const reports = await ReportIssue.find();
+    const reports = await ReportIssue.find()
 
     res.status(201).json(reports);
   } catch (error) {

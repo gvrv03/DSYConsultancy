@@ -12,6 +12,7 @@ export function AdminContexProvider({ children }) {
   const { user, Uid } = useUserAuth();
   const [allDepartments, setallDepartments] = useState("");
   const [allSchedule, setallSchedule] = useState([]);
+  const [allReportIssue, setallReportIssue] = useState([]);
   const [allfeedbacks, setallfeedbacks] = useState([]);
   const [toastMsg, settoastMsg] = useState({
     state: "hidden",
@@ -34,9 +35,6 @@ export function AdminContexProvider({ children }) {
     });
   };
 
-
-  
-
   const getAllSchedule = async () => {
     const res = await fetch("/api/schedule", {
       method: "GET",
@@ -47,6 +45,19 @@ export function AdminContexProvider({ children }) {
     const data = await res.json();
     setallSchedule(data);
   };
+
+
+  const getAllReports = async () => {
+    const res = await fetch("/api/reportIssue", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    const data = await res.json();
+    setallReportIssue(data);
+  };
+
 
   const getAllFeedback = async () => {
     const res = await fetch("/api/feedback", {
@@ -233,6 +244,7 @@ export function AdminContexProvider({ children }) {
     getAllDepartment();
     getAllSchedule();
     getAllFeedback();
+    getAllReports();
   }, []);
 
   return (
@@ -248,6 +260,7 @@ export function AdminContexProvider({ children }) {
         allfeedbacks,
         addDepartment, // popup
         openModal,
+        allReportIssue,
         closeModal,
       }}
     >

@@ -37,14 +37,10 @@ const HeaderFilter = () => {
     },
     {
       icon: "bi-buildings-fill",
-      Name: "Latest Updates",
-      Location: "/Admin/AllLatestUpdates",
+      Name: "All Issues",
+      Location: "/Admin/AllReport",
     },
-    {
-      icon: "bi-buildings-fill",
-      Name: "Blog Post",
-      Location: "/Admin/AllBlogs",
-    },
+   
     {
       icon: "bi-buildings-fill",
       Name: "All Schedule",
